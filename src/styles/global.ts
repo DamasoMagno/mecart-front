@@ -4,11 +4,16 @@ export const globalStyles = globalCss({
   "*": {
     padding: 0,
     margin: 0,
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
   },
 
-  'body': {
-    background: '#333',
-    height: '100vh'
+  "body": {
+    background: '#202024',
+    height: '100vh',
+  },
+
+  "body, input, textarea, button": {
+    fontWeight: "400",
+    fontFamily: "$body"
   }
 })

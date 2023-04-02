@@ -1,11 +1,11 @@
 import { Routes, Route } from "react-router-dom"
 
-import { Sign } from "./pages/Sign"
+import { Splash } from "./pages/Splash"
 
 export function RouterProvider(){
   return (
     <Routes>
-      <Route path="/" element={<Sign />} />
+      <Route path="/splash" element={<Splash />}/>
     </Routes>
   )
 }
