@@ -14,6 +14,7 @@ export const {
       "white": "#FFF",
       "black": "#000"
     },
+    
     fonts: {
       "body": "Roboto, sans serif"
     }
