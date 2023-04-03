@@ -1,7 +1,7 @@
 import { styled } from "../../config/stitches.config"
 
 export const Container = styled("div", {
-  backgroundColor: "#121214",
+  backgroundColor: "$cyan200",
   borderRadius: 4,
   display: "flex",
   alignItems: "center",
@@ -13,7 +13,7 @@ export const Container = styled("div", {
     background: "transparent",
     border: 0,
     outline: 0,
-    color: "#FFF",
+    color: "$white",
     padding: ".25rem 0",
     flex: 1,
   },

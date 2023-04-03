@@ -12,9 +12,9 @@ export const {
       "green700": "#00875F",
       "yellow600": "#FBA94C",
       "white": "#FFF",
-      "black": "#000"
+      "black": "#000",
+      "cyan200": "#121214"
     },
-    
     fonts: {
       "body": "Roboto, sans serif"
     }
