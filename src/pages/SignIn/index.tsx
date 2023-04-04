@@ -1,8 +1,8 @@
-import { Basket, GoogleLogo } from "@phosphor-icons/react";
+import { Basket, GoogleLogo, User } from "@phosphor-icons/react"
 
-import { Button } from "../../components/Button";
+import { Button } from "../../components/Button"
 
-import { Container, Content } from "./styles";
+import { Container, Content } from "./styles"
 
 export function SignIn() {
   return (
@@ -24,9 +24,14 @@ export function SignIn() {
             de compras com consciência
           </p>
 
-          <Button>
-            <GoogleLogo size={20} /> Fazer Login
-          </Button>
+          <div className="signOptions">
+            <Button ghost>
+              <User size={20} /> Entrar sem conta
+            </Button>
+            <Button>
+              <GoogleLogo size={20} /> Entrar em google
+            </Button>
+          </div>
         </div>
       </Content>
     </Container>

@@ -4,7 +4,7 @@ export const {
   styled, 
   css, 
   globalCss, 
-  keyframes 
+  keyframes
 } = createStitches({
   theme: {
     colors: {

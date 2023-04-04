@@ -14,9 +14,10 @@ export const Container = styled("div", {
 })
 
 export const Content = styled("div", {
-  height: "60vh",
+  height: "65vh",
   width: "100%",
-  marginBottom: "1.13rem",
+  maxWidth: "600px",
+  margin: "0 auto 1.13rem",
   display: "flex",
   alignItems: "center",
   flexDirection: "column",
@@ -43,11 +44,18 @@ export const Content = styled("div", {
   
     "p": {
       lineHeight: 1.7,
-      margin: "1rem 0 4rem",
+      margin: "1rem 0 3rem",
       maxWidth: "200px",
       fontSize: "1rem",
       display: "block",
       fontFamily: "$body"
+    },
+
+    ".signOptions": {
+      display: "flex",
+      flexDirection: "column",
+      gap: ".85rem",
+      width: "100%"
     }
   }
 })

@@ -7,7 +7,9 @@ export const Container = styled("div", {
   alignItems: "center",
   justifyContent: "center",
   gap: 8,
-  padding: ".5rem",
+  padding: ".25rem .75rem",
+  height: "3rem",
+  color: "#7C7C8A",
 
   "input": {
     background: "transparent",
@@ -16,5 +18,6 @@ export const Container = styled("div", {
     color: "$white",
     padding: ".25rem 0",
     flex: 1,
+    height: "100%"
   },
 })

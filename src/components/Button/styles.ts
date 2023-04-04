@@ -7,6 +7,7 @@ export const Container = styled("button", {
   outline: 0,
   borderRadius: 4,
   height: "3rem",
+  cursor: "pointer",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -27,5 +28,22 @@ export const Container = styled("button", {
 
   "&:hover": {
     filter: "brightness(.8)"
+  },
+
+  variants: {
+    ghost: {
+      true: {
+        border: "1px solid $green700",
+        background: "transparent",
+        color: "$green700"
+      }
+    },
+    noButton: {
+      true: {
+        border: 0,
+        background: "transparent",
+        color: "$green700"
+      }
+    }
   }
 })
