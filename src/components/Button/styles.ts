@@ -8,42 +8,29 @@ export const Container = styled("button", {
   borderRadius: 4,
   height: "3rem",
   cursor: "pointer",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: ".5rem",
-  padding: "0 1rem",
   width: "100%",
+  maxWidth: "600px",
   fontSize: "1rem",
   transition: "filter .25s",
   fontWeight: "bold",
   position: "relative",
 
-  "svg": {
-    position: "absolute",
-    left: "20px",
-    top: "50%",
-    transform: "translateY(-50%)"
-  },
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: ".5rem",
 
   "&:hover": {
-    filter: "brightness(.8)"
+    filter: "brightness(.8)",
   },
 
   variants: {
-    ghost: {
+    outline: {
       true: {
         border: "1px solid $green700",
         background: "transparent",
-        color: "$green700"
-      }
+        color: "$green700",
+      },
     },
-    noButton: {
-      true: {
-        border: 0,
-        background: "transparent",
-        color: "$green700"
-      }
-    }
-  }
-})
+  },
+});

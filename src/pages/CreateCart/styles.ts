@@ -1,4 +1,4 @@
-import { styled } from "../../config/stitches.config"
+import { styled } from "../../config/stitches.config";
 
 export const Container = styled("div", {
   display: "flex",
@@ -8,24 +8,24 @@ export const Container = styled("div", {
   color: "$white",
   height: "100vh",
 
-  "header": {
+  header: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     gap: ".5rem",
 
-    "strong": {
+    strong: {
       color: "$white",
       fontSize: "1.5rem",
 
-      "span": {
-        color: "$green700"
-      }
-    }
+      span: {
+        color: "$green700",
+      },
+    },
   },
 
-  "form": {
+  form: {
     maxWidth: "600px",
     marginTop: "5rem",
     display: "flex",
@@ -34,16 +34,16 @@ export const Container = styled("div", {
     gap: ".75rem",
     textAlign: "center",
 
-    "h3": {
-      marginBottom: "2rem"
+    h3: {
+      marginBottom: "2rem",
     },
 
-    "button": {
+    button: {
       marginTop: "1.5rem",
-      marginBottom: ".25rem"
+      marginBottom: ".25rem",
     },
 
-    "a": {
+    a: {
       color: "$green700",
       display: "flex",
       alignItems: "center",
@@ -51,7 +51,7 @@ export const Container = styled("div", {
       fontSize: ".875rem",
       textDecoration: "none",
       alignSelf: "start",
-      height: "3rem"
-    }
-  }
-})
+      height: "3rem",
+    },
+  },
+});

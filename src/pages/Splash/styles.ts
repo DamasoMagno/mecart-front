@@ -1,8 +1,8 @@
-import { styled, keyframes } from "../../config/stitches.config"
+import { styled, keyframes } from "../../config/stitches.config";
 
 export const alternateSizeIcon = keyframes({
-  '0%': { transform: 'scale(1)' },
-  '50%': { transform: 'scale(1.05)' },
+  "0%": { transform: "scale(1)" },
+  "50%": { transform: "scale(1.05)" },
 });
 
 export const Container = styled("div", {
@@ -21,13 +21,13 @@ export const Container = styled("div", {
     gap: ".5rem",
     animation: `${alternateSizeIcon} 1.5s infinite`,
 
-    "strong": {
+    strong: {
       color: "$white",
       fontSize: "2.5rem",
 
-      "span": {
-        color: "$green700"
-      }
-    }
-  }
-})
+      span: {
+        color: "$green700",
+      },
+    },
+  },
+});

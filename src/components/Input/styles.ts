@@ -1,4 +1,4 @@
-import { styled } from "../../config/stitches.config"
+import { styled } from "../../config/stitches.config";
 
 export const Container = styled("div", {
   backgroundColor: "$cyan200",
@@ -11,13 +11,13 @@ export const Container = styled("div", {
   height: "3rem",
   color: "#7C7C8A",
 
-  "input": {
+  input: {
     background: "transparent",
     border: 0,
     outline: 0,
     color: "$white",
     padding: ".25rem 0",
     flex: 1,
-    height: "100%"
+    height: "100%",
   },
-})
+});
