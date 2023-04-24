@@ -1,9 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { Basket, GoogleLogo, User } from "@phosphor-icons/react";
 
 import { Button } from "../../components/Button";
 
 import { Container, Content } from "./styles";
-import { useNavigate } from "react-router-dom";
 
 export function SignIn() {
   const navigate = useNavigate();
@@ -13,22 +13,22 @@ export function SignIn() {
   return (
     <Container>
       <Content>
-        <Basket className="logo" weight="bold" />
+        <Basket className="logo" weight="bold" color="#00875F" />
 
         <div className="description">
           <strong>
             Me<span>Cart</span>
           </strong>
           <p>Monte seu carrinho de compras com consciência.</p>
+        </div>
 
-          <div className="loginOptions">
-            <Button outline onClick={redirect}>
-              <User size={20} /> Entrar sem conta
-            </Button>
-            <Button>
-              <GoogleLogo size={20} /> Entrar em google
-            </Button>
-          </div>
+        <div className="signInMethods">
+          <Button outline onClick={redirect}>
+            <User size={20} /> Entrar sem e-mail
+          </Button>
+          <Button>
+            <GoogleLogo size={20} /> Entrar em google
+          </Button>
         </div>
       </Content>
     </Container>

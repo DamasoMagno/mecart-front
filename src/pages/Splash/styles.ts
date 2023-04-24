@@ -7,11 +7,9 @@ export const alternateSizeIcon = keyframes({
 
 export const Container = styled("div", {
   height: "100vh",
-  width: "100%",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  gap: 4,
 
   ".logo": {
     display: "flex",

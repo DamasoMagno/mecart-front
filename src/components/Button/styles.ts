@@ -1,7 +1,7 @@
 import { styled } from "../../config/stitches.config";
 
 export const Container = styled("button", {
-  background: "$green700",
+  background: "$green500",
   color: "$white",
   border: 0,
   outline: 0,
@@ -29,7 +29,14 @@ export const Container = styled("button", {
       true: {
         border: "1px solid $green700",
         background: "transparent",
-        color: "$green700",
+        color: "$green500",
+      },
+    },
+    float: {
+      true: {
+        width: "50px",
+        height: "50px",
+        borderRadius: "100%",
       },
     },
   },

@@ -2,14 +2,14 @@ import { styled } from "../../config/stitches.config";
 
 export const Container = styled("header", {
   background: "$black",
-  padding: "3rem 1.5rem 1.5rem",
+  padding: "2rem 1.5rem 1.5rem",
   color: "$white",
 
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
 
-  div: {
+  ".logo": {
     display: "flex",
     alignItems: "center",
     gap: 6,

@@ -8,6 +8,7 @@ export const Container = styled("div", {
   justifyContent: "center",
   gap: 8,
   padding: ".25rem .75rem",
+  border: "1px solid transparent",
   height: "3rem",
   color: "#7C7C8A",
 
@@ -19,5 +20,9 @@ export const Container = styled("div", {
     padding: ".25rem 0",
     flex: 1,
     height: "100%",
+  },
+
+  "&:focus-within": {
+    borderColor: "$green300",
   },
 });

@@ -10,9 +10,11 @@ export const Content = styled("main", {
   padding: "0 1.5rem 1rem",
   display: "flex",
   flexDirection: "column",
+  maxWidth: "1200px",
+  width: "100%",
+  margin: "2rem auto",
 
   nav: {
-    margin: "2rem 0 1.5rem",
     display: "flex",
     overflow: "scroll",
     width: "100%",
@@ -29,27 +31,28 @@ export const Content = styled("main", {
       outline: 0,
       whiteSpace: "nowrap",
       color: "#7C7C8A",
-      borderRadius: "8px",
-      padding: "0 .75rem",
+      borderRadius: "4px ",
+      padding: "0 1.125rem",
       fontSize: ".75rem",
       textTransform: "uppercase",
       transition: "all .25s",
       cursor: "pointer",
 
-      "&:hover, &:focus": {
-        border: "1px solid $green700",
-        outline: "$green700",
-        color: "$green700",
+      "&:hover, &:focus, &:first-child": {
+        border: "1px solid $green300",
+        outline: "$green300",
+        color: "$green300",
       },
     },
   },
 
-  ul: {
+  ".carts": {
+    marginTop: "2rem",
     display: "flex",
     flexDirection: "column",
     gap: ".25rem",
 
-    ".resume": {
+    ".cartQuantity": {
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
