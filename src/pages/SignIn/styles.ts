@@ -17,12 +17,12 @@ export const Content = styled("div", {
   width: "100%",
   maxWidth: "600px",
   margin: "0 auto 3rem",
+  padding: "0 1.125rem",
   display: "flex",
   flexDirection: "column",
   textAlign: "center",
   alignItems: "center",
   justifyContent: "space-between",
-  padding: "0 1.125rem",
 
   ".logo": {
     animation: `${alternateSizeIcon} 1.5s infinite`,
@@ -30,7 +30,6 @@ export const Content = styled("div", {
   },
 
   ".description": {
-    marginTop: "8rem",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

@@ -3,19 +3,19 @@ import { styled } from "../../../../config/stitches.config";
 
 export const Container = styled(Link, {
   background: "#121214",
-  borderRadius: 5,
+  borderRadius: "4px",
   textDecoration: "none",
   height: "5rem",
   color: "rgba(255, 255, 230, 0.75)",
   border: "1px solid transparent",
   position: "relative",
-  transition: "all .25s",
   padding: "1.15rem 1.25rem",
+  marginBottom: ".5rem",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
   gap: ".25rem",
-  marginBottom: ".5rem",
+  transition: "all .25s",
 
   ".info": {
     display: "flex",

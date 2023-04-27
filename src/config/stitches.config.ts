@@ -16,4 +16,7 @@ export const { styled, css, globalCss, keyframes } = createStitches({
       body: "Roboto, sans serif",
     },
   },
+  media: {
+    lg: '(min-width: 1024px)',
+  }
 });

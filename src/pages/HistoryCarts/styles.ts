@@ -1,11 +1,5 @@
 import { styled } from "../../config/stitches.config";
 
-export const Container = styled("div", {
-  display: "flex",
-  flexDirection: "column",
-  width: "100%",
-});
-
 export const Content = styled("main", {
   padding: "0 1.5rem 1rem",
   display: "flex",
@@ -38,7 +32,7 @@ export const Content = styled("main", {
       transition: "all .25s",
       cursor: "pointer",
 
-      "&:hover, &:focus, &:first-child": {
+      "&:hover, &:focus, &.selected": {
         border: "1px solid $green300",
         outline: "$green300",
         color: "$green300",
@@ -53,11 +47,11 @@ export const Content = styled("main", {
     gap: ".25rem",
 
     ".cartQuantity": {
+      color: "$white",
+      marginBottom: ".75rem",
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
-      color: "$white",
-      margin: "0 0 .75rem",
 
       span: {
         fontSize: ".875rem",
@@ -68,9 +62,15 @@ export const Content = styled("main", {
 
   footer: {
     position: "fixed",
-    bottom: "2%",
-    width: "100%",
+    bottom: "5%",
     left: 0,
+    width: "100%",
     padding: "0 2rem",
+    transition: "all 1s", 
+
+    "@lg": {
+      width: "300px",
+      left: "auto"
+    }
   },
 });
