@@ -45,7 +45,6 @@ export const Resume = styled(SwiperSlide, {
   borderRadius: ".5rem",
   display: "flex",
   flexDirection: "column",
-  minWidth: "250px",
   color: "$white",
 
   header: {
