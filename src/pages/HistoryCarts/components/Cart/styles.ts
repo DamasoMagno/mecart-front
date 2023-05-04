@@ -6,7 +6,6 @@ export const Container = styled(Link, {
   borderRadius: "4px",
   textDecoration: "none",
   height: "5rem",
-  color: "rgba(255, 255, 230, 0.75)",
   border: "1px solid transparent",
   position: "relative",
   padding: "1.15rem 1.25rem",
@@ -15,7 +14,6 @@ export const Container = styled(Link, {
   justifyContent: "space-between",
   alignItems: "center",
   gap: ".25rem",
-  transition: "all .25s",
 
   ".info": {
     display: "flex",
@@ -24,7 +22,8 @@ export const Container = styled(Link, {
 
     strong: {
       fontSize: "1rem",
-      color: "$white",
+      color: "rgba(255, 255, 255, .75)",
+      transition: "all .25s",
     },
 
     div: {
@@ -32,14 +31,19 @@ export const Container = styled(Link, {
       alignItems: "center",
       gap: "0.912rem",
 
-      "time, span": {
+      "svg, time, span": {
         display: "flex",
         alignItems: "center",
         gap: ".25rem",
         fontSize: ".75rem",
-        color: "rgba(255, 255, 230, 0.65)",
+        color: "rgba(255, 255, 255, .65)",
+       transition: "all .25s",
       },
     },
+  },
+
+  "> svg": {
+    color: "#FFF",
   },
 
   "&:hover, &:focus": {
@@ -47,8 +51,10 @@ export const Container = styled(Link, {
       color: "$white",
     },
 
-    "svg, time": {
-      color: "rgba(255, 255, 230, 0.85)",
-    },
+    "div": {
+      "svg, time, span": {
+        color: "rgba(255, 255, 255, .85)",
+      },
+    }
   },
 });

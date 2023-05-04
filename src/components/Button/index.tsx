@@ -8,6 +8,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   float?: boolean;
 }
 
-export const Button: FC<ButtonProps> = ({ children, ...props }) => {
-  return <Container {...props}>{children}</Container>;
-};
+export const Button: FC<ButtonProps> = 
+  ({ children, ...props }) => {
+    return <Container {...props}>{children}</Container>;
+  };

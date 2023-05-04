@@ -2,45 +2,19 @@ import { styled } from "../../config/stitches.config";
 
 export const Container = styled("header", {
   background: "$black",
-  padding: "2rem 1.5rem 1.5rem",
+  padding: "2rem 1rem 1.5rem",
   color: "$white",
-
+  fontWeight: "bold",
+  fontSize: "1.25rem",
   display: "flex",
   alignItems: "center",
-  justifyContent: "space-between",
 
-  ".logo": {
-    display: "flex",
-    alignItems: "center",
-    gap: 6,
-
-    svg: {
-      color: "$green700",
-      fontSize: "2rem",
-    },
-
-    strong: {
-      fontSize: "1.5rem",
-
-      span: {
-        color: "$green700",
-      },
-    },
+  a: {
+    textDecoration: "none",
+    color: "$white",
   },
 
-  button: {
-    background: "transparent",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: "#7C7C8A",
-    fontSize: "1.5rem",
-    cursor: "pointer",
-    border: 0,
-    transition: "color .25s",
-
-    "&:hover": {
-      color: "$green700",
-    },
-  },
+  h3: {
+    margin: "auto",
+  }
 });

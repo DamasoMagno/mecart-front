@@ -11,15 +11,13 @@ export const Navigation = () => {
 
   return (
     <NavBar>
-      <button className="actions">
+      <button className="finish">
         <Check /> Finalizar
       </button>
-
-      <Button float className="newCart" onClick={redirect}>
+      <Button float disabled={false} className="newCart" onClick={redirect}>
         <Plus />
       </Button>
-
-      <button className="actions" id="remove">
+      <button className="remove">
         <X /> Remover
       </button>
     </NavBar>

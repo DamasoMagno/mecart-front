@@ -1,26 +1,22 @@
-import { CaretLeft } from "@phosphor-icons/react";
-import { Link } from "react-router-dom";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
-import { Content, Header } from "./styles";
+import { Header } from "../../components/Header";
+
+import { Content } from "./styles";
 
 export function Product() {
   return (
     <>
-      <Header>
-        <Link to="/history">
-          <CaretLeft />
-        </Link>
-        <h3>Produto</h3>
-        <div />
-      </Header>
+      <Header title="Produto" route="/history" />
 
       <Content>
         <Input placeholder="Nome" />
-        <Input placeholder="Quantitade" />
-        <Input placeholder="Valor Unidade" />
+        <Input placeholder="Quantitade" type="number" />
+        <Input placeholder="Valor Unidade" type="number" />
 
-        <Button>Salvar produto</Button>
+        <footer>
+          <Button>Salvar produto</Button>
+        </footer>
       </Content>
     </>
   );

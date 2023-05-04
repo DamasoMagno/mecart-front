@@ -7,7 +7,7 @@ export const NavBar = styled("footer", {
   background: "#29292E",
   display: "flex",
 
-  ".actions": {
+  "button:not(.newCart)": {
     width: "100%",
     background: "transparent",
     border: 0,
@@ -18,13 +18,22 @@ export const NavBar = styled("footer", {
     gap: ".5rem",
     cursor: "pointer",
     height: "3.5rem",
+    transition: "background .25s",
 
-    "&:first-child": {
+    "&.finish": {
       color: "$green700",
+
+      "&:hover, &:focus": {
+        background: "rgba(0, 135, 95, .1)",
+      },
     },
 
-    "&:last-child": {
+    "&.remove": {
       color: "#FC4C4C",
+
+      "&:hover, &:focus": {
+        background: "rgba(252, 75, 75, .1)",
+      },
     },
   },
 

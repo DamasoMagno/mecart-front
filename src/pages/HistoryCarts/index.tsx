@@ -1,21 +1,34 @@
 import { useState } from "react";
-import { Plus } from "@phosphor-icons/react";
+import { useNavigate } from "react-router-dom";
+import { Basket, Plus, SignOut } from "@phosphor-icons/react";
 
 import { Button } from "../../components/Button";
-import { Header } from "../../components/Header";
 import { CreateCartModal } from "./components/CreateCartModal";
 import { Cart } from "./components/Cart";
 
-import { Content } from "./styles";
+import { Content, Header } from "./styles";
 
 export function HistoryCarts() {
-  const [cartOpen, setCartOpen] = useState(false);
+  const navigate = useNavigate();
+  const redirect = () => navigate("/login");
 
+  const [cartOpen, setCartOpen] = useState(false);
   const toggleCartOpen = () => setCartOpen(!cartOpen);
 
   return (
     <div>
-      <Header />
+      <Header>
+        <div className="logo">
+          <Basket weight="bold" />
+          <strong>
+            Me<span>Cart</span>
+          </strong>
+        </div>
+
+        <button onClick={redirect}>
+          <SignOut />
+        </button>
+      </Header>
 
       <Content>
         <nav>
@@ -44,12 +57,12 @@ export function HistoryCarts() {
 
         <footer>
           <Button onClick={toggleCartOpen}>
-            <Plus /> Novo Carrinho
+            <Plus /> <span>Novo Carrinho</span>
           </Button>
         </footer>
       </Content>
 
-      <CreateCartModal openModal={cartOpen} onOpenModal={toggleCartOpen} />
+      <CreateCartModal cartModalIsOpen={cartOpen} onOpenModal={toggleCartOpen} />
     </div>
   );
 }

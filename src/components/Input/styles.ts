@@ -1,7 +1,7 @@
 import { styled } from "../../config/stitches.config";
 
 export const Container = styled("div", {
-  backgroundColor: "$cyan200",
+  backgroundColor: "$gray700",
   borderRadius: 4,
   display: "flex",
   alignItems: "center",
@@ -10,7 +10,7 @@ export const Container = styled("div", {
   padding: ".25rem .75rem",
   border: "1px solid transparent",
   height: "3rem",
-  color: "#7C7C8A",
+  color: "$gray300",
 
   input: {
     background: "transparent",
@@ -20,6 +20,10 @@ export const Container = styled("div", {
     padding: ".25rem 0",
     flex: 1,
     height: "100%",
+
+    "&::-webkit-inner-spin-button": {
+      "-webkit-appearance": "none",
+    },
   },
 
   "&:focus-within": {

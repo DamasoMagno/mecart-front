@@ -7,16 +7,16 @@ import { Button } from "../../../../components/Button";
 import { Overlay, Content } from "./styles";
 
 interface CreateCartModalProps {
-  openModal: boolean;
+  cartModalIsOpen: boolean;
   onOpenModal(): void;
 }
 
 export function CreateCartModal({
   onOpenModal,
-  openModal,
+  cartModalIsOpen,
 }: CreateCartModalProps) {
   return (
-    <Modal.Root open={openModal} onOpenChange={onOpenModal}>
+    <Modal.Root open={cartModalIsOpen} onOpenChange={onOpenModal}>
       <Overlay />
 
       <Modal.Portal>
@@ -32,12 +32,10 @@ export function CreateCartModal({
 
           <form>
             <Input placeholder="Nome carrinho" />
-            <Input placeholder="Data de compra" type="date"/>
-            <Input placeholder="Limite da sacol" type="number"/>
+            <Input placeholder="Data de compra" type="date" />
+            <Input placeholder="Limite da sacol" type="number" />
 
-            <Button type="button">
-              Criar Carrinho
-            </Button>
+            <Button type="button">Criar Carrinho</Button>
           </form>
         </Content>
       </Modal.Portal>

@@ -9,21 +9,19 @@ export const Overlay = styled(Modal.Overlay, {
 });
 
 export const Content = styled(Modal.Content, {
-  padding: "0 1.25rem",
   borderRadius: "20px 20px 0 0",
   position: "fixed",
   background: "$black",
   bottom: 0,
   backgroundColor: "#202024",
   width: "100%",
-  height: "60vh",
+  padding: "3.5rem 1rem",
 
   header: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     color: "$white",
-    marginTop: "6rem",
     fontSize: "1.25rem",
     fontWeight: "bold",
 
@@ -31,6 +29,7 @@ export const Content = styled(Modal.Content, {
       border: 0,
       color: "#7C7C8A",
       background: "transparent",
+      cursor: "pointer",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
@@ -43,9 +42,11 @@ export const Content = styled(Modal.Content, {
     display: "flex",
     flexDirection: "column",
     gap: ".75rem",
+    width: "100%",
 
     button: {
       marginTop: "2.25rem",
+      width: "100%"
     },
   },
 });

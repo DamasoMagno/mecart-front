@@ -3,11 +3,15 @@ import { styled } from "@stitches/react";
 export const Container = styled("li", {
   listStyle: "none",
   background: "#121214",
-  padding: "1rem",
-  borderRadius: "8px",
+  padding: "1.25rem 1rem",
+  borderRadius: "5px",
   display: "flex",
   flexDirection: "column",
-  gap: ".5rem",
+  gap: ".75rem",
+
+  "& + li": {
+    marginTop: ".5rem"
+  },
 
   strong: {
     color: "$white",
@@ -40,7 +44,7 @@ export const Container = styled("li", {
       "button, a": {
         border: 0,
         borderRadius: "8px",
-        padding: ".5rem",
+        padding: ".3125rem",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

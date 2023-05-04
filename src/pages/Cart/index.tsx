@@ -1,56 +1,61 @@
-import { CaretLeft, CurrencyDollar, Info, X } from "@phosphor-icons/react";
-import { Link } from "react-router-dom";
+import { CurrencyDollar, Info } from "@phosphor-icons/react";
+import { Swiper } from "swiper/react";
 
 import { Product } from "./components/Product";
 import { Navigation } from "./components/Navigation";
+import { Header } from "../../components/Header";
 
-import { Header, Container } from "./styles";
+import { Container, Resume } from "./styles";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 export function Cart() {
   return (
     <>
-      <Header>
-        <Link to="/history">
-          <CaretLeft />
-        </Link>
-        <h3>Novo Carrinho</h3>
-        <div />
-      </Header>
+      <Header title="Carrinho" route="/history" />
 
       <Container>
-        <section className="resume">
-          <div className="resumeTopic">
+        <Swiper className="resume" slidesPerView={2} spaceBetween={10}>
+          <Resume completed>
             <header>
               <span>Status</span>
               <Info />
             </header>
             <strong>Sacola livre</strong>
-          </div>
+          </Resume>
 
-          <div className="resumeTopic">
+          <Resume completed>
             <header>
               <span>Total na sacola</span>
               <CurrencyDollar />
             </header>
             <strong>R$ 80,00</strong>
-          </div>
+          </Resume>
 
-          <div className="resumeTopic">
+          <Resume>
             <header>
               <span>Limite da sacola</span>
               <CurrencyDollar />
             </header>
 
             <strong>R$ 80,00</strong>
-          </div>
-        </section>
+          </Resume>
+        </Swiper>
 
         <section className="products">
-          <strong className="quantityResume">
-            Produtos <span>4</span>
+          <strong className="quantityProducts">
+            Produtos
+            <span>4</span>
           </strong>
 
           <ul>
+            <Product />
+            <Product />
+            <Product />
+            <Product />
+            <Product />
             <Product />
           </ul>
         </section>

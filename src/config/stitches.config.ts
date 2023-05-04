@@ -10,13 +10,15 @@ export const { styled, css, globalCss, keyframes } = createStitches({
       red600: "#FBA94C",
       white: "#FFF",
       black: "#000",
-      cyan200: "#121214",
+      gray700: "#121214",
+      gray300: "7C7C8A"
     },
     fonts: {
       body: "Roboto, sans serif",
     },
   },
+
   media: {
-    lg: '(min-width: 1024px)',
-  }
+    lg: "(min-width: 1024px)",
+  },
 });

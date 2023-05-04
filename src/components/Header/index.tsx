@@ -1,25 +1,22 @@
-import { Basket, SignOut } from "@phosphor-icons/react";
+import { FC } from "react";
+import { CaretLeft } from "@phosphor-icons/react";
+import { Link } from "react-router-dom";
 
 import { Container } from "./styles";
-import { useNavigate } from "react-router-dom";
 
-export function Header() {
-  const navigate = useNavigate();
+interface HeaderProps {
+  title: string;
+  route: string;
+}
 
-  const redirect = () => navigate("/login");
-
+export const Header: FC<HeaderProps> = ({ title, route }) => {
   return (
     <Container>
-      <div className="logo">
-        <Basket weight="bold" />
-        <strong>
-          Me<span>Cart</span>
-        </strong>
-      </div>
-
-      <button onClick={redirect}>
-        <SignOut />
-      </button>
+      <Link to={route}>
+        <CaretLeft />
+      </Link>
+      
+      <h3>{title}</h3>
     </Container>
   );
-}
+};

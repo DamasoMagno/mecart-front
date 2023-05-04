@@ -1,20 +1,5 @@
 import { styled } from "@stitches/react";
-
-export const Header = styled("header", {
-  background: "$black",
-  padding: "2rem 1rem 1.5rem",
-  color: "$white",
-  fontWeight: "bold",
-  fontSize: "1.25rem",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-
-  a: {
-    textDecoration: "none",
-    color: "$white",
-  },
-});
+import { SwiperSlide } from "swiper/react";
 
 export const Container = styled("main", {
   display: "flex",
@@ -28,41 +13,16 @@ export const Container = styled("main", {
     display: "flex",
     alignItems: "center",
     gap: "1.5rem",
-
-    ".resumeTopic": {
-      background: "$green700",
-      padding: "1rem 1rem",
-      borderRadius: ".5rem",
-      display: "flex",
-      flexDirection: "column",
-      gap: "1rem",
-      width: "100%",
-      color: "$white",
-
-      header: {
-        fontSize: ".875rem",
-        color: "rgba(255, 255, 255, .85)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-      },
-
-      strong: {
-        fontSize: "1rem",
-        fontWeight: 700,
-        lineHeight: 1.7,
-      },
-    },
   },
 
   ".products": {
     marginTop: "2rem",
-    padding: "0 1.5rem",
+    padding: "0 1.5rem 2rem",
 
     display: "flex",
     flexDirection: "column",
 
-    ".quantityResume": {
+    ".quantityProducts": {
       color: "#E1E1E6",
       marginBottom: "1rem",
       fontWeight: "bold",
@@ -74,6 +34,40 @@ export const Container = styled("main", {
 
       span: {
         fontSize: "1rem",
+      },
+    },
+  },
+});
+
+export const Resume = styled(SwiperSlide, {
+  background: "$green700",
+  padding: "1.5rem 1rem",
+  borderRadius: ".5rem",
+  display: "flex",
+  flexDirection: "column",
+  minWidth: "250px",
+  color: "$white",
+
+  header: {
+    fontSize: ".875rem",
+    color: "rgba(255, 255, 255, .85)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+
+  strong: {
+    marginTop: ".75rem",
+    display: "block",
+    fontSize: "1rem",
+    fontWeight: 700,
+    lineHeight: 1.7,
+  },
+
+  variants: {
+    completed: {
+      true: {
+        background: "#FE5C5C",
       },
     },
   },

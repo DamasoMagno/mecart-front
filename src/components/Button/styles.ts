@@ -6,7 +6,7 @@ export const Container = styled("button", {
   border: 0,
   outline: 0,
   borderRadius: 4,
-  height: "3rem",
+  height: "3.5rem",
   cursor: "pointer",
   width: "100%",
   maxWidth: "600px",
@@ -19,6 +19,11 @@ export const Container = styled("button", {
   alignItems: "center",
   justifyContent: "center",
   gap: ".5rem",
+
+  "&:disabled": {
+    background: "rgba(9, 126, 89, .85)",
+    cursor: "not-allowed"
+  },
 
   "&:hover": {
     filter: "brightness(.8)",
@@ -37,6 +42,10 @@ export const Container = styled("button", {
         width: "50px",
         height: "50px",
         borderRadius: "100%",
+
+        "span": {
+          display: "none"
+        }
       },
     },
   },
