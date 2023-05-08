@@ -7,7 +7,7 @@ import { Content } from "./styles";
 export function Product() {
   return (
     <>
-      <Header title="Produto" route="/history" />
+      <Header title="Produto" route="/cart" />
 
       <Content>
         <Input placeholder="Nome" />

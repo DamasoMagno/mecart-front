@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Basket, CurrencyDollar, Pencil, Trash } from "@phosphor-icons/react";
+import { ConfirmCartRemove } from "../CofirmCartRemove";
 
 import { Container } from "./styles";
 
@@ -21,9 +22,8 @@ export const Product = () => (
         <Link to={"/product"}>
           <Pencil />
         </Link>
-        <button>
-          <Trash />
-        </button>
+
+        <ConfirmCartRemove />
       </div>
     </div>
   </Container>

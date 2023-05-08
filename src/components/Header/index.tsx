@@ -12,11 +12,13 @@ interface HeaderProps {
 export const Header: FC<HeaderProps> = ({ title, route }) => {
   return (
     <Container>
-      <Link to={route}>
-        <CaretLeft />
-      </Link>
-      
-      <h3>{title}</h3>
+      <div className="content">
+        <Link to={route}>
+          <CaretLeft />
+        </Link>
+
+        <h3>{title}</h3>
+      </div>
     </Container>
   );
 };

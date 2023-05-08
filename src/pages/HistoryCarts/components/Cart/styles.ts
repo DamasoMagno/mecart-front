@@ -5,6 +5,7 @@ export const Container = styled(Link, {
   background: "#121214",
   borderRadius: "4px",
   textDecoration: "none",
+  overflow: "hidden",
   height: "5rem",
   border: "1px solid transparent",
   position: "relative",

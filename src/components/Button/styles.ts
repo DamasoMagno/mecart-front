@@ -1,5 +1,6 @@
 import { styled } from "../../config/stitches.config";
 
+
 export const Container = styled("button", {
   background: "$green500",
   color: "$white",
@@ -9,7 +10,6 @@ export const Container = styled("button", {
   height: "3.5rem",
   cursor: "pointer",
   width: "100%",
-  maxWidth: "600px",
   fontSize: "1rem",
   transition: "filter .25s",
   fontWeight: "bold",
@@ -22,7 +22,7 @@ export const Container = styled("button", {
 
   "&:disabled": {
     background: "rgba(9, 126, 89, .85)",
-    cursor: "not-allowed"
+    cursor: "not-allowed",
   },
 
   "&:hover": {
@@ -43,9 +43,15 @@ export const Container = styled("button", {
         height: "50px",
         borderRadius: "100%",
 
-        "span": {
-          display: "none"
-        }
+        span: {
+          display: "none",
+        },
+      },
+    },
+    ghost: {
+      true: {
+        background: "transparent",
+        border: "none",
       },
     },
   },

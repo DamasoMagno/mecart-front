@@ -23,7 +23,7 @@ export function SignIn() {
         </div>
 
         <div className="signInMethods">
-          <Button outline onClick={redirect}>
+          <Button variant={{ outline: true }} onClick={redirect}>
             <User size={20} /> Entrar sem e-mail
           </Button>
           <Button>

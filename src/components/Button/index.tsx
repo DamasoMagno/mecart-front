@@ -1,14 +1,17 @@
 import { ButtonHTMLAttributes, FC, ReactNode } from "react";
 
 import { Container } from "./styles";
+import { VariantProps } from "@stitches/react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  outline?: boolean;
-  float?: boolean;
+  variant?: VariantProps<typeof Container>;
 }
 
-export const Button: FC<ButtonProps> = 
-  ({ children, ...props }) => {
-    return <Container {...props}>{children}</Container>;
-  };
+export const Button: FC<ButtonProps> = ({ children, variant, ...props }) => {
+  return (
+    <Container {...variant} {...props}>
+      {children}
+    </Container>
+  );
+};

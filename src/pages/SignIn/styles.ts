@@ -7,7 +7,6 @@ export const alternateSizeIcon = keyframes({
 
 export const Container = styled("div", {
   height: "100vh",
-  color: "$white",
   display: "flex",
   alignItems: "flex-end",
 });
@@ -15,8 +14,9 @@ export const Container = styled("div", {
 export const Content = styled("div", {
   height: "65vh",
   width: "100%",
+  color: "$white",
   maxWidth: "600px",
-  margin: "0 auto 3rem",
+  margin: "0 auto 2.5rem",
   padding: "0 1.125rem",
   display: "flex",
   flexDirection: "column",
@@ -53,7 +53,7 @@ export const Content = styled("div", {
   ".signInMethods": {
     display: "flex",
     flexDirection: "column",
-    gap: ".75rem",
+    gap: ".5rem",
     width: "100%",
   },
 });

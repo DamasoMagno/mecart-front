@@ -5,22 +5,22 @@ export const Container = styled("main", {
   display: "flex",
   flexDirection: "column",
   margin: "2rem auto",
-  maxWidth: "1200px",
+  maxWidth: "900px",
 
   ".resume": {
     width: "100%",
-    padding: "0 0 0 1.5rem",
     display: "flex",
     alignItems: "center",
     gap: "1.5rem",
+    zIndex: 0,
+    paddingLeft: "1rem",
   },
 
   ".products": {
-    marginTop: "2rem",
-    padding: "0 1.5rem 2rem",
-
+    margin: "2rem 0 3rem",
     display: "flex",
     flexDirection: "column",
+    padding: "0 1rem",
 
     ".quantityProducts": {
       color: "#E1E1E6",
@@ -43,9 +43,10 @@ export const Resume = styled(SwiperSlide, {
   background: "$green700",
   padding: "1.5rem 1rem",
   borderRadius: ".5rem",
-  display: "flex",
-  flexDirection: "column",
   color: "$white",
+  display: "flex",
+  zIndex: 0,
+  flexDirection: "column",
 
   header: {
     fontSize: ".875rem",
@@ -69,5 +70,50 @@ export const Resume = styled(SwiperSlide, {
         background: "#FE5C5C",
       },
     },
+  },
+});
+
+export const Navigation = styled("footer", {
+  position: "fixed",
+  width: "100%",
+  bottom: 0,
+  background: "#29292E",
+  display: "flex",
+
+  "button:not(.newCart)": {
+    width: "100%",
+    background: "transparent",
+    border: 0,
+    fontSize: "1rem",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: ".5rem",
+    cursor: "pointer",
+    height: "3.5rem",
+    transition: "background .25s",
+
+    "&.finish": {
+      color: "$green700",
+
+      "&:hover, &:focus": {
+        background: "rgba(0, 135, 95, .1)",
+      },
+    },
+
+    "&.remove": {
+      color: "#FC4C4C",
+
+      "&:hover, &:focus": {
+        background: "rgba(252, 75, 75, .1)",
+      },
+    },
+  },
+
+  ".newCart": {
+    position: "absolute",
+    top: "-50%",
+    right: "50%",
+    transform: "translate(50%)",
   },
 });

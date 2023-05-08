@@ -10,24 +10,26 @@ import { Content, Header } from "./styles";
 
 export function HistoryCarts() {
   const navigate = useNavigate();
-  const redirect = () => navigate("/login");
-
   const [cartOpen, setCartOpen] = useState(false);
+
   const toggleCartOpen = () => setCartOpen(!cartOpen);
+  const logout = () => navigate("/login");
 
   return (
     <div>
       <Header>
-        <div className="logo">
-          <Basket weight="bold" />
-          <strong>
-            Me<span>Cart</span>
-          </strong>
-        </div>
+        <div className="content">
+          <div className="logo">
+            <Basket weight="bold" />
+            <strong>
+              Me<span>Cart</span>
+            </strong>
+          </div>
 
-        <button onClick={redirect}>
-          <SignOut />
-        </button>
+          <button onClick={logout}>
+            <SignOut />
+          </button>
+        </div>
       </Header>
 
       <Content>
@@ -62,7 +64,10 @@ export function HistoryCarts() {
         </footer>
       </Content>
 
-      <CreateCartModal cartModalIsOpen={cartOpen} onOpenModal={toggleCartOpen} />
+      <CreateCartModal
+        cartModalIsOpen={cartOpen}
+        onOpenModal={toggleCartOpen}
+      />
     </div>
   );
 }

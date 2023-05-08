@@ -18,7 +18,6 @@ export function Cart({ createdAt, title, totalPrice }: CartProps) {
           <time>
             <Clock /> {createdAt}
           </time>
-
           <span>
             <CurrencyDollar /> 12,00
           </span>

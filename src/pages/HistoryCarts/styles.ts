@@ -2,56 +2,60 @@ import { styled } from "../../config/stitches.config";
 
 export const Header = styled("header", {
   background: "$black",
-  padding: "2rem 1.5rem 1.5rem",
-  color: "$white",
 
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-
-  ".logo": {
+  ".content": {
+    padding: "2rem 1rem 1.5rem",
+    maxWidth: "900px",
+    margin: "0 auto",
     display: "flex",
     alignItems: "center",
-    gap: 6,
+    justifyContent: "space-between",
 
-    svg: {
-      color: "$green700",
-      fontSize: "2rem",
-    },
+    ".logo": {
+      display: "flex",
+      alignItems: "center",
+      gap: 6,
 
-    strong: {
-      fontSize: "1.5rem",
-
-      span: {
+      svg: {
         color: "$green700",
+        fontSize: "2rem",
+      },
+
+      strong: {
+        fontSize: "1.5rem",
+        color: "$white",
+
+        span: {
+          color: "$green700",
+        },
       },
     },
-  },
 
-  button: {
-    background: "transparent",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: "#7C7C8A",
-    fontSize: "1.5rem",
-    cursor: "pointer",
-    border: 0,
-    transition: "color .25s",
+    button: {
+      background: "transparent",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: "#7C7C8A",
+      fontSize: "1.5rem",
+      cursor: "pointer",
+      border: 0,
+      transition: "color .25s",
 
-    "&:hover": {
-      color: "$green700",
+      "&:hover": {
+        color: "$green700",
+      },
     },
   },
 });
 
 export const Content = styled("main", {
-  padding: "0 1.5rem 1rem",
   display: "flex",
   flexDirection: "column",
-  maxWidth: "1200px",
-  width: "100%",
+  maxWidth: "900px",
   margin: "2rem auto",
+  padding: "0 1rem",
+  position: "relative",
 
   nav: {
     display: "flex",
@@ -106,16 +110,17 @@ export const Content = styled("main", {
   },
 
   footer: {
+    marginBottom: "auto",
     position: "fixed",
-    bottom: "5%",
-    left: 0,
+    bottom: 10,
     width: "100%",
-    padding: "0 2rem",
-    transition: "all 1s", 
+    left: 0,
+    padding: "0 1rem",
 
     "@lg": {
+      left: "unset",
       width: "300px",
-      left: "auto"
+      padding: "0"
     }
   },
 });

@@ -15,7 +15,19 @@ export const Content = styled(Modal.Content, {
   bottom: 0,
   backgroundColor: "#202024",
   width: "100%",
-  padding: "3.5rem 1rem",
+  padding: "3.5rem 1rem 1.75rem",
+
+  "@lg": {
+    bottom: "50%",
+    right: "50%",
+    transform: "translate(50%, 50%)",
+    width: "600px",
+    borderRadius: "8px",
+    padding: "2rem",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
 
   header: {
     display: "flex",
@@ -46,7 +58,7 @@ export const Content = styled(Modal.Content, {
 
     button: {
       marginTop: "2.25rem",
-      width: "100%"
+      width: "100%",
     },
   },
 });

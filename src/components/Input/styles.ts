@@ -24,6 +24,11 @@ export const Container = styled("div", {
     "&::-webkit-inner-spin-button": {
       "-webkit-appearance": "none",
     },
+
+    "&::-webkit-calendar-picker-indicator": {
+      display: "none",
+      "-webkit-appearance": "none",
+    },
   },
 
   "&:focus-within": {

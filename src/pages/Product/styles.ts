@@ -1,19 +1,25 @@
 import { styled } from "../../config/stitches.config";
 
 export const Content = styled("form", {
-  padding: "0 1.5rem 1rem",
   display: "flex",
   flexDirection: "column",
-  maxWidth: "1200px",
-  width: "100%",
+  maxWidth: "900px",
   margin: "2rem auto 0",
   gap: ".75rem",
+  padding: "0 1rem",
 
   footer: {
+    marginBottom: "auto",
     position: "fixed",
-    bottom: 20,
-    left: 0,
     width: "100%",
-    padding: "0 1rem"
+    left: 0,
+    bottom: 0,
+    padding: "0 1rem 1rem",
+
+    "@lg": {
+      left: "unset",
+      width: "300px",
+      padding: "0",
+    },
   },
 });

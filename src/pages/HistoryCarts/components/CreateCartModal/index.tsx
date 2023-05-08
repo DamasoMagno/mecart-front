@@ -33,9 +33,9 @@ export function CreateCartModal({
           <form>
             <Input placeholder="Nome carrinho" />
             <Input placeholder="Data de compra" type="date" />
-            <Input placeholder="Limite da sacol" type="number" />
+            <Input placeholder="Limite da sacola" type="number" />
 
-            <Button type="button">Criar Carrinho</Button>
+            <Button type="submit">Criar Carrinho</Button>
           </form>
         </Content>
       </Modal.Portal>
