@@ -120,7 +120,7 @@ export const Content = styled("main", {
     "@lg": {
       left: "unset",
       width: "300px",
-      padding: "0"
-    }
+      padding: "0",
+    },
   },
 });

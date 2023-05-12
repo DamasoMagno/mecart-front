@@ -12,8 +12,8 @@ export const RouterProvider = () => {
       <Route path="/" element={<Splash />} />
       <Route path="/login" element={<SignIn />} />
       <Route path="/history" element={<HistoryCarts />} />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/product" element={<Product />} />
+      <Route path="/cart/:cartId" element={<Cart />} />
+      <Route path="/cart/:cartId/product" element={<Product />} />
     </Routes>
   );
 };

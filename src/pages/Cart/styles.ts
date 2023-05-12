@@ -79,6 +79,7 @@ export const Navigation = styled("footer", {
   bottom: 0,
   background: "#29292E",
   display: "flex",
+  alignItems: "center",
 
   "button:not(.newCart)": {
     width: "100%",
@@ -111,9 +112,8 @@ export const Navigation = styled("footer", {
   },
 
   ".newCart": {
-    position: "absolute",
-    top: "-50%",
-    right: "50%",
-    transform: "translate(50%)",
-  },
+    margin: ".5rem",
+    maxWidth: "50px",
+    height: "50px",
+  }
 });

@@ -1,6 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Check, CurrencyDollar, Info, Plus, X } from "@phosphor-icons/react";
 import { Swiper } from "swiper/react";
+
+import { IProduct } from "../../interfaces";
 
 import { Product } from "./components/Product";
 import { Header } from "../../components/Header";
@@ -12,7 +15,22 @@ import "swiper/css";
 
 export function Cart() {
   const navigate = useNavigate();
-  const redirect = () => navigate("/product");
+  const params = useParams() as { cartId: string };
+
+  const [products, setProducts] = useState<IProduct[] | undefined>([]);
+
+  const redirect = () => navigate(`/cart/${params.cartId}/product`);
+
+  useEffect(() => {
+    const productsStoragedByCartId: IProduct[] =
+      JSON.parse(localStorage.getItem("@products") as string) || [];
+
+    let filterProductsByCartId = productsStoragedByCartId.filter((product) => {
+      return String(product.cartId) === params.cartId;
+    });
+
+    setProducts(filterProductsByCartId);
+  }, []);
 
   return (
     <>
@@ -63,16 +81,13 @@ export function Cart() {
         <section className="products">
           <strong className="quantityProducts">
             Produtos
-            <span>4</span>
+            <span>{products?.length ?? 0}</span>
           </strong>
 
           <ul>
-            <Product />
-            <Product />
-            <Product />
-            <Product />
-            <Product />
-            <Product />
+            {products?.map((product) => {
+              return <Product key={product.id} product={product} />;
+            })}
           </ul>
         </section>
       </Container>
@@ -81,11 +96,7 @@ export function Cart() {
         <button className="finish">
           <Check /> Finalizar
         </button>
-        <Button
-          variant={{ float: true }}
-          className="newCart"
-          onClick={redirect}
-        >
+        <Button className="newCart" onClick={redirect}>
           <Plus />
         </Button>
         <button className="remove">

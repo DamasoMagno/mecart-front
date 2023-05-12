@@ -2,18 +2,36 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Basket, Plus, SignOut } from "@phosphor-icons/react";
 
+import { ICart } from "../../interfaces";
+
 import { Button } from "../../components/Button";
 import { CreateCartModal } from "./components/CreateCartModal";
 import { Cart } from "./components/Cart";
 
 import { Content, Header } from "./styles";
 
+
 export function HistoryCarts() {
   const navigate = useNavigate();
-  const [cartOpen, setCartOpen] = useState(false);
 
-  const toggleCartOpen = () => setCartOpen(!cartOpen);
-  const logout = () => navigate("/login");
+  const [cartOpen, setCartOpen] = useState(false);
+  const [carts, setCarts] = useState<ICart[]>(() => {
+    const cartsStoraged: ICart[] =
+      JSON.parse(localStorage.getItem("@carts") as string) || [];
+
+    return cartsStoraged;
+  });
+
+  const handleToggleCartOpen = () => setCartOpen(!cartOpen);
+
+  function logout() {
+    localStorage.clear();
+    navigate("/login");
+  }
+
+  function handleInsertNewCartOnCarts(cart: ICart) {
+    setCarts((carts) => [...carts, cart]);
+  }
 
   return (
     <div>
@@ -40,25 +58,18 @@ export function HistoryCarts() {
 
         <div className="carts">
           <strong className="cartQuantity">
-            Carrinhos <span>2</span>
+            Carrinhos <span>{carts.length}</span>
           </strong>
 
           <ul>
-            <Cart
-              title="Cebolitos e doritos"
-              createdAt="20/01/2022"
-              totalPrice="32,00"
-            />
-            <Cart
-              title="Cebolitos e doritos"
-              createdAt="20/01/2022"
-              totalPrice="32,00"
-            />
+            {carts.map((cart) => {
+              return <Cart key={cart.id} cart={cart} />;
+            })}
           </ul>
         </div>
 
         <footer>
-          <Button onClick={toggleCartOpen}>
+          <Button onClick={handleToggleCartOpen}>
             <Plus /> <span>Novo Carrinho</span>
           </Button>
         </footer>
@@ -66,7 +77,8 @@ export function HistoryCarts() {
 
       <CreateCartModal
         cartModalIsOpen={cartOpen}
-        onOpenModal={toggleCartOpen}
+        onSetCartOnState={handleInsertNewCartOnCarts}
+        onOpenModal={handleToggleCartOpen}
       />
     </div>
   );

@@ -1,10 +1,23 @@
+import { Trash } from "@phosphor-icons/react";
 import * as ConfirmModal from "@radix-ui/react-alert-dialog";
 
-import { Overlay, Content } from "./styles";
-import { Trash } from "@phosphor-icons/react";
 import { Button } from "../../../../components/Button";
 
+import { Overlay, Content } from "./styles";
+import { IProduct } from "../../../../interfaces";
+
 export function ConfirmCartRemove() {
+  function removeProductFromLocalStorage() {
+    const productsStoragedByCartId: IProduct[] =
+      JSON.parse(localStorage.getItem("@products") as string) || [];
+
+    const findProductPosition = productsStoragedByCartId.findIndex(
+      (product) => product.id === 0
+    );
+
+    productsStoragedByCartId.splice(findProductPosition, 1);
+  }
+
   return (
     <ConfirmModal.Root>
       <ConfirmModal.Trigger asChild>
@@ -30,7 +43,11 @@ export function ConfirmCartRemove() {
             </ConfirmModal.Cancel>
             <span />
             <ConfirmModal.Action asChild>
-              <Button variant={{ ghost: true }} className="remove">
+              <Button 
+                variant={{ ghost: true }} 
+                className="remove"
+                onClick={removeProductFromLocalStorage}
+              >
                 Remover
               </Button>
             </ConfirmModal.Action>

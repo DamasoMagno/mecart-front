@@ -5,7 +5,7 @@ export const Content = styled("form", {
   flexDirection: "column",
   maxWidth: "900px",
   margin: "2rem auto 0",
-  gap: ".75rem",
+  gap: ".5rem",
   padding: "0 1rem",
 
   footer: {

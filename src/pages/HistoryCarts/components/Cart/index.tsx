@@ -1,25 +1,25 @@
 import { CaretRight, Clock, CurrencyDollar } from "@phosphor-icons/react";
 
+import { ICart } from "../../../../interfaces";
+
 import { Container } from "./styles";
 
 interface CartProps {
-  title: string;
-  createdAt: string;
-  totalPrice: string;
+  cart: ICart;
 }
 
-export function Cart({ createdAt, title, totalPrice }: CartProps) {
+export function Cart({ cart}: CartProps) {
   return (
-    <Container to="/cart">
+    <Container to={`/cart/${cart.id}`}>
       <div className="info">
-        <strong>{title}</strong>
+        <strong>{cart.cartName}</strong>
 
         <div>
           <time>
-            <Clock /> {createdAt}
+            <Clock /> {cart.createdAt}
           </time>
           <span>
-            <CurrencyDollar /> 12,00
+            <CurrencyDollar /> {cart.totalPrice}
           </span>
         </div>
       </div>
