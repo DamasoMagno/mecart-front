@@ -9,8 +9,8 @@ export interface IProduct {
 export interface ICart {
   id: number;
   cartName: string;
-  totalPrice: string;
-  createdAt: string;
+  totalPrice: number;
+  createdAt: Date;
 }
 
 

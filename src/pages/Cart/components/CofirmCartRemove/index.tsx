@@ -4,20 +4,14 @@ import * as ConfirmModal from "@radix-ui/react-alert-dialog";
 import { Button } from "../../../../components/Button";
 
 import { Overlay, Content } from "./styles";
-import { IProduct } from "../../../../interfaces";
 
-export function ConfirmCartRemove() {
-  function removeProductFromLocalStorage() {
-    const productsStoragedByCartId: IProduct[] =
-      JSON.parse(localStorage.getItem("@products") as string) || [];
+interface ConfirmCartRemoveProps {
+  onRemoveProductFromCart: () => void;
+}
 
-    const findProductPosition = productsStoragedByCartId.findIndex(
-      (product) => product.id === 0
-    );
-
-    productsStoragedByCartId.splice(findProductPosition, 1);
-  }
-
+export function ConfirmCartRemove({
+  onRemoveProductFromCart,
+}: ConfirmCartRemoveProps) {
   return (
     <ConfirmModal.Root>
       <ConfirmModal.Trigger asChild>
@@ -43,10 +37,10 @@ export function ConfirmCartRemove() {
             </ConfirmModal.Cancel>
             <span />
             <ConfirmModal.Action asChild>
-              <Button 
-                variant={{ ghost: true }} 
+              <Button
+                variant={{ ghost: true }}
                 className="remove"
-                onClick={removeProductFromLocalStorage}
+                onClick={onRemoveProductFromCart}
               >
                 Remover
               </Button>

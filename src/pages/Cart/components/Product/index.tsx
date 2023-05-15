@@ -1,17 +1,38 @@
 import { Link, useParams } from "react-router-dom";
-import { Basket, CurrencyDollar, Pencil, Trash } from "@phosphor-icons/react";
+import { Basket, CurrencyDollar, Pencil } from "@phosphor-icons/react";
 import { ConfirmCartRemove } from "../CofirmCartRemove";
 
 import { Container } from "./styles";
-import { IProduct } from "../../../../interfaces";
+import { ICart, IProduct } from "../../../../interfaces";
 
 interface ProductProps {
   product: IProduct;
+  setProducts: (products: IProduct[]) => void;
 }
 
-
-export const Product = ({ product }: ProductProps) => {
+export const Product = ({ product, setProducts }: ProductProps) => {
   const params = useParams() as { cartId: string; productId: string };
+
+  function handleRemoveProductCart() {
+    const productsStoragedByCartId: IProduct[] =
+      JSON.parse(localStorage.getItem("@products") as string) || [];
+
+    const findProductPosition = productsStoragedByCartId.findIndex(
+      (product) => product.id === Number(params.productId)
+    );
+
+    productsStoragedByCartId.splice(findProductPosition, 1);
+
+    setProducts(productsStoragedByCartId);
+    localStorage.setItem("@products", JSON.stringify(productsStoragedByCartId));
+  }
+
+  let totalPriceProduct = product.quantity * product.unity;
+
+  let productPriceFormatted = new Intl.NumberFormat("pt-Br", {
+    style: "currency",
+    currency: "BRL",
+  }).format(totalPriceProduct);
 
   return (
     <Container>
@@ -23,7 +44,7 @@ export const Product = ({ product }: ProductProps) => {
             <Basket /> {product.quantity}
           </span>
           <span>
-            <CurrencyDollar /> {product.quantity * product.unity}
+            <CurrencyDollar /> {productPriceFormatted}
           </span>
         </div>
 
@@ -32,7 +53,9 @@ export const Product = ({ product }: ProductProps) => {
             <Pencil />
           </Link>
 
-          <ConfirmCartRemove />
+          <ConfirmCartRemove
+            onRemoveProductFromCart={handleRemoveProductCart}
+          />
         </div>
       </div>
     </Container>

@@ -88,6 +88,7 @@ export const Navigation = styled("footer", {
     fontSize: "1rem",
     display: "flex",
     alignItems: "center",
+    flexDirection: "column",
     justifyContent: "center",
     gap: ".5rem",
     cursor: "pointer",

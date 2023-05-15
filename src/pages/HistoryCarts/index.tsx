@@ -10,7 +10,6 @@ import { Cart } from "./components/Cart";
 
 import { Content, Header } from "./styles";
 
-
 export function HistoryCarts() {
   const navigate = useNavigate();
 
