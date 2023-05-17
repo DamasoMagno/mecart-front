@@ -1,12 +1,13 @@
 import { X } from "@phosphor-icons/react";
 import * as Modal from "@radix-ui/react-dialog";
+import { useForm } from "react-hook-form";
+
+import { ICart } from "../../../../interfaces";
 
 import { Input } from "../../../../components/Input";
 import { Button } from "../../../../components/Button";
 
 import { Overlay, Content } from "./styles";
-import { useForm } from "react-hook-form";
-import { ICart } from "../../../../interfaces";
 
 interface CreateCartModalProps {
   cartModalIsOpen: boolean;

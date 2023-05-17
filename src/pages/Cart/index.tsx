@@ -54,6 +54,26 @@ export function Cart() {
     setProducts(filterProductsByCartId);
   }, []);
 
+  function removeCartFromStorage(id: number) {
+    let carts: ICart[] = JSON.parse(localStorage.getItem("@carts") as string);
+    let products: IProduct[] = JSON.parse(localStorage.getItem("@products") as string)
+
+    const findCartById = carts.find(
+      (cart) => cart.id === Number(params.cartId)
+    );
+
+    if (!findCartById) return;
+
+    carts = carts.filter(cart => cart.id !== findCartById.id);
+    products = products.filter(product => Number(product.cartId) !== findCartById.id);
+
+    localStorage.setItem("@carts", JSON.stringify(carts));
+    localStorage.setItem("@products", JSON.stringify(products));
+
+    navigate("/history");
+  }
+
+
   return (
     <>
       <Header title="Carrinho" route="/history" />
@@ -91,7 +111,10 @@ export function Cart() {
         <Button className="newCart" onClick={redirect}>
           <Plus />
         </Button>
-        <button className="remove">
+        <button
+          className="remove"
+          onClick={() => removeCartFromStorage(Number(cart?.id))}
+        >
           <X /> Remover
         </button>
       </Navigation>

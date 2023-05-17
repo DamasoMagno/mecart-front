@@ -1,18 +1,18 @@
 import { format } from "date-fns";
 import { CaretRight, Clock, CurrencyDollar } from "@phosphor-icons/react";
 
+import { formatPrice } from "../../../../utils/format-price";
 import { ICart } from "../../../../interfaces";
 
 import { Container } from "./styles";
-import { formatPrice } from "../../../../utils/format-price";
 
 interface CartProps {
   cart: ICart;
 }
 
 export function Cart({ cart }: CartProps) {
-  const cartDate = new Date(cart.createdAt);
-  const dateFormatted = format(cartDate, "dd/MM/yyyy");
+  const cartCreatedAt = new Date(cart.createdAt);
+  const dateFormatted = format(cartCreatedAt, "dd/MM/yyyy");
 
   return (
     <Container to={`/cart/${cart.id}`}>

@@ -43,13 +43,15 @@ export function Product() {
     let totalValue = product.quantity * product.unity;
 
     if (totalValue > Number(cart?.totalPrice)) {
-      return toast.error("Carrinho cheio!", {
+      toast.error("Carrinho cheio!", {
         icon: null,
         style: {
-          background: "#FBA94C",
-          color: "#FFF",
+          background: "#FC4C4C",
+          color: "#FFF"
         },
       });
+
+      return;
     }
 
     if (productId) {
@@ -97,6 +99,7 @@ export function Product() {
         <Input
           placeholder="Valor Unidade"
           type="number"
+          step="0.01"
           register={{ ...register("unity", { required: true }) }}
         />
 
