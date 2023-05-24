@@ -8,6 +8,19 @@ export const Content = styled("form", {
   gap: ".5rem",
   padding: "0 1rem",
 
+  ".fields": {
+    display: "flex",
+    flexDirection: "column",
+    marginBottom: ".5rem",
+    flex: 1,
+
+    label: {
+      marginBottom: ".5rem",
+      color: "rgba(255, 255, 255, .5)",
+      fontSize: ".85rem",
+    },
+  },
+
   footer: {
     marginBottom: "auto",
     position: "fixed",

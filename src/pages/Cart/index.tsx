@@ -1,39 +1,40 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Check, Plus, X } from "@phosphor-icons/react";
+import { Check, PencilLine, Plus, X } from "@phosphor-icons/react";
 
-import { ICart, IProduct } from "../../interfaces";
+import { IProduct } from "../../interfaces";
 
 import { Product } from "./components/Product";
 import { Header } from "../../components/Header";
 import { Button } from "../../components/Button";
+import { Resumes } from "./components/Resumes";
+import { EditCartModal } from "../../components/EditCartModal";
+
+import { useModalStorage } from "../../store/modalStorage";
+import { useCartsStorage } from "../../store/cartsStorage";
 
 import { Container, Navigation } from "./styles";
 
 import "swiper/css";
-import { Resumes } from "./components/Resumes";
 
 export function Cart() {
   const navigate = useNavigate();
   const params = useParams();
 
+  const { openCartModal } = useModalStorage((state) => ({
+    openCartModal: state.openCartModal,
+  }));
+  const { cart, setCart, removeCart } = useCartsStorage((state) => ({
+    cart: state.cart,
+    setCart: state.setCart,
+    removeCart: state.removeCart,
+  }));
   const [products, setProducts] = useState<IProduct[]>([]);
-  const [cart, setCart] = useState(() => {
-    const carts: ICart[] = JSON.parse(localStorage.getItem("@carts") as string);
-    const findCartById = carts.find(
-      (cart) => cart.id === Number(params.cartId)
-    );
-
-    if (!findCartById) {
-      return null;
-    }
-
-    return findCartById;
-  });
 
   let totalPriceInCart = products.reduce(
     (accumulator: number, currentValue: IProduct) => {
-      let productPriceOnCart = currentValue.quantity * currentValue.unity;
+      let productPriceOnCart =
+        currentValue.quantity * currentValue.pricePerUnity;
       let totalCartPrice = productPriceOnCart + accumulator;
 
       return totalCartPrice;
@@ -41,9 +42,9 @@ export function Cart() {
     0
   );
 
-  const redirect = () => navigate(`/cart/${params.cartId}/product`);
-
   useEffect(() => {
+    setCart(String(params.cartId));
+
     const productsStoragedByCartId: IProduct[] =
       JSON.parse(localStorage.getItem("@products") as string) || [];
 
@@ -54,29 +55,26 @@ export function Cart() {
     setProducts(filterProductsByCartId);
   }, []);
 
-  function removeCartFromStorage(id: number) {
-    let carts: ICart[] = JSON.parse(localStorage.getItem("@carts") as string);
-    let products: IProduct[] = JSON.parse(localStorage.getItem("@products") as string)
+  const redirect = () => navigate(`/cart/${params.cartId}/product`);
 
-    const findCartById = carts.find(
-      (cart) => cart.id === Number(params.cartId)
-    );
-
-    if (!findCartById) return;
-
-    carts = carts.filter(cart => cart.id !== findCartById.id);
-    products = products.filter(product => Number(product.cartId) !== findCartById.id);
-
-    localStorage.setItem("@carts", JSON.stringify(carts));
-    localStorage.setItem("@products", JSON.stringify(products));
-
+  function removeCartFromStorage() {
+    removeCart(String(params.cartId));
     navigate("/history");
   }
 
+  let cartLimited = totalPriceInCart >= Number(cart?.totalPrice);
 
   return (
     <>
-      <Header title="Carrinho" route="/history" />
+      <Header title="Carrinho" route="/history">
+        <Button
+          style={{ width: "40px", height: "40px" }}
+          variant={{ outline: true }}
+          onClick={() => openCartModal(true, cart)}
+        >
+          <PencilLine />
+        </Button>
+      </Header>
 
       <Container>
         <Resumes
@@ -108,16 +106,15 @@ export function Cart() {
         <button className="finish">
           <Check /> Finalizar
         </button>
-        <Button className="newCart" onClick={redirect}>
+        <Button className="newCart" onClick={redirect} disabled={cartLimited}>
           <Plus />
         </Button>
-        <button
-          className="remove"
-          onClick={() => removeCartFromStorage(Number(cart?.id))}
-        >
+        <button className="remove" onClick={removeCartFromStorage}>
           <X /> Remover
         </button>
       </Navigation>
+
+      <EditCartModal />
     </>
   );
 }

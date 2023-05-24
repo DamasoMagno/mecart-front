@@ -6,6 +6,12 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [
     react(),
-    VitePWA({ registerType: "autoUpdate" })
+    VitePWA({ 
+      registerType: "autoUpdate",
+      devOptions: {
+        enabled: true,
+        type: "module"
+      }
+    })
   ]
 })

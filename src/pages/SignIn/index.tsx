@@ -7,7 +7,6 @@ import { Container, Content } from "./styles";
 
 export function SignIn() {
   const navigate = useNavigate();
-
   const redirect = () => navigate("/history");
 
   return (

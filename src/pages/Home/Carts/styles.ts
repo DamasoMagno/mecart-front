@@ -1,53 +1,4 @@
-import { styled } from "../../config/stitches.config";
-
-export const Header = styled("header", {
-  background: "$black",
-
-  ".content": {
-    padding: "2rem 1rem 1.5rem",
-    maxWidth: "900px",
-    margin: "0 auto",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-
-    ".logo": {
-      display: "flex",
-      alignItems: "center",
-      gap: 6,
-
-      svg: {
-        color: "$green700",
-        fontSize: "2rem",
-      },
-
-      strong: {
-        fontSize: "1.5rem",
-        color: "$white",
-
-        span: {
-          color: "$green700",
-        },
-      },
-    },
-
-    button: {
-      background: "transparent",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      color: "#7C7C8A",
-      fontSize: "1.5rem",
-      cursor: "pointer",
-      border: 0,
-      transition: "color .25s",
-
-      "&:hover": {
-        color: "$green700",
-      },
-    },
-  },
-});
+import { styled } from "../../../config/stitches.config";
 
 export const Content = styled("main", {
   display: "flex",
@@ -57,12 +8,12 @@ export const Content = styled("main", {
   padding: "0 1rem",
   position: "relative",
 
-  nav: {
+  ".filters": {
     display: "flex",
     overflow: "scroll",
     width: "100%",
     gap: ".5rem",
-    height: "2.5rem",
+    height: "3rem",
 
     "&::-webkit-scrollbar": {
       display: "none",
@@ -109,18 +60,20 @@ export const Content = styled("main", {
     },
   },
 
-  footer: {
-    marginBottom: "auto",
-    position: "fixed",
-    bottom: 10,
-    width: "100%",
-    left: 0,
-    padding: "0 1rem",
+  ".no-content": {
+    marginTop: "5rem",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "rgba(255, 255, 255, .35)",
+    gap: "1rem",
 
-    "@lg": {
-      left: "unset",
-      width: "300px",
-      padding: "0",
-    },
-  },
+    "p": {
+      width: "180px",
+      textAlign: "center",
+      lineHeight: 1.7,
+      fontSize: "1rem"
+    }
+  }
 });

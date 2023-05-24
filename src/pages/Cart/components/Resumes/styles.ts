@@ -29,7 +29,7 @@ export const Resume = styled(SwiperSlide, {
   variants: {
     completed: {
       true: {
-        background: "#FE5C5C",
+        background: "$red600",
       },
     },
   },

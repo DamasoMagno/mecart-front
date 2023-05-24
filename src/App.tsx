@@ -1,9 +1,9 @@
 import { BrowserRouter } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 import { RouterProvider } from "./routes";
 
 import { globalStyles } from "./styles/global";
-import { Toaster } from "react-hot-toast";
 
 globalStyles();
 

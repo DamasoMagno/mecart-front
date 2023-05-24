@@ -1,13 +1,13 @@
 export interface IProduct {
-  id: number | undefined;
+  id: string;
   productName: string;
   quantity: number;
-  unity: number;
+  pricePerUnity: number;
   cartId: string;
 }
 
 export interface ICart {
-  id: number;
+  id: string;
   cartName: string;
   totalPrice: number;
   createdAt: Date;

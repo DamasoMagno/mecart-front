@@ -2,7 +2,7 @@ import { FC, InputHTMLAttributes } from "react";
 import { Icon } from "@phosphor-icons/react";
 
 import { Container } from "./styles";
-import { UseFormRegisterReturn } from "react-hook-form";
+import { Ref, UseFormRegisterReturn } from "react-hook-form";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon?: Icon;

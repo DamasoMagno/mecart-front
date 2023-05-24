@@ -1,8 +1,8 @@
 import { format } from "date-fns";
 import { CaretRight, Clock, CurrencyDollar } from "@phosphor-icons/react";
 
-import { formatPrice } from "../../../../utils/format-price";
-import { ICart } from "../../../../interfaces";
+import { formatPrice } from "../../../../../utils/format-price";
+import { ICart } from "../../../../../interfaces";
 
 import { Container } from "./styles";
 

@@ -18,7 +18,7 @@ export const Product = ({ product, setProducts }: ProductProps) => {
       JSON.parse(localStorage.getItem("@products") as string) || [];
 
     const findProductPosition = productsStoragedByCartId.findIndex(
-      (product) => product.id === Number(params.productId)
+      (product) => product.id === params.productId
     );
 
     productsStoragedByCartId.splice(findProductPosition, 1);
@@ -27,7 +27,7 @@ export const Product = ({ product, setProducts }: ProductProps) => {
     localStorage.setItem("@products", JSON.stringify(productsStoragedByCartId));
   }
 
-  let totalPriceProduct = product.quantity * product.unity;
+  let totalPriceProduct = product.quantity * product.pricePerUnity;
 
   let productPriceFormatted = new Intl.NumberFormat("pt-Br", {
     style: "currency",

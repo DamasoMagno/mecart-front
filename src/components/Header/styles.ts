@@ -10,13 +10,20 @@ export const Container = styled("header", {
     padding: "2rem 1rem 1.5rem",
     display: "flex",
     alignItems: "center",
+    justifyContent: "space-between",
     gap: "1rem",
     maxWidth: "900px",
     margin: "0 auto",
 
-    a: {
-      textDecoration: "none",
-      color: "$white",
+    div: {
+      display: "flex",
+      alignItems: "center",
+      gap: "1rem",
+
+      a: {
+        textDecoration: "none",
+        color: "$white",
+      },
     },
   },
 });

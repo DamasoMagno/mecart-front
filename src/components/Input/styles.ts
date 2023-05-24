@@ -34,4 +34,8 @@ export const Container = styled("div", {
   "&:focus-within": {
     borderColor: "$green300",
   },
+
+  "svg":{
+    color: "$white"
+  }
 });
