@@ -11,6 +11,12 @@ export interface ICart {
   cartName: string;
   totalPrice: number;
   createdAt: Date;
+  status: "pendent" | "finished";
+}
+
+export interface IProductName {
+  id: string;
+  productName: string;
 }
 
 

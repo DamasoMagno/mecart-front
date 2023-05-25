@@ -15,13 +15,13 @@ export const Content = styled(Modal.Content, {
   bottom: 0,
   backgroundColor: "#202024",
   width: "100%",
-  padding: "3.5rem 1rem 1.75rem",
+  padding: "5rem 1rem 2rem",
 
   "@lg": {
     bottom: "50%",
     right: "50%",
     transform: "translate(50%, 50%)",
-    width: "600px",
+    width: "400px",
     borderRadius: "8px",
     padding: "2rem",
     display: "flex",

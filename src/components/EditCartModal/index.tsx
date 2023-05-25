@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { CurrencyDollar, X } from "@phosphor-icons/react";
 import * as Modal from "@radix-ui/react-dialog";
 import { useForm } from "react-hook-form";
@@ -6,11 +7,10 @@ import { ICart } from "../../interfaces";
 
 import { Input } from "../Input";
 import { Button } from "../Button";
-
-import { Overlay, Content } from "./styles";
-import { useEffect } from "react";
 import { useModalStorage } from "../../store/modalStorage";
 import { useCartsStorage } from "../../store/cartsStorage";
+
+import { Overlay, Content } from "./styles";
 
 export function EditCartModal() {
   const { openCartModal, modalCartIsOpen, cart } = useModalStorage((state) => ({

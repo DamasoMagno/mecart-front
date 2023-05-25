@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
-import { Cookie, CurrencyDollar, ShoppingBagOpen } from "@phosphor-icons/react";
+import {
+  Check,
+  Cookie,
+  CurrencyDollar,
+  ShoppingBagOpen,
+  WarningCircle,
+} from "@phosphor-icons/react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 
-import { ICart, IProduct } from "../../interfaces";
+import { ICart, IProduct, IProductName } from "../../interfaces";
 import { formatPrice } from "../../utils/format-price";
 
 import { Input } from "../../components/Input";
@@ -18,32 +24,38 @@ export function Product() {
   const navigate = useNavigate();
   const { cartId } = useParams();
   const [queryParams] = useSearchParams();
-  const { register, handleSubmit, setValue, setError, watch } =
-    useForm<IProduct>();
+  const { register, handleSubmit, setValue, watch } = useForm<IProduct>();
 
   const [cart, setCart] = useState(() => {
     const carts: ICart[] = JSON.parse(localStorage.getItem("@carts") as string);
     const findCartById = carts.find((cart) => cart.id === cartId);
-
-    if (!findCartById) {
-      return navigate("/history");
-    }
-
-    return findCartById;
+    return findCartById ? findCartById : null;
   });
-  const [productName, setProductName] = useState(() => {
-    const t = JSON.parse(localStorage.getItem("@productName") as string);
-    return t;
+  const [productsName, setProductsName] = useState<IProductName[]>(() => {
+    const namesOfProduct = JSON.parse(
+      localStorage.getItem("@productsName") as string
+    );
+    return namesOfProduct;
   });
+  let productId = queryParams.get("productId");
+  let total = watch("pricePerUnity") * watch("quantity");
 
   let productsStoraged: IProduct[] =
     JSON.parse(localStorage.getItem("@products") as string) || [];
 
-  let productId = queryParams.get("productId");
-
   function registerProduct(data: IProduct) {
     if (data.pricePerUnity === 0) {
-      toast.error("Insira um valor minimo");
+      toast.error("Insira um valor válido", {
+        icon: <WarningCircle />,
+        style: {
+          background: "#FC4C4C",
+          color: "#FFF",
+          display: "flex",
+          gap: "4px",
+          alignItems: "center",
+        },
+      });
+
       return;
     }
 
@@ -53,14 +65,17 @@ export function Product() {
       cartId: String(cartId),
     };
 
-    let totalValue = product.quantity * product.pricePerUnity;
+    const totalValueProduct = product.quantity * product.pricePerUnity;
 
-    if (totalValue > Number(cart?.totalPrice)) {
-      toast.error("Carrinho cheio!", {
-        icon: null,
+    if (totalValueProduct > Number(cart?.totalPrice)) {
+      toast.error("Sacola cheia!", {
+        icon: <WarningCircle />,
         style: {
           background: "#FC4C4C",
           color: "#FFF",
+          display: "flex",
+          gap: "4px",
+          alignItems: "center",
         },
       });
 
@@ -68,19 +83,38 @@ export function Product() {
     }
 
     if (productId) {
-      let productOnCart = productsStoraged.findIndex(
+      let findProductOnCartById = productsStoraged.findIndex(
         (product) => product.id === productId
       );
-      productsStoraged[productOnCart] = product;
+      productsStoraged[findProductOnCartById] = product;
     } else {
       productsStoraged.push(product);
     }
 
     localStorage.setItem("@products", JSON.stringify(productsStoraged));
-    navigate(`/cart/${cartId}`);
+
+    toast.success("Cadastro com sucesso", {
+      icon: <Check />,
+      style: {
+        background: "#00B37E",
+        color: "#FFF",
+        display: "flex",
+        gap: "4px",
+        alignItems: "center",
+      },
+    });
+
+    setTimeout(() => {
+      navigate(`/cart/${cartId}`);
+    }, 500);
   }
 
   useEffect(() => {
+    if (!cart) {
+      navigate("/history");
+      return;
+    }
+
     if (!productId) {
       setValue("quantity", Number(1));
       setValue("pricePerUnity", Number(0));
@@ -98,59 +132,47 @@ export function Product() {
     }
   }, []);
 
-  let total = watch("pricePerUnity") * watch("quantity");
-
   return (
     <>
       <Header title="Produto" route={`/cart/${cartId}`} />
 
       <Content onSubmit={handleSubmit(registerProduct)}>
-        <div className="fields">
-          <label htmlFor="name">Nome do produto</label>
+        <div className="productName">
           <Input
             id="name"
+            label="Nome do produto"
             list="products"
             icon={Cookie}
             register={{ ...register("productName", { required: true }) }}
           />
+          <datalist id="products">
+            {productsName?.map((product: any) => (
+              <option key={product.id}>{product.productName}</option>
+            ))}
+          </datalist>
         </div>
-
-        <datalist id="products">
-          {productName.map((product: any) => {
-            return <option key={product.id}>{product.productName}</option>;
-          })}
-        </datalist>
-
-        <div className="fields">
-          <label htmlFor="quantity">Quantidade de produtos</label>
-          <Input
-            id="quantity"
-            type="number"
-            icon={ShoppingBagOpen}
-            register={{ ...register("quantity", { required: true }) }}
-          />
-        </div>
-
-        <div className="fields">
-          <label htmlFor="total">Total</label>
-          <Input
-            id="total"
-            disabled
-            icon={CurrencyDollar}
-            value={formatPrice(total)}
-          />
-        </div>
-
-        <div className="fields">
-          <label htmlFor="price">Preço por produto</label>
-          <Input
-            id="price"
-            type="number"
-            step="0.01"
-            icon={CurrencyDollar}
-            register={{ ...register("pricePerUnity", { required: true }) }}
-          />
-        </div>
+        <Input
+          id="quantity"
+          label="Quantidade de produtos"
+          type="number"
+          icon={ShoppingBagOpen}
+          register={{ ...register("quantity", { required: true }) }}
+        />
+        <Input
+          id="total"
+          disabled
+          label="Total"
+          icon={CurrencyDollar}
+          value={formatPrice(total)}
+        />
+        <Input
+          id="price"
+          label="Preço por produto"
+          type="number"
+          step="0.01"
+          icon={CurrencyDollar}
+          register={{ ...register("pricePerUnity", { required: true }) }}
+        />
 
         <footer>
           <Button type="submit">Salvar produto</Button>

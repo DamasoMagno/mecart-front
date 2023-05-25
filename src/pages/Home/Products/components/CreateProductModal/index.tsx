@@ -1,7 +1,6 @@
 import { X } from "@phosphor-icons/react";
 import * as Modal from "@radix-ui/react-dialog";
 import { useForm } from "react-hook-form";
-import { v4 } from "uuid";
 
 import { Input } from "../../../../../components/Input";
 import { Button } from "../../../../../components/Button";
@@ -15,10 +14,7 @@ export function CreateProductModal() {
     productModalIsOpen: state.modalProductIsOpen,
     openProductModal: state.openProductModal,
   }));
-  const { addProduct } = useProductsStorage((state) => ({
-    addProduct: state.addProduct,
-  }));
-
+  const addProduct = useProductsStorage((state) => state.addProduct);
   const { register, handleSubmit } = useForm();
 
   function createNewProduct(data: any) {
@@ -42,13 +38,17 @@ export function CreateProductModal() {
           </header>
 
           <form onSubmit={handleSubmit(createNewProduct)}>
-            <Input
-              register={{
-                ...register("productName", {
-                  required: true,
-                }),
-              }}
-            />
+            <div className="fields">
+              <label htmlFor="name">Nome do produto</label>
+              <Input
+                id="name"
+                register={{
+                  ...register("productName", {
+                    required: true,
+                  }),
+                }}
+              />
+            </div>
 
             <Button type="submit">Criar Carrinho</Button>
           </form>

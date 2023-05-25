@@ -12,14 +12,12 @@ interface CartProps {
 }
 
 export function ProductName({ product }: CartProps) {
-  const { removeProduct } = useProductsStorage(state => ({
-    removeProduct: state.removeProduct
-  }))
+  const removeProduct = useProductsStorage((state) => state.removeProduct);
 
   return (
     <Container>
       <strong>{product.productName}</strong>
-      
+
       <button onClick={() => removeProduct(product.id)}>
         <Trash />
       </button>

@@ -5,21 +5,8 @@ export const Content = styled("form", {
   flexDirection: "column",
   maxWidth: "900px",
   margin: "2rem auto 0",
-  gap: ".5rem",
+  gap: ".75rem",
   padding: "0 1rem",
-
-  ".fields": {
-    display: "flex",
-    flexDirection: "column",
-    marginBottom: ".5rem",
-    flex: 1,
-
-    label: {
-      marginBottom: ".5rem",
-      color: "rgba(255, 255, 255, .5)",
-      fontSize: ".85rem",
-    },
-  },
 
   footer: {
     marginBottom: "auto",

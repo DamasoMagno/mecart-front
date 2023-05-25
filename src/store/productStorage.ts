@@ -1,11 +1,12 @@
 import create from "zustand";
 import { v4 as uuidv4 } from "uuid";
-import { ICart } from "../interfaces";
+import { IProductName } from "../interfaces";
+
 
 interface ProductsStorage {
   products: any[];
-  addProduct: (carts: ICart) => void;
-  removeProduct: (cartId: string) => void;
+  addProduct: (product: IProductName) => void;
+  removeProduct: (productId: string) => void;
 }
 
 export const useProductsStorage = create<ProductsStorage>((set, get) => ({

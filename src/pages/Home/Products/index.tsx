@@ -11,9 +11,7 @@ import { CreateProductModal } from "./components/CreateProductModal";
 import { Content } from "./styles";
 
 export function Products() {
-  const { products } = useProductsStorage((state) => ({
-    products: state.products,
-  }));
+  const products = useProductsStorage((state) => state.products);
 
   const [productsFiltered, setProductsFiltered] = useState(products);
   const [filter, setFilter] = useState("");
@@ -36,7 +34,10 @@ export function Products() {
             onChange={(e) => setFilter(e.target.value)}
             placeholder="Buscar produto"
           />
-          <Button onClick={() => handleFilterItems(filter)}>
+          <Button
+            variant={{ outline: true }}
+            onClick={() => handleFilterItems(filter)}
+          >
             <MagnifyingGlass />
           </Button>
         </div>

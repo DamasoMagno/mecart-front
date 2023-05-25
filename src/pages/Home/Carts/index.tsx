@@ -6,9 +6,7 @@ import { EditCartModal } from "../../../components/EditCartModal";
 import { useCartsStorage } from "../../../store/cartsStorage";
 
 export function Carts() {
-  const { carts } = useCartsStorage((state) => ({
-    carts: state.carts,
-  }));
+  const carts = useCartsStorage((state) => state.carts);
 
   return (
     <>

@@ -1,30 +1,30 @@
 import { Link, useParams } from "react-router-dom";
 import { Basket, CurrencyDollar, Pencil } from "@phosphor-icons/react";
+
+import { IProduct } from "../../../../interfaces";
 import { ConfirmCartRemove } from "../CofirmCartRemove";
 
 import { Container } from "./styles";
-import { ICart, IProduct } from "../../../../interfaces";
 
 interface ProductProps {
   product: IProduct;
   setProducts: (products: IProduct[]) => void;
 }
 
+
 export const Product = ({ product, setProducts }: ProductProps) => {
-  const params = useParams() as { cartId: string; productId: string };
+  const params = useParams();
 
   function handleRemoveProductCart() {
     const productsStoragedByCartId: IProduct[] =
       JSON.parse(localStorage.getItem("@products") as string) || [];
 
-    const findProductPosition = productsStoragedByCartId.findIndex(
-      (product) => product.id === params.productId
+    const removeProductByID = productsStoragedByCartId.filter(
+      (product) => product.id !== params.productId
     );
 
-    productsStoragedByCartId.splice(findProductPosition, 1);
-
-    setProducts(productsStoragedByCartId);
-    localStorage.setItem("@products", JSON.stringify(productsStoragedByCartId));
+    localStorage.setItem("@products", JSON.stringify(removeProductByID));
+    setProducts(removeProductByID);
   }
 
   let totalPriceProduct = product.quantity * product.pricePerUnity;

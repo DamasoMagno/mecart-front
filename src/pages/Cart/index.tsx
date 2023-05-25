@@ -21,14 +21,15 @@ export function Cart() {
   const navigate = useNavigate();
   const params = useParams();
 
-  const { openCartModal } = useModalStorage((state) => ({
-    openCartModal: state.openCartModal,
-  }));
-  const { cart, setCart, removeCart } = useCartsStorage((state) => ({
-    cart: state.cart,
-    setCart: state.setCart,
-    removeCart: state.removeCart,
-  }));
+  const openCartModal = useModalStorage((state) => state.openCartModal);
+  const { cart, setCart, removeCart, finishCart } = useCartsStorage(
+    (state) => ({
+      cart: state.cart,
+      setCart: state.setCart,
+      removeCart: state.removeCart,
+      finishCart: state.finishCart,
+    })
+  );
   const [products, setProducts] = useState<IProduct[]>([]);
 
   let totalPriceInCart = products.reduce(
@@ -59,6 +60,11 @@ export function Cart() {
 
   function removeCartFromStorage() {
     removeCart(String(params.cartId));
+    navigate("/history");
+  }
+
+  function finishCartAndRedirect() {
+    finishCart(String(params.cartId));
     navigate("/history");
   }
 
@@ -103,7 +109,7 @@ export function Cart() {
       </Container>
 
       <Navigation>
-        <button className="finish">
+        <button className="finish" onClick={finishCartAndRedirect}>
           <Check /> Finalizar
         </button>
         <Button className="newCart" onClick={redirect} disabled={cartLimited}>

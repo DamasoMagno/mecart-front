@@ -15,13 +15,13 @@ export const Content = styled(Modal.Content, {
   bottom: 0,
   backgroundColor: "#202024",
   width: "100%",
-  padding: "3.5rem 1rem 1.75rem",
+  padding: "5rem 1rem 2rem",
 
   "@lg": {
     bottom: "50%",
     right: "50%",
     transform: "translate(50%, 50%)",
-    width: "600px",
+    width: "400px",
     borderRadius: "8px",
     padding: "2rem",
     display: "flex",
@@ -50,15 +50,21 @@ export const Content = styled(Modal.Content, {
   },
 
   form: {
-    marginTop: "2.25rem",
     display: "flex",
     flexDirection: "column",
-    gap: ".75rem",
     width: "100%",
 
-    button: {
-      marginTop: "2.25rem",
-      width: "100%",
+    ".fields": {
+      display: "flex",
+      flexDirection: "column",
+      margin: "1.5rem 0 2rem",
+      flex: 1,
+
+      label: {
+        marginBottom: ".5rem",
+        color: "rgba(255, 255, 255, .5)",
+        fontSize: ".85rem",
+      },
     },
   },
 });
