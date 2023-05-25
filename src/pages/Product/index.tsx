@@ -159,13 +159,6 @@ export function Product() {
           register={{ ...register("quantity", { required: true }) }}
         />
         <Input
-          id="total"
-          disabled
-          label="Total"
-          icon={CurrencyDollar}
-          value={formatPrice(total)}
-        />
-        <Input
           id="price"
           label="Preço por produto"
           type="number"
@@ -173,7 +166,13 @@ export function Product() {
           icon={CurrencyDollar}
           register={{ ...register("pricePerUnity", { required: true }) }}
         />
-
+        <Input
+          id="total"
+          disabled
+          label="Total"
+          icon={CurrencyDollar}
+          value={formatPrice(total)}
+        />
         <footer>
           <Button type="submit">Salvar produto</Button>
         </footer>

@@ -18,13 +18,16 @@ export function Products() {
 
   function handleFilterItems(filter: string) {
     const productsFiltered = products.filter((product) =>
-      product.productName.includes(filter)
+      product.productName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
     );
 
     setProductsFiltered(productsFiltered);
+    setFilter("");
   }
 
-  useEffect(() => setProductsFiltered(products), [products]);
+  useEffect(() => {
+    setProductsFiltered(products);
+  }, [products])
 
   return (
     <>
@@ -32,6 +35,7 @@ export function Products() {
         <div className="find">
           <Input
             onChange={(e) => setFilter(e.target.value)}
+            value={filter}
             placeholder="Buscar produto"
           />
           <Button

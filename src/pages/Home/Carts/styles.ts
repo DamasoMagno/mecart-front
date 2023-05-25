@@ -8,35 +8,19 @@ export const Content = styled("main", {
   padding: "0 1rem",
   position: "relative",
 
-  ".filters": {
+  ".find": {
     display: "flex",
-    overflow: "scroll",
-    width: "100%",
-    gap: ".5rem",
-    height: "3rem",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: "8px",
 
-    "&::-webkit-scrollbar": {
-      display: "none",
+    "> div": {
+      flex: 1,
     },
 
     button: {
-      background: "$black",
-      border: "1px solid transparent",
-      outline: 0,
-      whiteSpace: "nowrap",
-      color: "#7C7C8A",
-      borderRadius: "4px ",
-      padding: "0 1.125rem",
-      fontSize: ".75rem",
-      textTransform: "uppercase",
-      transition: "all .25s",
-      cursor: "pointer",
-
-      "&:hover, &:focus, &.selected": {
-        border: "1px solid $green300",
-        outline: "$green300",
-        color: "$green300",
-      },
+      height: "3rem",
+      width: "50px",
     },
   },
 

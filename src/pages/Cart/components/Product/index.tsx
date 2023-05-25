@@ -5,23 +5,24 @@ import { IProduct } from "../../../../interfaces";
 import { ConfirmCartRemove } from "../CofirmCartRemove";
 
 import { Container } from "./styles";
+import { useCartsStorage } from "../../../../store/cartsStorage";
 
 interface ProductProps {
   product: IProduct;
   setProducts: (products: IProduct[]) => void;
 }
 
-
 export const Product = ({ product, setProducts }: ProductProps) => {
   const params = useParams();
+  const cart = useCartsStorage((state) => state.cart);
 
   function handleRemoveProductCart() {
     const productsStoragedByCartId: IProduct[] =
-      JSON.parse(localStorage.getItem("@products") as string) || [];
-
+    JSON.parse(localStorage.getItem("@products") as string) || [];
+    
     const removeProductByID = productsStoragedByCartId.filter(
-      (product) => product.id !== params.productId
-    );
+      (currentProduct) => currentProduct.id !== product.id
+      );
 
     localStorage.setItem("@products", JSON.stringify(removeProductByID));
     setProducts(removeProductByID);
@@ -49,13 +50,19 @@ export const Product = ({ product, setProducts }: ProductProps) => {
         </div>
 
         <div className="productEdit">
-          <Link to={`/cart/${params.cartId}/product?productId=${product.id}`}>
-            <Pencil />
-          </Link>
+          {cart?.status === "pendent" && (
+            <>
+              <Link
+                to={`/cart/${params.cartId}/product?productId=${product.id}`}
+              >
+                <Pencil />
+              </Link>
 
-          <ConfirmCartRemove
-            onRemoveProductFromCart={handleRemoveProductCart}
-          />
+              <ConfirmCartRemove
+                onRemoveProductFromCart={handleRemoveProductCart}
+              />
+            </>
+          )}
         </div>
       </div>
     </Container>

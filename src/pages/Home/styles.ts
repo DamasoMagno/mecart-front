@@ -53,10 +53,12 @@ export const Navigation = styled("footer", {
   position: "fixed",
   width: "100%",
   bottom: 0,
-  left: 0,
-  background: "#29292E",
   display: "flex",
   alignItems: "center",
+  maxWidth: "700px",
+  padding: ".5rem 0",
+  left: "50%",
+  transform: "translate(-50%)",
 
   button: {
     width: "100%",
@@ -68,7 +70,7 @@ export const Navigation = styled("footer", {
     justifyContent: "center",
     gap: ".5rem",
     cursor: "pointer",
-    height: "3.5rem",
+    height: "3rem",
     transition: "background .25s",
     color: "$white",
 
@@ -78,6 +80,11 @@ export const Navigation = styled("footer", {
       "&.current": {
         color: "$green700",
       },
+    },
+
+    "&.action": {
+      maxWidth: "50px",
+      height: "50px"
     },
   },
 });

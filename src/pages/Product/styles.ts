@@ -17,9 +17,9 @@ export const Content = styled("form", {
     padding: "0 1rem 1rem",
 
     "@lg": {
-      left: "unset",
+      left: "50%",
       width: "300px",
-      padding: "0",
+      transform: "translate(-50%)"
     },
   },
 });

@@ -42,13 +42,15 @@ export const Navigation = styled("footer", {
   position: "fixed",
   width: "100%",
   bottom: 0,
-  background: "#29292E",
   display: "flex",
   alignItems: "center",
+  maxWidth: "700px",
+  padding: ".5rem 0",
+  left: "50%",
+  transform: "translate(-50%)",
 
   "button:not(.newCart)": {
     width: "100%",
-    background: "transparent",
     border: 0,
     fontSize: "1rem",
     display: "flex",
@@ -57,29 +59,27 @@ export const Navigation = styled("footer", {
     justifyContent: "center",
     gap: ".5rem",
     cursor: "pointer",
-    height: "3.5rem",
-    transition: "background .25s",
+    height: "3rem",
+
+    color: "$white",
+    background: "transparent",
+    transition: "filter .25s",
 
     "&.finish": {
       color: "$green700",
-
-      "&:hover, &:focus": {
-        background: "rgba(0, 135, 95, .1)",
-      },
     },
 
     "&.remove": {
       color: "$red700",
+    },
 
-      "&:hover, &:focus": {
-        background: "rgba(252, 75, 75, .1)",
-      },
+    "&:hover": {
+      filter: "brightness(.55)",
     },
   },
 
   ".newCart": {
-    margin: ".5rem",
     maxWidth: "50px",
-    height: "50px",
-  }
+    maxHeight: "50px",
+  },
 });

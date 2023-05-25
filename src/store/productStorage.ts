@@ -4,7 +4,7 @@ import { IProductName } from "../interfaces";
 
 
 interface ProductsStorage {
-  products: any[];
+  products: IProductName[];
   addProduct: (product: IProductName) => void;
   removeProduct: (productId: string) => void;
 }

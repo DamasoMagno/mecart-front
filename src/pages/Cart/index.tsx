@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Check, PencilLine, Plus, X } from "@phosphor-icons/react";
+import { Check, PencilLine, Plus, WarningCircle, X } from "@phosphor-icons/react";
 
 import { IProduct } from "../../interfaces";
 
@@ -16,22 +16,23 @@ import { useCartsStorage } from "../../store/cartsStorage";
 import { Container, Navigation } from "./styles";
 
 import "swiper/css";
+import toast from "react-hot-toast";
 
 export function Cart() {
   const navigate = useNavigate();
   const params = useParams();
 
   const openCartModal = useModalStorage((state) => state.openCartModal);
-  const { cart, setCart, removeCart, finishCart } = useCartsStorage(
+  const { cart, setCart, removeCart, updateCart, finishCart } = useCartsStorage(
     (state) => ({
       cart: state.cart,
       setCart: state.setCart,
       removeCart: state.removeCart,
       finishCart: state.finishCart,
+      updateCart: state.updateCart,
     })
   );
   const [products, setProducts] = useState<IProduct[]>([]);
-
   let totalPriceInCart = products.reduce(
     (accumulator: number, currentValue: IProduct) => {
       let productPriceOnCart =
@@ -44,6 +45,11 @@ export function Cart() {
   );
 
   useEffect(() => {
+    if (!params.cartId) {
+      navigate("/history");
+      return;
+    }
+
     setCart(String(params.cartId));
 
     const productsStoragedByCartId: IProduct[] =
@@ -64,8 +70,29 @@ export function Cart() {
   }
 
   function finishCartAndRedirect() {
-    finishCart(String(params.cartId));
-    navigate("/history");
+    if (!cart) return;
+
+    if(!(totalPriceInCart > 0)){
+      toast.error("Sem produtos cadastrado", {
+        icon: <WarningCircle />,
+        style: {
+          background: "#FC4C4C",
+          color: "#FFF",
+          display: "flex",
+          gap: "4px",
+          alignItems: "center",
+        },
+      });
+
+      return;
+    }
+
+    if (cart?.status === "pendent") {
+      finishCart(String(params.cartId));
+      return;
+    }
+
+    updateCart({ ...cart, status: "pendent" });
   }
 
   let cartLimited = totalPriceInCart >= Number(cart?.totalPrice);
@@ -73,13 +100,18 @@ export function Cart() {
   return (
     <>
       <Header title="Carrinho" route="/history">
-        <Button
-          style={{ width: "40px", height: "40px" }}
-          variant={{ outline: true }}
-          onClick={() => openCartModal(true, cart)}
-        >
-          <PencilLine />
-        </Button>
+        {cart?.status === "pendent" && (
+          <Button
+            style={{
+              width: "40px",
+              height: "30px",
+            }}
+            variant={{ outline: true }}
+            onClick={() => openCartModal(true, cart)}
+          >
+            <PencilLine />
+          </Button>
+        )}
       </Header>
 
       <Container>
@@ -110,9 +142,21 @@ export function Cart() {
 
       <Navigation>
         <button className="finish" onClick={finishCartAndRedirect}>
-          <Check /> Finalizar
+          {cart?.status === "finished" ? (
+            <>
+              <PencilLine /> Editar
+            </>
+          ) : (
+            <>
+              <Check /> Finalizar
+            </>
+          )}
         </button>
-        <Button className="newCart" onClick={redirect} disabled={cartLimited}>
+        <Button
+          className="newCart"
+          onClick={redirect}
+          disabled={cartLimited || cart?.status === "finished"}
+        >
           <Plus />
         </Button>
         <button className="remove" onClick={removeCartFromStorage}>

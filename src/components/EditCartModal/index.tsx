@@ -60,30 +60,25 @@ export function EditCartModal() {
           </header>
 
           <form onSubmit={handleSubmit(handleCreateCart)}>
-            <div className="fields">
-              <label>Nome do carrinho</label>
-              <Input
-                register={{
-                  ...register("cartName", {
-                    required: true,
-                  }),
-                }}
-              />
-            </div>
-
-            <div className="fields"> 
-              <label>Limite sacola</label>
-              <Input
-                type="number"
-                step={"0.01"}
-                icon={CurrencyDollar}
-                register={{
-                  ...register("totalPrice", {
-                    required: true,
-                  }),
-                }}
-              />
-            </div>
+            <Input
+              label="Nome do carrinho"
+              register={{
+                ...register("cartName", {
+                  required: true,
+                }),
+              }}
+            />
+            <Input
+              type="number"
+              label="Limite sacola"
+              step={"0.01"}
+              icon={CurrencyDollar}
+              register={{
+                ...register("totalPrice", {
+                  required: true,
+                }),
+              }}
+            />
             <Button type="submit">
               {cart?.id ? "Salvar alterações" : "Criar carrinho"}
             </Button>
