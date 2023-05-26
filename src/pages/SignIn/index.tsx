@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Basket, GoogleLogo, User } from "@phosphor-icons/react";
+import { Basket, User } from "@phosphor-icons/react";
 
 import { Button } from "../../components/Button";
 
