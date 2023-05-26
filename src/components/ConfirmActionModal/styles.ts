@@ -1,5 +1,5 @@
 import { FileX } from "@phosphor-icons/react";
-import { styled } from "../../../../config/stitches.config";
+import { styled } from "../../config/stitches.config";
 import * as ConfirmModal from "@radix-ui/react-alert-dialog";
 
 export const Overlay = styled(ConfirmModal.Overlay, {

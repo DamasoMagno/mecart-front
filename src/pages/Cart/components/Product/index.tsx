@@ -1,11 +1,12 @@
 import { Link, useParams } from "react-router-dom";
-import { Basket, CurrencyDollar, Pencil } from "@phosphor-icons/react";
+import { Basket, CurrencyDollar, Pencil, Trash } from "@phosphor-icons/react";
 
 import { IProduct } from "../../../../interfaces";
-import { ConfirmCartRemove } from "../CofirmCartRemove";
+import { ConfirmCartRemove } from "../../../../components/ConfirmActionModal";
 
 import { Container } from "./styles";
 import { useCartsStorage } from "../../../../store/cartsStorage";
+import { Button } from "../../../../components/Button";
 
 interface ProductProps {
   product: IProduct;
@@ -58,9 +59,14 @@ export const Product = ({ product, setProducts }: ProductProps) => {
                 <Pencil />
               </Link>
 
-              <ConfirmCartRemove
-                onRemoveProductFromCart={handleRemoveProductCart}
-              />
+              <ConfirmCartRemove 
+                onRemove={handleRemoveProductCart}
+                description="Confirmar a remoção, não terá como reverter"
+              >
+                <button>
+                  <Trash />
+                </button>
+              </ConfirmCartRemove>
             </>
           )}
         </div>

@@ -55,9 +55,10 @@ export const Navigation = styled("footer", {
   bottom: 0,
   display: "flex",
   alignItems: "center",
-  maxWidth: "700px",
+  maxWidth: "900px",
   padding: ".5rem 0",
   left: "50%",
+  zIndex: 0,
   transform: "translate(-50%)",
 
   button: {

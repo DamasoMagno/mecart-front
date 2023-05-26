@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Check, PencilLine, Plus, WarningCircle, X } from "@phosphor-icons/react";
+import {
+  Check,
+  Package,
+  PencilLine,
+  Plus,
+  WarningCircle,
+  X,
+} from "@phosphor-icons/react";
 
 import { IProduct } from "../../interfaces";
 
@@ -17,6 +24,7 @@ import { Container, Navigation } from "./styles";
 
 import "swiper/css";
 import toast from "react-hot-toast";
+import { ConfirmCartRemove } from "../../components/ConfirmActionModal";
 
 export function Cart() {
   const navigate = useNavigate();
@@ -72,7 +80,7 @@ export function Cart() {
   function finishCartAndRedirect() {
     if (!cart) return;
 
-    if(!(totalPriceInCart > 0)){
+    if (!(totalPriceInCart > 0)) {
       toast.error("Sem produtos cadastrado", {
         icon: <WarningCircle />,
         style: {
@@ -103,7 +111,7 @@ export function Cart() {
         {cart?.status === "pendent" && (
           <Button
             style={{
-              width: "40px",
+              width: "30px",
               height: "30px",
             }}
             variant={{ outline: true }}
@@ -127,15 +135,22 @@ export function Cart() {
           </strong>
 
           <ul>
-            {products?.map((product) => {
-              return (
-                <Product
-                  key={product.id}
-                  setProducts={setProducts}
-                  product={product}
-                />
-              );
-            })}
+            {products.length > 0 ? (
+              products?.map((product) => {
+                return (
+                  <Product
+                    key={product.id}
+                    setProducts={setProducts}
+                    product={product}
+                  />
+                );
+              })
+            ) : (
+              <div className="no-content">
+                <Package weight="bold" size={50} />
+                <p>Nenhum produto inserido ao carrinho</p>
+              </div>
+            )}
           </ul>
         </section>
       </Container>
@@ -159,9 +174,14 @@ export function Cart() {
         >
           <Plus />
         </Button>
-        <button className="remove" onClick={removeCartFromStorage}>
-          <X /> Remover
-        </button>
+        <ConfirmCartRemove
+          onRemove={removeCartFromStorage}
+          description="Esta ação removerá esse carrinho definitivamente"
+        >
+          <button className="remove">
+            <X /> Remover
+          </button>
+        </ConfirmCartRemove>
       </Navigation>
 
       <EditCartModal />

@@ -1,24 +1,24 @@
-import { Trash } from "@phosphor-icons/react";
+import { ReactNode } from "react";
 import * as ConfirmModal from "@radix-ui/react-alert-dialog";
 
-import { Button } from "../../../../components/Button";
+import { Button } from "../Button";
 
 import { Overlay, Content } from "./styles";
 
 interface ConfirmCartRemoveProps {
-  onRemoveProductFromCart: () => void;
+  onRemove: () => void;
+  description: string;
+  children: ReactNode;
 }
 
 export function ConfirmCartRemove({
-  onRemoveProductFromCart,
+  onRemove,
+  children,
+  description,
 }: ConfirmCartRemoveProps) {
   return (
     <ConfirmModal.Root>
-      <ConfirmModal.Trigger asChild>
-        <button>
-          <Trash />
-        </button>
-      </ConfirmModal.Trigger>
+      <ConfirmModal.Trigger asChild>{children}</ConfirmModal.Trigger>
 
       <ConfirmModal.Portal>
         <Overlay />
@@ -27,7 +27,7 @@ export function ConfirmCartRemove({
           <div className="description">
             <ConfirmModal.Title>Deseja remover ?</ConfirmModal.Title>
             <ConfirmModal.Description asChild>
-              <p>Confirmar a remoção, não terá como reverter</p>
+              <p>{description}</p>
             </ConfirmModal.Description>
           </div>
 
@@ -40,7 +40,7 @@ export function ConfirmCartRemove({
               <Button
                 variant={{ ghost: true }}
                 className="remove"
-                onClick={onRemoveProductFromCart}
+                onClick={onRemove}
               >
                 Remover
               </Button>

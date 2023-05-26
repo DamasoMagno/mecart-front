@@ -44,10 +44,11 @@ export const Navigation = styled("footer", {
   bottom: 0,
   display: "flex",
   alignItems: "center",
-  maxWidth: "700px",
+  maxWidth: "900px",
   padding: ".5rem 0",
   left: "50%",
   transform: "translate(-50%)",
+  zIndex: 0,
 
   "button:not(.newCart)": {
     width: "100%",

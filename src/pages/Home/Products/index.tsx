@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Basket, MagnifyingGlass } from "@phosphor-icons/react";
+import { Basket, MagnifyingGlass, Package } from "@phosphor-icons/react";
 
 import { useProductsStorage } from "../../../store/productStorage";
 
@@ -58,8 +58,8 @@ export function Products() {
               })
             ) : (
               <div className="no-content">
-                <Basket weight="bold" size={50} />
-                <p>Você não possui carrinhos cadastrados</p>
+                <Package weight="bold" size={50} />
+                <p>Você não possui produtos cadastrados</p>
               </div>
             )}
           </ul>
