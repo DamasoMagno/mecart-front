@@ -25,9 +25,6 @@ export function SignIn() {
           <Button variant={{ outline: true }} onClick={redirect}>
             <User size={20} /> Entrar sem e-mail
           </Button>
-          <Button>
-            <GoogleLogo size={20} /> Entrar em google
-          </Button>
         </div>
       </Content>
     </Container>
