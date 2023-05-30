@@ -5,6 +5,7 @@ import { IProductName } from "../interfaces";
 
 interface ProductsStorage {
   products: IProductName[];
+  loadProducts: () => void;
   addProduct: (product: IProductName) => void;
   removeProduct: (productId: string) => void;
 }
@@ -12,6 +13,14 @@ interface ProductsStorage {
 export const useProductsStorage = create<ProductsStorage>((set, get) => ({
   products: JSON.parse(localStorage.getItem("@productName") as string) || [],
 
+  loadProducts: () => {
+    const productName: IProductName[] =
+      JSON.parse(localStorage.getItem("@carts") as string) || [];
+
+    return set({
+      products: productName
+    })
+  },
   addProduct: (data: any) => {
     const productsNameStoraged =
       JSON.parse(localStorage.getItem("@productName") as string) || [];

@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 
-import { Splash } from "./pages/Splash";
 import { SignIn } from "./pages/SignIn";
 import { Carts } from "./pages/Home/Carts";
 import { Products } from "./pages/Home/Products";
@@ -11,8 +10,7 @@ import { Home } from "./pages/Home";
 export const RouterProvider = () => {
   return (
     <Routes>
-      <Route path="/" element={<Splash />} />
-      <Route path="/login" element={<SignIn />} />
+      <Route path="/" element={<SignIn />} />
       <Route path="/" element={<Home />}>
         <Route path="history" element={<Carts />} />
         <Route path="products" element={<Products />} />

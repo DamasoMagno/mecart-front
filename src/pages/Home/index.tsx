@@ -1,10 +1,11 @@
 import { Basket, Cube, Plus, SignOut } from "@phosphor-icons/react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
+import { useModalStorage } from "../../store/modalStorage";
+
 import { Button } from "../../components/Button";
 
 import { Header, Navigation } from "./styles";
-import { useModalStorage } from "../../store/modalStorage";
 
 export function Home() {
   const { openCartModal, openProductModal } = useModalStorage((state) => ({
@@ -17,7 +18,7 @@ export function Home() {
 
   function logout() {
     localStorage.clear();
-    navigate("/login");
+    navigate("/");
   }
 
   const navigateTo = (route: string) => navigate(route);

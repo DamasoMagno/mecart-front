@@ -1,5 +1,5 @@
 import { FC, InputHTMLAttributes } from "react";
-import { Ref, UseFormRegisterReturn } from "react-hook-form";
+import { UseFormRegisterReturn } from "react-hook-form";
 import { Icon } from "@phosphor-icons/react";
 
 import { Container } from "./styles";

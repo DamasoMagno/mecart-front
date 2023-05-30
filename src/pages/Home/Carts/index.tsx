@@ -1,15 +1,20 @@
-import { Cart } from "./components/Cart";
-
-import { Content } from "./styles";
+import { useEffect, useState } from "react";
 import { Basket, MagnifyingGlass } from "@phosphor-icons/react";
-import { EditCartModal } from "../../../components/EditCartModal";
+
 import { useCartsStorage } from "../../../store/cartsStorage";
+
+import { Cart } from "./components/Cart";
+import { EditCartModal } from "../../../components/EditCartModal";
 import { Input } from "../../../components/Input";
 import { Button } from "../../../components/Button";
-import { useEffect, useState } from "react";
+
+import { Content } from "./styles";
 
 export function Carts() {
-  const carts = useCartsStorage((state) => state.carts);
+  const { carts, loadCarts } = useCartsStorage((state) => ({
+    carts: state.carts,
+    loadCarts: state.loadCarts,
+  }));
 
   const [cartsFiltered, setCartsFiltered] = useState(carts);
   const [filter, setFilter] = useState("");
@@ -25,7 +30,7 @@ export function Carts() {
 
   useEffect(() => {
     setCartsFiltered(carts);
-  }, [carts])
+  }, [carts]);
 
   return (
     <>

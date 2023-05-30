@@ -23,6 +23,7 @@ export const Container = styled("li", {
     alignItems: "center",
     justifyContent: "space-between",
     color: "$white",
+    height: "1rem",
 
     ".productData": {
       display: "flex",

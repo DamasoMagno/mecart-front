@@ -6,6 +6,7 @@ interface CartsStorage {
   carts: ICart[];
   cart: ICart | null;
   setCart: (cartId: string) => void;
+  loadCarts: () => void;
   addCart: (carts: ICart) => void;
   updateCart: (cart: ICart) => void;
   removeCart: (id: string) => void;
@@ -16,6 +17,14 @@ export const useCartsStorage = create<CartsStorage>((set, get) => ({
   carts: JSON.parse(localStorage.getItem("@carts") as string) || [],
   cart: null,
 
+  loadCarts: () => {
+    const cartsStoraged: ICart[] =
+      JSON.parse(localStorage.getItem("@carts") as string) || [];
+
+    return set({
+      carts: cartsStoraged
+    })
+  },
   addCart: (data: ICart) => {
     const cartsStoraged: ICart[] =
       JSON.parse(localStorage.getItem("@carts") as string) || [];
@@ -40,7 +49,7 @@ export const useCartsStorage = create<CartsStorage>((set, get) => ({
 
     let findCartById = cartsStoraged.findIndex((cart) => cart.id === data.id);
 
-    if(cartsStoraged[findCartById].totalPrice < Number(data.totalPrice)){
+    if (cartsStoraged[findCartById].totalPrice < Number(data.totalPrice)) {
       throw new Error("Não é permitido inserir valor menor que o já posto");
     }
 
@@ -92,17 +101,17 @@ export const useCartsStorage = create<CartsStorage>((set, get) => ({
 
   finishCart: (id: string) => {
     let cartsStoraged: ICart[] =
-    JSON.parse(localStorage.getItem("@carts") as string) || [];
-    
+      JSON.parse(localStorage.getItem("@carts") as string) || [];
+
     let findCartById = cartsStoraged.findIndex((cart) => cart.id === id);
-    
+
     if (!!findCartById) return;
-    
+
     cartsStoraged[findCartById] = {
       ...cartsStoraged[findCartById],
       status: "finished",
     };
-    
+
     localStorage.setItem("@carts", JSON.stringify([...cartsStoraged]));
     return set({
       carts: cartsStoraged,

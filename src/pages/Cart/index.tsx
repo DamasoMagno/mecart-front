@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 import {
   Check,
   Package,
@@ -10,21 +11,19 @@ import {
 } from "@phosphor-icons/react";
 
 import { IProduct } from "../../interfaces";
+import { useModalStorage } from "../../store/modalStorage";
+import { useCartsStorage } from "../../store/cartsStorage";
 
 import { Product } from "./components/Product";
 import { Header } from "../../components/Header";
 import { Button } from "../../components/Button";
 import { Resumes } from "./components/Resumes";
 import { EditCartModal } from "../../components/EditCartModal";
-
-import { useModalStorage } from "../../store/modalStorage";
-import { useCartsStorage } from "../../store/cartsStorage";
+import { ConfirmCartRemove } from "../../components/ConfirmActionModal";
 
 import { Container, Navigation } from "./styles";
 
 import "swiper/css";
-import toast from "react-hot-toast";
-import { ConfirmCartRemove } from "../../components/ConfirmActionModal";
 
 export function Cart() {
   const navigate = useNavigate();
@@ -83,13 +82,7 @@ export function Cart() {
     if (!(totalPriceInCart > 0)) {
       toast.error("Sem produtos cadastrado", {
         icon: <WarningCircle />,
-        style: {
-          background: "#FC4C4C",
-          color: "#FFF",
-          display: "flex",
-          gap: "4px",
-          alignItems: "center",
-        },
+        className: "alertError",
       });
 
       return;
@@ -163,7 +156,7 @@ export function Cart() {
             </>
           ) : (
             <>
-              <Check /> Finalizar
+              <Check /> Salvar
             </>
           )}
         </button>

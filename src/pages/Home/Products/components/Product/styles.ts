@@ -1,31 +1,45 @@
 import { styled } from "../../../../../config/stitches.config";
 
 export const Container = styled("li", {
-  background: "#121214",
   borderRadius: "4px",
   textDecoration: "none",
   overflow: "hidden",
-  height: "5rem",
   border: "1px solid transparent",
   position: "relative",
-  padding: "1.125rem 1.25rem",
   marginBottom: ".5rem",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  gap: ".25rem",
-  color: "#FFF",
+  height: "3.25rem",
+  wordBreak: "break-all",
+
+  div: {
+    borderRadius: "4px",
+    display: "flex",
+    alignItems: "center",
+    padding: "0 .5rem",
+    background: "#121214",
+    flex: 1,
+    height: "100%",
+
+    strong: {
+      color: "#FFF",
+      fontSize: ".95rem",
+    },
+  },
 
   button: {
     background: "$red700",
     border: 0,
-    padding: ".5rem",
+    padding: ".85rem",
     borderRadius: "4px",
     color: "#FFF",
     fontSize: "1rem",
     display: "flex",
     alignItems: "center",
+    marginLeft: ".3rem",
     cursor: "pointer",
+    height: "100%",
     transition: "filter .25s",
 
     "&:hover": {

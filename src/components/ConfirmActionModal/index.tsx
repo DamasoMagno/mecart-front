@@ -25,7 +25,7 @@ export function ConfirmCartRemove({
 
         <Content>
           <div className="description">
-            <ConfirmModal.Title>Deseja remover ?</ConfirmModal.Title>
+            <ConfirmModal.Title>Deseja remover?</ConfirmModal.Title>
             <ConfirmModal.Description asChild>
               <p>{description}</p>
             </ConfirmModal.Description>
@@ -35,7 +35,9 @@ export function ConfirmCartRemove({
             <ConfirmModal.Cancel asChild>
               <Button variant={{ ghost: true }}>Cancelar</Button>
             </ConfirmModal.Cancel>
+
             <span />
+
             <ConfirmModal.Action asChild>
               <Button
                 variant={{ ghost: true }}

@@ -1,14 +1,14 @@
 import { useEffect } from "react";
-import { CurrencyDollar, X } from "@phosphor-icons/react";
-import * as Modal from "@radix-ui/react-dialog";
 import { useForm } from "react-hook-form";
+import { CurrencyDollar, Package, X } from "@phosphor-icons/react";
+import * as Modal from "@radix-ui/react-dialog";
 
 import { ICart } from "../../interfaces";
+import { useModalStorage } from "../../store/modalStorage";
+import { useCartsStorage } from "../../store/cartsStorage";
 
 import { Input } from "../Input";
 import { Button } from "../Button";
-import { useModalStorage } from "../../store/modalStorage";
-import { useCartsStorage } from "../../store/cartsStorage";
 
 import { Overlay, Content } from "./styles";
 
@@ -22,7 +22,6 @@ export function EditCartModal() {
     addCart: state.addCart,
     updateCart: state.updateCart,
   }));
-
   const { register, handleSubmit, setValue } = useForm<ICart>();
 
   const handleCreateCart = (data: ICart) => {
@@ -42,6 +41,9 @@ export function EditCartModal() {
     }
   }, [cart]);
 
+  const showTitleExists = cart?.id ? "Editar carrinho" : "Novo carrinho";
+  const cartStatusExisting = cart?.id ? "Salvar alterações" : "Criar carrinho";
+
   return (
     <Modal.Root open={modalCartIsOpen} onOpenChange={openCartModal}>
       <Overlay />
@@ -49,9 +51,7 @@ export function EditCartModal() {
       <Modal.Portal>
         <Content>
           <header>
-            <Modal.Title>
-              {cart?.id ? "Editar carrinho" : "Novo carrinho"}
-            </Modal.Title>
+            <Modal.Title>{showTitleExists}</Modal.Title>
             <Modal.Close asChild>
               <button>
                 <X />
@@ -62,6 +62,7 @@ export function EditCartModal() {
           <form onSubmit={handleSubmit(handleCreateCart)}>
             <Input
               label="Nome do carrinho"
+              icon={Package}
               register={{
                 ...register("cartName", {
                   required: true,
@@ -79,9 +80,7 @@ export function EditCartModal() {
                 }),
               }}
             />
-            <Button type="submit">
-              {cart?.id ? "Salvar alterações" : "Criar carrinho"}
-            </Button>
+            <Button type="submit">{cartStatusExisting}</Button>
           </form>
         </Content>
       </Modal.Portal>

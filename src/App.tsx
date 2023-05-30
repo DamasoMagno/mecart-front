@@ -11,7 +11,12 @@ export function App() {
   return (
     <BrowserRouter>
       <RouterProvider />
-      <Toaster position="top-center" />
+      <Toaster
+        toastOptions={{
+          duration: 1500,
+        }}
+        position="top-center"
+      />
     </BrowserRouter>
   );
 }

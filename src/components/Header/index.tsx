@@ -18,7 +18,6 @@ export const Header: FC<HeaderProps> = ({ title, route, children }) => {
           <Link to={route}>
             <CaretLeft />
           </Link>
-
           <h3>{title}</h3>
         </div>
 

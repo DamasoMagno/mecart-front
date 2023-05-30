@@ -6,7 +6,6 @@ import { ConfirmCartRemove } from "../../../../components/ConfirmActionModal";
 
 import { Container } from "./styles";
 import { useCartsStorage } from "../../../../store/cartsStorage";
-import { Button } from "../../../../components/Button";
 
 interface ProductProps {
   product: IProduct;

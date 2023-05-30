@@ -32,4 +32,20 @@ export const globalStyles = globalCss({
       fontSize: "1rem",
     },
   },
+
+  ".alertError": {
+    background: "#FC4C4C",
+    color: "#FFF",
+    display: "flex",
+    gap: "4px",
+    alignItems: "center",
+  },
+
+  ".alertSuccess": {
+    background: "#00B37E",
+    color: "#FFF",
+    display: "flex",
+    gap: "4px",
+    alignItems: "center",
+  },
 });

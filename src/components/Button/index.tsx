@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes, FC, ReactNode } from "react";
+import { VariantProps } from "@stitches/react";
 
 import { Container } from "./styles";
-import { VariantProps } from "@stitches/react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;

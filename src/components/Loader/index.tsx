@@ -1,16 +1,8 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Basket } from "@phosphor-icons/react";
 
 import { Container } from "./styles";
 
 export const Splash = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    setTimeout(() => navigate("/login"), 2500);
-  }, []);
-
   return (
     <Container>
       <div className="logo">

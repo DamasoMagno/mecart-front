@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Basket, MagnifyingGlass, Package } from "@phosphor-icons/react";
+import { MagnifyingGlass, Package } from "@phosphor-icons/react";
 
 import { useProductsStorage } from "../../../store/productStorage";
 
@@ -11,7 +11,10 @@ import { CreateProductModal } from "./components/CreateProductModal";
 import { Content } from "./styles";
 
 export function Products() {
-  const products = useProductsStorage((state) => state.products);
+  const { products, loadProducts } = useProductsStorage((state) => ({
+    products: state.products,
+    loadProducts: state.loadProducts,
+  }));
 
   const [productsFiltered, setProductsFiltered] = useState(products);
   const [filter, setFilter] = useState("");
@@ -27,7 +30,9 @@ export function Products() {
 
   useEffect(() => {
     setProductsFiltered(products);
-  }, [products])
+  }, [products]);
+
+  console.log(products);
 
   return (
     <>

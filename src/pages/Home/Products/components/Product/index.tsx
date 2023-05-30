@@ -16,7 +16,9 @@ export function ProductName({ product }: CartProps) {
 
   return (
     <Container>
-      <strong>{product.productName}</strong>
+      <div>
+        <strong>{product.productName}</strong>
+      </div>
 
       <button onClick={() => removeProduct(product.id)}>
         <Trash />

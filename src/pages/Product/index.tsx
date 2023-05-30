@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import {
   Check,
-  Cookie,
   CurrencyDollar,
+  Package,
   ShoppingBagOpen,
   WarningCircle,
 } from "@phosphor-icons/react";
@@ -44,21 +44,6 @@ export function Product() {
     JSON.parse(localStorage.getItem("@products") as string) || [];
 
   function registerProduct(data: IProduct) {
-    if (data.pricePerUnity === 0) {
-      toast.error("Insira um valor válido", {
-        icon: <WarningCircle />,
-        style: {
-          background: "#FC4C4C",
-          color: "#FFF",
-          display: "flex",
-          gap: "4px",
-          alignItems: "center",
-        },
-      });
-
-      return;
-    }
-
     const product: IProduct = {
       ...data,
       id: productId ? productId : uuidv4(),
@@ -70,13 +55,7 @@ export function Product() {
     if (totalValueProduct > Number(cart?.totalPrice)) {
       toast.error("Sacola cheia!", {
         icon: <WarningCircle />,
-        style: {
-          background: "#FC4C4C",
-          color: "#FFF",
-          display: "flex",
-          gap: "4px",
-          alignItems: "center",
-        },
+        className: "alertError",
       });
 
       return;
@@ -95,13 +74,7 @@ export function Product() {
 
     toast.success("Cadastro com sucesso", {
       icon: <Check />,
-      style: {
-        background: "#00B37E",
-        color: "#FFF",
-        display: "flex",
-        gap: "4px",
-        alignItems: "center",
-      },
+      className: "alertSuccess",
     });
 
     setTimeout(() => {
@@ -117,7 +90,6 @@ export function Product() {
 
     if (!productId) {
       setValue("quantity", Number(1));
-      setValue("pricePerUnity", Number(0));
       return;
     }
 
@@ -142,7 +114,7 @@ export function Product() {
             id="name"
             label="Nome do produto"
             list="products"
-            icon={Cookie}
+            icon={Package}
             register={{ ...register("productName", { required: true }) }}
           />
           <datalist id="products">
@@ -160,11 +132,16 @@ export function Product() {
         />
         <Input
           id="price"
-          label="Preço por produto"
+          label="Preço por produto, Ex: 0.01"
           type="number"
           step="0.01"
           icon={CurrencyDollar}
-          register={{ ...register("pricePerUnity", { required: true }) }}
+          register={{
+            ...register("pricePerUnity", {
+              min: 0.01,
+              required: true
+            }),
+          }}
         />
         <Input
           id="total"
