@@ -14,6 +14,7 @@ export const globalStyles = globalCss({
   "body, input, textarea, button": {
     fontWeight: "400",
     fontFamily: "$body",
+    fontSize: "1rem"
   },
 
   ".no-content": {
@@ -37,7 +38,6 @@ export const globalStyles = globalCss({
     background: "#FC4C4C",
     color: "#FFF",
     display: "flex",
-    gap: "4px",
     alignItems: "center",
   },
 
@@ -45,7 +45,6 @@ export const globalStyles = globalCss({
     background: "#00B37E",
     color: "#FFF",
     display: "flex",
-    gap: "4px",
     alignItems: "center",
   },
 });

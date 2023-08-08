@@ -7,7 +7,7 @@ import { Container, Content } from "./styles";
 
 export function SignIn() {
   const navigate = useNavigate();
-  const redirect = () => navigate("/history");
+  const redirect = () => navigate("/carts");
 
   return (
     <Container>
@@ -22,7 +22,7 @@ export function SignIn() {
         </div>
 
         <div className="signInMethods">
-          <Button variant={{ outline: true }} onClick={redirect}>
+          <Button onClick={redirect}>
             <User size={20} /> Entrar sem e-mail
           </Button>
         </div>

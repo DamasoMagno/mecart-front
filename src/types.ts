@@ -1,4 +1,4 @@
-export interface IProduct {
+export type IProduct = {
   id: string;
   productName: string;
   quantity: number;
@@ -6,7 +6,12 @@ export interface IProduct {
   cartId: string;
 }
 
-export interface ICart {
+export type IProductName = {
+  id: string;
+  productName: string;
+}
+
+export type ICart = {
   id: string;
   cartName: string;
   totalPrice: number;
@@ -14,9 +19,4 @@ export interface ICart {
   status: "pendent" | "finished";
 }
 
-export interface IProductName {
-  id: string;
-  productName: string;
-}
-
-
+export type CartInputs = Omit<ICart, "id" | "createdAt" | "status">;

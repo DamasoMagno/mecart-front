@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { styled } from "../../../../../config/stitches.config";
+import { styled } from "../../../../config/stitches.config";
 
 export const Container = styled(Link, {
   background: "#121214",

@@ -1,16 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import toast from "react-hot-toast";
-import {
-  Check,
-  Package,
-  PencilLine,
-  Plus,
-  WarningCircle,
-  X,
-} from "@phosphor-icons/react";
+import { CaretLeft, List, Package, Plus } from "@phosphor-icons/react";
 
-import { IProduct } from "../../interfaces";
 import { useModalStorage } from "../../store/modalStorage";
 import { useCartsStorage } from "../../store/cartsStorage";
 
@@ -18,33 +9,35 @@ import { Product } from "./components/Product";
 import { Header } from "../../components/Header";
 import { Button } from "../../components/Button";
 import { Resumes } from "./components/Resumes";
-import { EditCartModal } from "../../components/EditCartModal";
-import { ConfirmCartRemove } from "../../components/ConfirmActionModal";
+import { Drawer } from "./components/Drawer";
 
-import { Container, Navigation } from "./styles";
+import { IProduct } from "../../types";
+
+import { Actions, Container, Navigation } from "./styles";
+
+type ParamsProps = {
+  cartId: string;
+}
 
 import "swiper/css";
 
 export function Cart() {
   const navigate = useNavigate();
-  const params = useParams();
+  const { cartId } = useParams<ParamsProps>();
 
-  const openCartModal = useModalStorage((state) => state.openCartModal);
-  const { cart, setCart, removeCart, updateCart, finishCart } = useCartsStorage(
-    (state) => ({
-      cart: state.cart,
-      setCart: state.setCart,
-      removeCart: state.removeCart,
-      finishCart: state.finishCart,
-      updateCart: state.updateCart,
-    })
-  );
+  const openCartModal = useModalStorage((state) => state.openCartWithData);
+  const { cart, setCart, carts } = useCartsStorage((state) => ({
+    carts: state.carts,
+    cart: state.cart,
+    setCart: state.setCart,
+  }));
+
   const [products, setProducts] = useState<IProduct[]>([]);
-  let totalPriceInCart = products.reduce(
+
+  const totalPriceInCart = products.reduce(
     (accumulator: number, currentValue: IProduct) => {
-      let productPriceOnCart =
-        currentValue.quantity * currentValue.pricePerUnity;
-      let totalCartPrice = productPriceOnCart + accumulator;
+      const { quantity, pricePerUnity } = currentValue;
+      const totalCartPrice = quantity * pricePerUnity + accumulator;
 
       return totalCartPrice;
     },
@@ -52,67 +45,43 @@ export function Cart() {
   );
 
   useEffect(() => {
-    if (!params.cartId) {
-      navigate("/history");
+    const checkCartExists = carts.find((cart) => cart.id === cartId);
+
+    if (!checkCartExists) {
+      navigate("/carts");
       return;
     }
 
-    setCart(String(params.cartId));
+    setCart(cartId as string);
 
     const productsStoragedByCartId: IProduct[] =
       JSON.parse(localStorage.getItem("@products") as string) || [];
 
     let filterProductsByCartId = productsStoragedByCartId.filter(
-      (product) => product.cartId === params.cartId
+      (product) => product.cartId === cartId
     );
 
     setProducts(filterProductsByCartId);
   }, []);
 
-  const redirect = () => navigate(`/cart/${params.cartId}/product`);
-
-  function removeCartFromStorage() {
-    removeCart(String(params.cartId));
-    navigate("/history");
-  }
-
-  function finishCartAndRedirect() {
-    if (!cart) return;
-
-    if (!(totalPriceInCart > 0)) {
-      toast.error("Sem produtos cadastrado", {
-        icon: <WarningCircle />,
-        className: "alertError",
-      });
-
-      return;
-    }
-
-    if (cart?.status === "pendent") {
-      finishCart(String(params.cartId));
-      return;
-    }
-
-    updateCart({ ...cart, status: "pendent" });
-  }
-
-  let cartLimited = totalPriceInCart >= Number(cart?.totalPrice);
-
   return (
     <>
-      <Header title="Carrinho" route="/history">
-        {cart?.status === "pendent" && (
-          <Button
-            style={{
-              width: "30px",
-              height: "30px",
-            }}
-            variant={{ outline: true }}
-            onClick={() => openCartModal(true, cart)}
-          >
-            <PencilLine />
+      <Header>
+        <Navigation to="/carts">
+          <CaretLeft />
+          <strong>Carrinho</strong>
+        </Navigation>
+
+        <Actions>
+          <Button onClick={() => navigate(`/cart/${cartId}/product`)}>
+            <Plus />
+            <span>Inserir item</span>
           </Button>
-        )}
+
+          <button className="logout" onClick={() => openCartModal(cart)}>
+            <List />
+          </button>
+        </Actions>
       </Header>
 
       <Container>
@@ -148,36 +117,7 @@ export function Cart() {
         </section>
       </Container>
 
-      <Navigation>
-        <button className="finish" onClick={finishCartAndRedirect}>
-          {cart?.status === "finished" ? (
-            <>
-              <PencilLine /> Editar
-            </>
-          ) : (
-            <>
-              <Check /> Salvar
-            </>
-          )}
-        </button>
-        <Button
-          className="newCart"
-          onClick={redirect}
-          disabled={cartLimited || cart?.status === "finished"}
-        >
-          <Plus />
-        </Button>
-        <ConfirmCartRemove
-          onRemove={removeCartFromStorage}
-          description="Esta ação removerá esse carrinho definitivamente"
-        >
-          <button className="remove">
-            <X /> Remover
-          </button>
-        </ConfirmCartRemove>
-      </Navigation>
-
-      <EditCartModal />
+      <Drawer />
     </>
   );
 }

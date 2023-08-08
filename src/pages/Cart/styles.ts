@@ -1,10 +1,54 @@
 import { styled } from "@stitches/react";
+import { Link } from "react-router-dom";
+
+export const Navigation = styled(Link, {
+  display: "flex",
+  alignItems: "center",
+  gap: ".5rem",
+  textDecoration: "none",
+
+  svg: {
+    fontSize: "1.25rem",
+    color: "#FFF"
+  },
+
+  strong: {
+    fontSize: "1.25rem",
+    color: "$white",
+
+    span: {
+      color: "$green700",
+    },
+  },
+});
+
+export const Actions = styled("div", {
+  display: "flex",
+  alignItems: "center",
+  gap: "1.5rem",
+
+  ".logout": {
+    background: "transparent",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#7C7C8A",
+    fontSize: "1.5rem",
+    cursor: "pointer",
+    border: 0,
+    transition: "color .25s",
+
+    "&:hover": {
+      color: "$green700",
+    },
+  },
+});
 
 export const Container = styled("main", {
   display: "flex",
   flexDirection: "column",
   margin: "2rem auto",
-  maxWidth: "900px",
+  maxWidth: "728px",
 
   ".resume": {
     width: "100%",
@@ -38,49 +82,3 @@ export const Container = styled("main", {
   },
 });
 
-export const Navigation = styled("footer", {
-  position: "fixed",
-  width: "100%",
-  bottom: 0,
-  display: "flex",
-  alignItems: "center",
-  maxWidth: "900px",
-  padding: ".5rem 0",
-  left: "50%",
-  transform: "translate(-50%)",
-  zIndex: 0,
-
-  "button:not(.newCart)": {
-    width: "100%",
-    border: 0,
-    fontSize: "1rem",
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "column",
-    justifyContent: "center",
-    gap: ".5rem",
-    cursor: "pointer",
-    height: "3rem",
-
-    color: "$white",
-    background: "transparent",
-    transition: "filter .25s",
-
-    "&.finish": {
-      color: "$green700",
-    },
-
-    "&.remove": {
-      color: "$red700",
-    },
-
-    "&:hover": {
-      filter: "brightness(.55)",
-    },
-  },
-
-  ".newCart": {
-    maxWidth: "50px",
-    maxHeight: "50px",
-  },
-});

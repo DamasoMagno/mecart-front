@@ -9,25 +9,16 @@ export const Overlay = styled(Modal.Overlay, {
 });
 
 export const Content = styled(Modal.Content, {
-  borderRadius: "20px 20px 0 0",
+  borderRadius: "8px 8px 0 0",
   position: "fixed",
+  right: "50%",
+  transform: "translateX(50%)",
   background: "$black",
   bottom: 0,
   backgroundColor: "#202024",
   width: "100%",
-  padding: "5rem 1rem 2rem",
-
-  "@lg": {
-    bottom: "50%",
-    right: "50%",
-    transform: "translate(50%, 50%)",
-    width: "400px",
-    borderRadius: "8px",
-    padding: "2rem",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-  },
+  maxWidth: "500px",
+  padding: "4rem 1.5rem 2rem",
 
   header: {
     display: "flex",
@@ -50,28 +41,13 @@ export const Content = styled(Modal.Content, {
   },
 
   form: {
-    marginTop: "2.25rem",
     display: "flex",
     flexDirection: "column",
-    gap: ".75rem",
-    width: "100%",
+    gap: ".875rem",
+    paddingTop: "2rem",
 
     button: {
-      marginTop: "2.25rem",
-      width: "100%",
-    },
-
-    ".fields": {
-      display: "flex",
-      flexDirection: "column",
-      marginBottom: ".5rem",
-      flex: 1,
-
-      label: {
-        marginBottom: ".5rem",
-        color: "rgba(255, 255, 255, .5)",
-        fontSize: ".85rem",
-      },
-    },
+      marginTop: "1.5rem"
+    }
   },
 });

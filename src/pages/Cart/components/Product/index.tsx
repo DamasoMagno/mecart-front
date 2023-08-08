@@ -1,11 +1,11 @@
 import { Link, useParams } from "react-router-dom";
 import { Basket, CurrencyDollar, Pencil, Trash } from "@phosphor-icons/react";
 
-import { IProduct } from "../../../../interfaces";
-import { ConfirmCartRemove } from "../../../../components/ConfirmActionModal";
+import { ConfirmCartRemove } from "../../../../components/ModalConfirm";
 
 import { Container } from "./styles";
 import { useCartsStorage } from "../../../../store/cartsStorage";
+import { IProduct } from "../../../../types";
 
 interface ProductProps {
   product: IProduct;
@@ -18,11 +18,11 @@ export const Product = ({ product, setProducts }: ProductProps) => {
 
   function handleRemoveProductCart() {
     const productsStoragedByCartId: IProduct[] =
-    JSON.parse(localStorage.getItem("@products") as string) || [];
-    
+      JSON.parse(localStorage.getItem("@products") as string) || [];
+
     const removeProductByID = productsStoragedByCartId.filter(
       (currentProduct) => currentProduct.id !== product.id
-      );
+    );
 
     localStorage.setItem("@products", JSON.stringify(removeProductByID));
     setProducts(removeProductByID);
@@ -50,7 +50,7 @@ export const Product = ({ product, setProducts }: ProductProps) => {
         </div>
 
         <div className="productEdit">
-          {cart?.status === "pendent" && (
+          {cart?.status !== "pendent" && (
             <>
               <Link
                 to={`/cart/${params.cartId}/product?productId=${product.id}`}
@@ -58,7 +58,7 @@ export const Product = ({ product, setProducts }: ProductProps) => {
                 <Pencil />
               </Link>
 
-              <ConfirmCartRemove 
+              <ConfirmCartRemove
                 onRemove={handleRemoveProductCart}
                 description="Confirmar a remoção, não terá como reverter"
               >

@@ -17,7 +17,7 @@ export const Content = styled("div", {
   color: "$white",
   maxWidth: "600px",
   margin: "0 auto 2.5rem",
-  padding: "0 1.125rem",
+  padding: "0 4rem",
   display: "flex",
   flexDirection: "column",
   textAlign: "center",
@@ -56,4 +56,8 @@ export const Content = styled("div", {
     gap: ".5rem",
     width: "100%",
   },
+
+  "@lg": {
+    padding: "0 1rem",
+  }
 });

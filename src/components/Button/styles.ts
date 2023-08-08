@@ -3,17 +3,16 @@ import { styled } from "../../config/stitches.config";
 
 export const Container = styled("button", {
   background: "$green500",
-  color: "$white",
   border: 0,
   outline: 0,
-  borderRadius: 4,
-  height: "3.5rem",
+  borderRadius: 8,
   cursor: "pointer",
-  width: "100%",
   fontSize: "1rem",
   transition: "filter .25s",
-  fontWeight: "bold",
   position: "relative",
+  padding: "1rem",
+  height: "3rem",
+  color: "$white",
 
   display: "flex",
   alignItems: "center",
@@ -29,12 +28,25 @@ export const Container = styled("button", {
     filter: "brightness(.8)",
   },
 
+  "@media(max-width: 720px)": {
+    span: {
+      display: "none"
+    }
+  },
+
   variants: {
     outline: {
       true: {
         border: "1px solid $green700",
         background: "transparent",
         color: "$green500",
+
+        "&:disabled": {
+          opacity: ".5",
+          background: "transparent",
+          color: "$green500",
+          cursor: "not-allowed",
+        }
       },
     },
     float: {

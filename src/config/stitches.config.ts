@@ -8,10 +8,10 @@ export const { styled, css, globalCss, keyframes } = createStitches({
       green300: "#04D361",
       red700: "#FC4C4C",
       red600: "#FE5C5C",
+      gray700: "#121214",
+      gray300: "7C7C8A",
       white: "#FFF",
       black: "#000",
-      gray700: "#121214",
-      gray300: "7C7C8A"
     },
     fonts: {
       body: "Roboto, sans serif",
