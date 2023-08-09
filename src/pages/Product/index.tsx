@@ -16,6 +16,7 @@ import { Button } from "../../components/Button";
 import { Header } from "../../components/Header";
 
 import { Content, Navigation, ProductNameContainer } from "./styles";
+import { GroupBase, OptionsOrGroups } from "react-select";
 
 const productSchemaBody = z.object({
   productName: z.coerce
@@ -148,7 +149,7 @@ export function Product() {
     }
   }, []);
 
-  const options = productsName?.map((product) => {
+  const options: OptionsOrGroups<any, GroupBase<any>> | undefined = productsName?.map((product) => {
     let labelFormatted =
       product.productName.charAt(0).toUpperCase() +
       product.productName.slice(1);
@@ -187,7 +188,7 @@ export function Product() {
                     height: "3rem",
                   }),
                 }}
-                value={value}
+                value={options.find(option => option.value === value)?.value}
                 placeholder={value}
                 onChange={({ value }: any) => onChange(value)}
               />
