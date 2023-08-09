@@ -15,10 +15,10 @@ import { Container, Form } from "./styles";
 import { ICart } from "../../../../store/cartsStorage";
 
 const cartSchemaBody = z.object({
-  cartName: z.coerce.string().min(1, { message: "Nome orbigatório" }),
-  totalPrice: z.coerce
-    .number()
-    .min(1, { message: "Valor mininmo obrigatório" }),
+  cartName: z.string({ required_error: "Nome do carrinho obrigatório" }).min(1),
+  totalPrice: z
+    .number({ required_error: "Limite da sacola obrigatório" })
+    .min(1),
 });
 
 type Cart = z.infer<typeof cartSchemaBody>;

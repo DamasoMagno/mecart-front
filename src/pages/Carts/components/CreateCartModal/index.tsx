@@ -12,8 +12,8 @@ import { ModalContainer } from "../../../../components/ModalContainer";
 import { ICart } from "../../../../store/cartsStorage";
 
 const cartSchemaBody = z.object({
-  cartName: z.coerce.string().min(1),
-  totalPrice: z.coerce.number().min(1),
+  cartName: z.string({ required_error: "Nome do carrinho obrigatório" }).min(1),
+  totalPrice: z.number({ required_error: "Limite da sacola obrigatório" }).min(1),
 });
 
 type Cart = z.infer<typeof cartSchemaBody>;
@@ -24,7 +24,11 @@ export function EditCartModal() {
     toggleCartModal: state.toggleCartModal,
   }));
   const addCart = useCartsStorage((state) => state.addCart);
-  const { handleSubmit, control, formState: { errors } } = useForm<ICart>({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<ICart>({
     resolver: zodResolver(cartSchemaBody),
   });
 
@@ -32,8 +36,6 @@ export function EditCartModal() {
     addCart(data);
     toggleCartModal();
   };
-
-  console.log(errors)
 
   return (
     <ModalContainer

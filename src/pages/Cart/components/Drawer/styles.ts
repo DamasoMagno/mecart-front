@@ -9,12 +9,13 @@ export const Container = styled("div", {
   zIndex: 1,
   background: "#000",
   overflow: "hidden",
-  width: "540px",
+  maxWidth: "540px",
+  width: "100%",
 
   variants: {
     closed: {
       true: {
-        transform: "translateX(540px)",
+        transform: "translateX(100%)",
       }
     }
   },
@@ -52,18 +53,24 @@ export const Form = styled("form", {
     display: "flex",
     flexDirection: "column",
     width: "100%",
-    gap: 16,
+    gap: "1rem",
 
     "button": {
       background: "transparent",
       color: "#FFF",
+      marginTop: ".5rem",
       border: 0,
       width: "100%",
       textAlign: "left",
       cursor: "pointer",
       padding: "1rem .75rem",
-      borderRadius: 8,
-      fontSize: "1rem"
+      borderRadius: 4,
+      fontSize: "1rem",
+      transition: "background 0.25s",
+
+      "&:hover":{
+        background: "rgba(255, 255, 255, .05)"
+      }
     }
   },
 

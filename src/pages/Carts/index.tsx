@@ -57,10 +57,9 @@ export function Home() {
             <Plus />
             <span>Novo carrinho</span>
           </Button>
-
-          <button className="logout">
+          {/* <button className="logout">
             <Power />
-          </button>
+          </button> */}
         </Actions>
       </Header>
 
