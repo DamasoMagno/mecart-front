@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Basket, MagnifyingGlass, Plus, Power } from "@phosphor-icons/react";
+import { Basket, MagnifyingGlass, Plus, Power, WarningCircle } from "@phosphor-icons/react";
 
 import { useModalStorage } from "../../store/modalStorage";
 import { useCartsStorage } from "../../store/cartsStorage";
@@ -8,11 +8,12 @@ import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { Cart } from "./components/Cart";
 import { Header } from "../../components/Header";
-import { EditCartModal } from "./components/CreateCartModal";
+import { CreateCartModal } from "./components/CreateCartModal";
 
 import { ICart } from "../../store/cartsStorage";
 
 import { Content, Logo, Actions } from "./styles";
+import { toast } from "react-hot-toast";
 
 export function Home() {
   const openCartModal = useModalStorage((state) => state.toggleCartModal);
@@ -25,12 +26,20 @@ export function Home() {
   const [filter, setFilter] = useState<string>("");
 
   function handleFilterItems() {
-
     const productsFiltered = carts.filter((cart) => {
-      return cart.cartName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
-  });
+      return cart.cartName
+        .toLocaleLowerCase()
+        .includes(filter.toLocaleLowerCase());
+    });
 
-    if (!productsFiltered.length) return;
+    if (!productsFiltered.length) {
+      toast.error("Carrinhos não encontrados", {
+        icon: <WarningCircle />,
+        className: "alertError",
+      });
+      
+      return;
+    }
 
     setCartsFiltered(productsFiltered);
     setFilter("");
@@ -72,7 +81,7 @@ export function Home() {
         <div className="filter">
           <Input
             value={filter}
-            onChange={e => setFilter(e.target.value)}
+            onChange={(e) => setFilter(e.target.value)}
             placeholder="Buscar carrinho"
           />
           <Button variant={{ outline: true }} onClick={handleFilterItems}>
@@ -94,7 +103,7 @@ export function Home() {
         </ul>
       </Content>
 
-      <EditCartModal />
+      <CreateCartModal />
     </>
   );
 }

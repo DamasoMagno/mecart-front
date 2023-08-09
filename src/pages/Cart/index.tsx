@@ -25,7 +25,10 @@ export function Cart() {
   const navigate = useNavigate();
   const { cartId } = useParams<ParamsProps>();
 
-  const openCartModal = useModalStorage((state) => state.openCartWithData);
+  const {openCartModal, toggleModalCart} = useModalStorage((state) => ({ 
+    toggleModalCart: state.toggleCartModal,
+    openCartModal: state.openCartWithData
+   }));
   const { cart, setCart, carts } = useCartsStorage((state) => ({
     carts: state.carts,
     cart: state.cart,
@@ -48,7 +51,7 @@ export function Cart() {
     const checkCartExists = carts.find((cart) => cart.id === cartId);
 
     if (!checkCartExists) {
-      navigate("/carts");
+      navigate("/");
       return;
     }
 
@@ -64,10 +67,15 @@ export function Cart() {
     setProducts(filterProductsByCartId);
   }, []);
 
+  function redirect(){
+    toggleModalCart();
+    navigate("/");
+  }
+
   return (
     <>
       <Header>
-        <Navigation to="/carts">
+        <Navigation onClick={redirect}>
           <CaretLeft />
           <strong>Carrinho</strong>
         </Navigation>

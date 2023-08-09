@@ -1,11 +1,13 @@
 import { styled } from "@stitches/react";
-import { Link } from "react-router-dom";
 
-export const Navigation = styled(Link, {
+export const Navigation = styled("button", {
   display: "flex",
   alignItems: "center",
   gap: ".5rem",
   textDecoration: "none",
+  background: "transparent",
+  border: 0, 
+  cursor: "pointer",
 
   svg: {
     fontSize: "1.25rem",

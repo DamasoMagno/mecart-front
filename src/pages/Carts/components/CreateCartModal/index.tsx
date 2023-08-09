@@ -10,15 +10,11 @@ import { Button } from "../../../../components/Button";
 import { ModalContainer } from "../../../../components/ModalContainer";
 
 import { ICart } from "../../../../store/cartsStorage";
-
-const cartSchemaBody = z.object({
-  cartName: z.string({ required_error: "Nome do carrinho obrigatório" }).min(1),
-  totalPrice: z.number({ required_error: "Limite da sacola obrigatório" }).min(1),
-});
+import { cartSchemaBody } from "../../../../validations/Cart";
 
 type Cart = z.infer<typeof cartSchemaBody>;
 
-export function EditCartModal() {
+export function CreateCartModal() {
   const { toggleCartModal, modalCartIsOpen } = useModalStorage((state) => ({
     modalCartIsOpen: state.modalCartIsOpen,
     toggleCartModal: state.toggleCartModal,
@@ -39,7 +35,7 @@ export function EditCartModal() {
 
   return (
     <ModalContainer
-      title={"Novo carrinho"}
+      title="Novo carrinho"
       modalIsOpen={modalCartIsOpen}
       onOpenChangeModal={toggleCartModal}
       onSubmit={handleSubmit(handleCreateCart)}
@@ -49,13 +45,21 @@ export function EditCartModal() {
         name="cartName"
         render={({ field }) => <Input label="Nome do carrinho" {...field} />}
       />
+
       <Controller
         control={control}
         name="totalPrice"
-        render={({ field }) => (
-          <Input type="number" label="Limite sacola" step={"0.01"} {...field} />
+        render={({ field: { onChange, ...props } }) => (
+          <Input
+            type="number"
+            label="Limite sacola"
+            step={"0.01"}
+            {...props}
+            onChange={(e) => onChange(Number(e.target.value))}
+          />
         )}
       />
+
       <Button type="submit">Criar novo carrinho</Button>
     </ModalContainer>
   );

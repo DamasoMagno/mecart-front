@@ -19,13 +19,11 @@ import { Header } from "../../components/Header";
 import { Content, Navigation, ProductNameContainer } from "./styles";
 
 const productSchemaBody = z.object({
-  productName: z
-    .string({ required_error: "Nome do produto obrigatório" })
-    .min(1),
-  quantity: z
-    .number({ required_error: "Quantidade minima obrigatória" })
-    .min(1),
-  pricePerUnity: z.number({ required_error: "Preço minimo requerido" }).min(1),
+  productName: z.string({ required_error: "Campo nome obrigatório" }),
+  quantity: z.number().min(1, "Quantidade minima exigida"),
+  pricePerUnity: z
+    .number({ required_error: "Campo obrigatório" })
+    .min(0.01, "Valor minimo de 0.01 exigido"),
 });
 
 type Product = z.infer<typeof productSchemaBody>;
@@ -51,7 +49,7 @@ export function Product() {
     setValue,
     watch,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<IProduct>({
     resolver: zodResolver(productSchemaBody),
     defaultValues: {
@@ -196,12 +194,11 @@ export function Product() {
                   }),
                 }}
                 value={value}
-                placeholder={value}
+                placeholder={value ?? "Selecione o produto"}
                 onChange={({ value }: SelectOptionProps) => onChange(value)}
               />
             )}
           />
-          {errors.productName && <p>{errors.productName.message}</p>}
         </ProductNameContainer>
 
         <Controller
@@ -233,7 +230,6 @@ export function Product() {
             />
           )}
         />
-        {errors.pricePerUnity && <p>{errors.pricePerUnity.message}</p>}
 
         <div className="total">
           <span>Total</span>
@@ -241,7 +237,7 @@ export function Product() {
         </div>
 
         <footer>
-          <Button type="submit">
+          <Button type="submit" disabled={isSubmitting}>
             <Check /> Salvar produto
           </Button>
         </footer>

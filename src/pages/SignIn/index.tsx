@@ -7,7 +7,7 @@ import { Container, Content } from "./styles";
 
 export function SignIn() {
   const navigate = useNavigate();
-  const redirect = () => navigate("/carts");
+  const redirect = () => navigate("/");
 
   return (
     <Container>

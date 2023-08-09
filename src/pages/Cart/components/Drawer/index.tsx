@@ -5,6 +5,7 @@ import { X } from "@phosphor-icons/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
+import { cartSchemaBody } from "../../../../validations/Cart";
 import { useCartsStorage } from "../../../../store/cartsStorage";
 import { useModalStorage } from "../../../../store/modalStorage";
 
@@ -13,13 +14,6 @@ import { Input } from "../../../../components/Input";
 
 import { Container, Form } from "./styles";
 import { ICart } from "../../../../store/cartsStorage";
-
-const cartSchemaBody = z.object({
-  cartName: z.string({ required_error: "Nome do carrinho obrigatório" }).min(1),
-  totalPrice: z
-    .number({ required_error: "Limite da sacola obrigatório" })
-    .min(1),
-});
 
 type Cart = z.infer<typeof cartSchemaBody>;
 
@@ -38,12 +32,14 @@ export function Drawer() {
     removeCart: state.removeCart,
   }));
 
-  const { handleSubmit, setValue, control } = useForm<ICart>({
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    formState: { errors },
+    setError,
+  } = useForm<ICart>({
     resolver: zodResolver(cartSchemaBody),
-    defaultValues: {
-      cartName: "",
-      totalPrice: 0,
-    },
   });
 
   const handleCreateCart = (data: Cart) => {
@@ -60,7 +56,7 @@ export function Drawer() {
     removeCart(String(cart?.id));
     toggleCartModal();
 
-    navigate("/carts");
+    navigate("/");
   }
 
   useEffect(() => {
@@ -69,6 +65,8 @@ export function Drawer() {
       setValue("totalPrice", cart.totalPrice);
     }
   }, [cart]);
+
+  console.log(errors);
 
   return (
     <Container closed={!modalCartIsOpen}>
@@ -87,18 +85,21 @@ export function Drawer() {
               <Input label="Nome do carrinho" {...field} />
             )}
           />
+
           <Controller
             control={control}
             name="totalPrice"
-            render={({ field }) => (
+            render={({ field: { onChange, ...props } }) => (
               <Input
                 type="number"
                 label="Limite sacola"
                 step={"0.01"}
-                {...field}
+                {...props}
+                onChange={(e) => onChange(Number(e.target.value))}
               />
             )}
           />
+
           <button type="button" onClick={handleDeleteCart}>
             Remover
           </button>

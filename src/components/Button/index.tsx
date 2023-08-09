@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, FC, ReactNode, forwardRef } from "react";
+import { ButtonHTMLAttributes, ReactNode, forwardRef } from "react";
 import { VariantProps as VariantsProps } from "@stitches/react";
 
 import { Container } from "./styles";

@@ -22,7 +22,6 @@ export const Container = styled("div", {
 
   header: {
     padding: "2rem 0 1.5rem",
-    height: "100px",
     display: "flex",
     justifyContent: "flex-end",
 
@@ -31,7 +30,7 @@ export const Container = styled("div", {
       alignItems: "center",
       justifyContent: "center",
       width: "50px",
-      fontSize: "2rem",
+      fontSize: "1.25rem",
       backgroundColor: "transparent",
       border: "none",
       cursor: "pointer",
@@ -43,11 +42,12 @@ export const Container = styled("div", {
 
 export const Form = styled("form", {
   display: "flex",
-  padding: "0 1.5rem",
-  width: "540px",
+  padding: "2rem 1.5rem 0",
+  width: "100%",
+  maxWidth: "540px",
   flexDirection: "column",
   justifyContent: "space-between",
-  height: "80%",
+  height: "85%",
 
   ".inputs": {
     display: "flex",
