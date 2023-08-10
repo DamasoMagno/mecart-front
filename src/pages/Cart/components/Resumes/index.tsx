@@ -16,7 +16,7 @@ export const Resumes = ({
 }: ResumesProps) => {
   const statusAsCompleted = totalPriceOnCart >= limitCreditOnCart;
   const cartStatus =
-    totalPriceOnCart < limitCreditOnCart ? "Sacola Livre" : "Saco Cheia";
+    totalPriceOnCart < limitCreditOnCart ? "Livre" : "Cheia";
 
   return (
     <Swiper
@@ -39,7 +39,7 @@ export const Resumes = ({
           <span>Status</span>
           <Info />
         </header>
-        <strong>{cartStatus}</strong>
+        <strong>Sacola {cartStatus}</strong>
       </Resume>
 
       <Resume completed={statusAsCompleted}>

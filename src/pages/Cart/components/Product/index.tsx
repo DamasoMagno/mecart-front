@@ -3,9 +3,9 @@ import { Basket, CurrencyDollar, Pencil, Trash } from "@phosphor-icons/react";
 
 import { ConfirmCartRemove } from "../../../../components/ModalConfirm";
 
-import { Container } from "./styles";
-import { useCartsStorage } from "../../../../store/cartsStorage";
 import { IProduct } from "../../../../types";
+import { Container } from "./styles";
+import { formatPrice } from "../../../../utils/format-price";
 
 interface ProductProps {
   product: IProduct;
@@ -14,7 +14,6 @@ interface ProductProps {
 
 export const Product = ({ product, setProducts }: ProductProps) => {
   const params = useParams();
-  const cart = useCartsStorage((state) => state.cart);
 
   function handleRemoveProductCart() {
     const productsStoragedByCartId: IProduct[] =
@@ -29,11 +28,7 @@ export const Product = ({ product, setProducts }: ProductProps) => {
   }
 
   let totalPriceProduct = product.quantity * product.pricePerUnity;
-
-  let productPriceFormatted = new Intl.NumberFormat("pt-Br", {
-    style: "currency",
-    currency: "BRL",
-  }).format(totalPriceProduct);
+  const productUrl = `/cart/${params.cartId}/product?productId=${product.id}`;
 
   return (
     <Container>
@@ -42,32 +37,28 @@ export const Product = ({ product, setProducts }: ProductProps) => {
       <div>
         <div className="productData">
           <span>
-            <Basket /> {product.quantity}
+            <Basket />
+            {product.quantity}
           </span>
           <span>
-            <CurrencyDollar /> {productPriceFormatted}
+            <CurrencyDollar />
+            {formatPrice(totalPriceProduct)}
           </span>
         </div>
 
         <div className="productEdit">
-          {cart?.status !== "pendent" && (
-            <>
-              <Link
-                to={`/cart/${params.cartId}/product?productId=${product.id}`}
-              >
-                <Pencil />
-              </Link>
+          <Link to={productUrl}>
+            <Pencil />
+          </Link>
 
-              <ConfirmCartRemove
-                onRemove={handleRemoveProductCart}
-                description="Confirmar a remoção, não terá como reverter"
-              >
-                <button>
-                  <Trash />
-                </button>
-              </ConfirmCartRemove>
-            </>
-          )}
+          <ConfirmCartRemove
+            onRemove={handleRemoveProductCart}
+            description="Confirmar a remoção, não terá como reverter"
+          >
+            <button>
+              <Trash />
+            </button>
+          </ConfirmCartRemove>
         </div>
       </div>
     </Container>

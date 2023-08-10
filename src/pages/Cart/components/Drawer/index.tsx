@@ -32,13 +32,7 @@ export function Drawer() {
     removeCart: state.removeCart,
   }));
 
-  const {
-    handleSubmit,
-    control,
-    setValue,
-    formState: { errors },
-    setError,
-  } = useForm<ICart>({
+  const { handleSubmit, control, setValue } = useForm<ICart>({
     resolver: zodResolver(cartSchemaBody),
   });
 
@@ -50,6 +44,7 @@ export function Drawer() {
     };
 
     updateCart(updattedCart);
+    toggleCartModal();
   };
 
   function handleDeleteCart() {
@@ -65,8 +60,6 @@ export function Drawer() {
       setValue("totalPrice", cart.totalPrice);
     }
   }, [cart]);
-
-  console.log(errors);
 
   return (
     <Container closed={!modalCartIsOpen}>
