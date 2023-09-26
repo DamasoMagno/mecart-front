@@ -1,14 +1,14 @@
-import { ReactNode } from "react";
-import * as ConfirmModal from "@radix-ui/react-alert-dialog";
+import { ReactNode } from 'react'
+import * as ConfirmModal from '@radix-ui/react-alert-dialog'
 
-import { Button } from "../Button";
+import { Button } from '../Button'
 
-import { Overlay, Content } from "./styles";
+import { Overlay, Content } from './styles'
 
 interface ConfirmCartRemoveProps {
-  onRemove: () => void;
-  description: string;
-  children: ReactNode;
+  onRemove: () => void
+  description: string
+  children: ReactNode
 }
 
 export function ConfirmCartRemove({
@@ -49,5 +49,5 @@ export function ConfirmCartRemove({
         </Content>
       </ConfirmModal.Portal>
     </ConfirmModal.Root>
-  );
+  )
 }

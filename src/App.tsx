@@ -1,11 +1,11 @@
-import { BrowserRouter } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
+import { BrowserRouter } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
 
-import { RouterProvider } from "./routes";
+import { RouterProvider } from './routes'
 
-import { globalStyles } from "./styles/global";
+import { globalStyles } from './styles/global'
 
-globalStyles();
+globalStyles()
 
 export function App() {
   return (
@@ -18,5 +18,5 @@ export function App() {
         position="top-center"
       />
     </BrowserRouter>
-  );
+  )
 }

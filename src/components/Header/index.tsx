@@ -1,15 +1,15 @@
-import { FC, ReactNode } from "react";
+import { ReactNode } from 'react'
 
-import { Container } from "./styles";
+import { Container } from './styles'
 
 interface HeaderProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
-export const Header: FC<HeaderProps> = ({ children }) => {
+export function Header({ children }: HeaderProps) {
   return (
     <Container>
       <div className="content">{children}</div>
     </Container>
-  );
-};
+  )
+}

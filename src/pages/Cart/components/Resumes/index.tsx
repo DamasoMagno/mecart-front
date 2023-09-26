@@ -1,22 +1,21 @@
-import { Swiper } from "swiper/react";
-import { CurrencyDollar, Info } from "@phosphor-icons/react";
+import { Swiper } from 'swiper/react'
+import { CurrencyDollar, Info } from '@phosphor-icons/react'
 
-import { formatPrice } from "../../../../utils/format-price";
+import { formatPrice } from '../../../../utils/format-price'
 
-import { Resume } from "./styles";
+import { Resume } from './styles'
 
 interface ResumesProps {
-  totalPriceOnCart: number;
-  limitCreditOnCart: number;
+  totalPriceOnCart: number
+  limitCreditOnCart: number
 }
 
 export const Resumes = ({
   totalPriceOnCart,
   limitCreditOnCart,
 }: ResumesProps) => {
-  const statusAsCompleted = totalPriceOnCart >= limitCreditOnCart;
-  const cartStatus =
-    totalPriceOnCart < limitCreditOnCart ? "Livre" : "Cheia";
+  const statusAsCompleted = totalPriceOnCart >= limitCreditOnCart
+  const cartStatus = totalPriceOnCart < limitCreditOnCart ? 'Livre' : 'Cheia'
 
   return (
     <Swiper
@@ -59,5 +58,5 @@ export const Resumes = ({
         <strong>{formatPrice(limitCreditOnCart)}</strong>
       </Resume>
     </Swiper>
-  );
-};
+  )
+}

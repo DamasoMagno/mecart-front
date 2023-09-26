@@ -1,65 +1,66 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { X } from "@phosphor-icons/react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { X } from '@phosphor-icons/react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 
-import { cartSchemaBody } from "../../../../validations/Cart";
-import { useCartsStorage } from "../../../../store/cartsStorage";
-import { useModalStorage } from "../../../../store/modalStorage";
+import { cartSchemaBody } from '../../../../validations/Cart'
+import { useCartsStorage, ICart } from '../../../../store/cartsStorage'
+import { useModalStorage } from '../../../../store/modalStorage'
 
-import { Button } from "../../../../components/Button";
-import { Input } from "../../../../components/Input";
+import { Button } from '../../../../components/Button'
+import { Input } from '../../../../components/Input'
 
-import { Container, Form } from "./styles";
-import { ICart } from "../../../../store/cartsStorage";
+import { Container, Form } from './styles'
 
-type Cart = z.infer<typeof cartSchemaBody>;
+type Cart = z.infer<typeof cartSchemaBody>
 
 export function Drawer() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const { toggleCartModal, modalCartIsOpen, cart } = useModalStorage(
-    (state) => ({
+    (state: any) => ({
       modalCartIsOpen: state.modalCartIsOpen,
       toggleCartModal: state.toggleCartModal,
       cart: state.cart,
-    })
-  );
-  const { updateCart, removeCart } = useCartsStorage((state) => ({
+    }),
+  )
+  const { updateCart, removeCart } = useCartsStorage((state: any) => ({
     updateCart: state.updateCart,
     removeCart: state.removeCart,
-  }));
+  }))
 
   const { handleSubmit, control, setValue } = useForm<ICart>({
     resolver: zodResolver(cartSchemaBody),
-  });
+  })
 
   const handleCreateCart = (data: Cart) => {
     const updattedCart: ICart = {
-      ...cart!,
+      id: cart.id,
+      status: cart.status,
+      createdAt: cart.createdAt,
       cartName: data.cartName,
       totalPrice: data.totalPrice,
-    };
+    }
 
-    updateCart(updattedCart);
-    toggleCartModal();
-  };
+    updateCart(updattedCart)
+    toggleCartModal()
+  }
 
   function handleDeleteCart() {
-    removeCart(String(cart?.id));
-    toggleCartModal();
+    removeCart(String(cart?.id))
+    toggleCartModal()
 
-    navigate("/");
+    navigate('/')
   }
 
   useEffect(() => {
     if (cart?.id) {
-      setValue("cartName", cart.cartName);
-      setValue("totalPrice", cart.totalPrice);
+      setValue('cartName', cart.cartName)
+      setValue('totalPrice', cart.totalPrice)
     }
-  }, [cart]);
+  }, [cart, setValue])
 
   return (
     <Container closed={!modalCartIsOpen}>
@@ -86,7 +87,7 @@ export function Drawer() {
               <Input
                 type="number"
                 label="Limite sacola"
-                step={"0.01"}
+                step={'0.01'}
                 {...props}
                 onChange={(e) => onChange(Number(e.target.value))}
               />
@@ -103,5 +104,5 @@ export function Drawer() {
         </Button>
       </Form>
     </Container>
-  );
+  )
 }

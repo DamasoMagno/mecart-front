@@ -1,19 +1,21 @@
-import { ButtonHTMLAttributes, ReactNode, forwardRef } from "react";
-import { VariantProps as VariantsProps } from "@stitches/react";
+import { ButtonHTMLAttributes, ReactNode, forwardRef } from 'react'
+import { VariantProps as VariantsProps } from '@stitches/react'
 
-import { Container } from "./styles";
+import { Container } from './styles'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: ReactNode;
-  variant?: VariantsProps<typeof Container>;
+  children: ReactNode
+  variant?: VariantsProps<typeof Container>
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ children, variant, ...props }, ref) => {
+  (props, ref) => {
     return (
-      <Container ref={ref} {...variant} {...props}>
-        {children}
+      <Container ref={ref} {...props.variant} {...props}>
+        {props.children}
       </Container>
-    );
-  }
-);
+    )
+  },
+)
+
+Button.displayName = 'Button'

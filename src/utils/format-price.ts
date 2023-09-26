@@ -1,8 +1,9 @@
 export function formatPrice(price: number) {
-  const priceFormatted = new Intl.NumberFormat("pt-Br", {
-    style: "currency",
-    currency: "BRL",
-  }).format(price);
+  const priceFormatted = new Intl.NumberFormat('pt-Br', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(price)
 
-  return priceFormatted;
+  const priceFormattedWithCurrency = priceFormatted.replace('R$', '')
+  return priceFormattedWithCurrency
 }

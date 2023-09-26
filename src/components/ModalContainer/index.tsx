@@ -1,14 +1,14 @@
-import { ComponentProps, ReactNode } from "react";
-import { X } from "@phosphor-icons/react";
-import * as Modal from "@radix-ui/react-dialog";
+import { ComponentProps, ReactNode } from 'react'
+import { X } from '@phosphor-icons/react'
+import * as Modal from '@radix-ui/react-dialog'
 
-import { Overlay, Content } from "./styles";
+import { Overlay, Content } from './styles'
 
-interface ModalContainerProps extends ComponentProps<"form"> {
-  title: string;
-  modalIsOpen: boolean;
-  onOpenChangeModal: any;
-  children: ReactNode;
+interface ModalContainerProps extends ComponentProps<'form'> {
+  title: string
+  modalIsOpen: boolean
+  onOpenChangeModal: any
+  children: ReactNode
 }
 
 export function ModalContainer({
@@ -37,5 +37,5 @@ export function ModalContainer({
         </Content>
       </Modal.Portal>
     </Modal.Root>
-  );
+  )
 }

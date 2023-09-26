@@ -1,75 +1,75 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { CaretLeft, List, Package, Plus } from "@phosphor-icons/react";
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { CaretLeft, List, Package, Plus } from '@phosphor-icons/react'
 
-import { useModalStorage } from "../../store/modalStorage";
-import { useCartsStorage } from "../../store/cartsStorage";
+import { useModalStorage } from '../../store/modalStorage'
+import { useCartsStorage } from '../../store/cartsStorage'
 
-import { Product } from "./components/Product";
-import { Header } from "../../components/Header";
-import { Button } from "../../components/Button";
-import { Resumes } from "./components/Resumes";
-import { Drawer } from "./components/Drawer";
+import { Product } from './components/Product'
+import { Header } from '../../components/Header'
+import { Button } from '../../components/Button'
+import { Resumes } from './components/Resumes'
+import { Drawer } from './components/Drawer'
 
-import { IProduct } from "../../types";
+import { IProduct } from '../../types'
 
-import { Actions, Container, Navigation } from "./styles";
+import { Actions, Container, Navigation } from './styles'
+
+import 'swiper/css'
 
 type ParamsProps = {
-  cartId: string;
+  cartId: string
 }
 
-import "swiper/css";
-
 export function Cart() {
-  const navigate = useNavigate();
-  const { cartId } = useParams<ParamsProps>();
+  const navigate = useNavigate()
+  const { cartId } = useParams<ParamsProps>()
 
-  const {openCartModal, toggleModalCart} = useModalStorage((state) => ({ 
+  const { openCartModal, toggleModalCart } = useModalStorage((state: any) => ({
     toggleModalCart: state.toggleCartModal,
-    openCartModal: state.openCartWithData
-   }));
-  const { cart, setCart, carts } = useCartsStorage((state) => ({
+    openCartModal: state.openCartWithData,
+  }))
+  const { cart, setCart, carts } = useCartsStorage((state: any) => ({
     carts: state.carts,
     cart: state.cart,
     setCart: state.setCart,
-  }));
+  }))
 
-  const [products, setProducts] = useState<IProduct[]>([]);
+  const [products, setProducts] = useState<IProduct[]>([])
 
   const totalPriceInCart = products.reduce(
     (accumulator: number, currentValue: IProduct) => {
-      const { quantity, pricePerUnity } = currentValue;
-      const totalCartPrice = quantity * pricePerUnity + accumulator;
+      const { quantity, pricePerUnity } = currentValue
+      const totalCartPrice = quantity * pricePerUnity + accumulator
 
-      return totalCartPrice;
+      return totalCartPrice
     },
-    0
-  );
+    0,
+  )
 
   useEffect(() => {
-    const checkCartExists = carts.find((cart) => cart.id === cartId);
+    const checkCartExists = carts.find((cart: any) => cart.id === cartId)
 
     if (!checkCartExists) {
-      navigate("/");
-      return;
+      navigate('/')
+      return
     }
 
-    setCart(cartId as string);
+    setCart(cartId as string)
 
     const productsStoragedByCartId: IProduct[] =
-      JSON.parse(localStorage.getItem("@products") as string) || [];
+      JSON.parse(localStorage.getItem('@products') as string) || []
 
-    let filterProductsByCartId = productsStoragedByCartId.filter(
-      (product) => product.cartId === cartId
-    );
+    const filterProductsByCartId = productsStoragedByCartId.filter(
+      (product) => product.cartId === cartId,
+    )
 
-    setProducts(filterProductsByCartId);
-  }, []);
+    setProducts(filterProductsByCartId)
+  }, [])
 
-  function redirect(){
-    toggleModalCart();
-    navigate("/");
+  function redirect() {
+    toggleModalCart()
+    navigate('/')
   }
 
   return (
@@ -113,7 +113,7 @@ export function Cart() {
                     setProducts={setProducts}
                     product={product}
                   />
-                );
+                )
               })
             ) : (
               <div className="no-content">
@@ -127,5 +127,5 @@ export function Cart() {
 
       <Drawer />
     </>
-  );
+  )
 }
