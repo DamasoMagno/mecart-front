@@ -39,15 +39,4 @@ export const Content = styled(Modal.Content, {
       fontSize: '1.5rem',
     },
   },
-
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '.875rem',
-    paddingTop: '2rem',
-
-    button: {
-      marginTop: '1.5rem',
-    },
-  },
 })

@@ -1,29 +1,30 @@
 import { create } from 'zustand'
 
-type ICart = {
-  id: string
-  cartName: string
-  totalPrice: number
-  createdAt: Date
-  status: 'pendent' | 'finished'
-}
-
-interface ModalStorage {
-  cart: ICart | null
+export interface ModalStorage {
   modalCartIsOpen: boolean
   toggleCartModal: () => void
-  openCartWithData: (cart: ICart | null) => void
+
+  modalNewCartIsOpen: boolean
+  toggleNewCartModal: () => void
+
+  modalProductIsOpen: boolean
+  toggleProductModal: () => void
 }
 
 export const useModalStorage = create<ModalStorage>((set, get) => ({
-  cart: null,
   modalCartIsOpen: false,
+  modalNewCartIsOpen: false,
+  modalProductIsOpen: false,
 
-  toggleCartModal: () => {
-    set({ modalCartIsOpen: !get().modalCartIsOpen, cart: null })
+  toggleNewCartModal: () => {
+    set({ modalNewCartIsOpen: !get().modalNewCartIsOpen })
   },
 
-  openCartWithData: (cart: ICart | null) => {
-    set({ modalCartIsOpen: true, cart })
+  toggleCartModal: () => {
+    set({ modalCartIsOpen: !get().modalCartIsOpen })
+  },
+
+  toggleProductModal: () => {
+    set({ modalProductIsOpen: !get().modalProductIsOpen })
   },
 }))

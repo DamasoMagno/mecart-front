@@ -1,6 +1,7 @@
 import { styled } from '@stitches/react'
+import { Link } from 'react-router-dom'
 
-export const Navigation = styled('button', {
+export const Navigation = styled(Link, {
   display: 'flex',
   alignItems: 'center',
   gap: '.5rem',
@@ -67,19 +68,11 @@ export const Container = styled('main', {
     flexDirection: 'column',
     padding: '0 1rem',
 
-    '.quantityProducts': {
+    strong: {
       color: '#E1E1E6',
       marginBottom: '1rem',
       fontWeight: 'bold',
       fontSize: '1.125rem',
-
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-
-      span: {
-        fontSize: '1rem',
-      },
     },
   },
 })

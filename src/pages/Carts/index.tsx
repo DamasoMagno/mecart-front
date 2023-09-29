@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import {
-  Basket,
+  Bag,
   MagnifyingGlass,
   Plus,
   WarningCircle,
 } from '@phosphor-icons/react'
+import { toast } from 'react-hot-toast'
 
-import { useModalStorage } from '../../store/modalStorage'
 import { useCartsStorage, ICart } from '../../store/cartsStorage'
+import { useModalStorage } from '../../store/modalStorage'
 
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
@@ -16,24 +17,23 @@ import { Header } from '../../components/Header'
 import { CreateCartModal } from './components/CreateCartModal'
 
 import { Content, Logo, Actions } from './styles'
-import { toast } from 'react-hot-toast'
 
 export function Home() {
-  const openCartModal = useModalStorage((state: any) => state.toggleCartModal)
-  const { carts, loadCarts } = useCartsStorage((state: any) => ({
-    carts: state.carts,
-    loadCarts: state.loadCarts,
+  const { carts, loadCarts } = useCartsStorage(({ carts, loadCarts }) => ({
+    carts,
+    loadCarts,
   }))
+  const toggleNewCartModal = useModalStorage(
+    ({ toggleNewCartModal }) => toggleNewCartModal,
+  )
 
   const [cartsFiltered, setCartsFiltered] = useState<ICart[]>(carts)
   const [filter, setFilter] = useState<string>('')
 
   function handleFilterItems() {
-    const productsFiltered = carts.filter((cart: any) => {
-      return cart.cartName
-        .toLocaleLowerCase()
-        .includes(filter.toLocaleLowerCase())
-    })
+    const productsFiltered = carts.filter((cart) =>
+      cart.title.toLocaleLowerCase().includes(filter.toLocaleLowerCase()),
+    )
 
     if (!productsFiltered.length) {
       toast.error('Carrinhos não encontrados', {
@@ -48,7 +48,7 @@ export function Home() {
     setFilter('')
   }
 
-  useEffect(() => loadCarts(), [])
+  useEffect(() => loadCarts(), [loadCarts])
 
   useEffect(() => {
     setCartsFiltered(carts)
@@ -58,28 +58,22 @@ export function Home() {
     <>
       <Header>
         <Logo>
-          <Basket weight="bold" />
+          <Bag weight="bold" />
           <strong>
             Me<span>Cart</span>
           </strong>
         </Logo>
 
         <Actions>
-          <Button onClick={openCartModal}>
+          <Button onClick={toggleNewCartModal}>
             <Plus />
             <span>Novo carrinho</span>
           </Button>
-          {/* <button className="logout">
-            <Power />
-          </button> */}
         </Actions>
       </Header>
 
       <Content>
-        <strong className="cartQuantity">
-          Carrinhos
-          <span>{cartsFiltered.length}</span>
-        </strong>
+        <strong>Carrinhos</strong>
 
         <div className="filter">
           <Input
@@ -99,7 +93,7 @@ export function Home() {
             })
           ) : (
             <div className="no-content">
-              <Basket weight="bold" size={50} />
+              <Bag weight="bold" size={50} />
               <p>Você não possui carrinhos cadastrados</p>
             </div>
           )}

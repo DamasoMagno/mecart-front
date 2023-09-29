@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 export type IProduct = {
   id: string
-  productName: string
+  name: string
   quantity: number
   pricePerUnity: number
   cartId: string
@@ -11,30 +11,29 @@ export type IProduct = {
 
 export type IProductName = {
   id: string
-  productName: string
+  name: string
 }
 
 export type ICart = {
   id: string
-  cartName: string
-  totalPrice: number
-  createdAt: Date
-  status: 'pendent' | 'finished'
+  title: string
+  limit: number
+  created_at: Date
 }
 
-export type CartInputs = Omit<ICart, 'id' | 'createdAt' | 'status'>
+export type CartInputs = Omit<ICart, 'id' | 'created_at'>
 
-interface CartsStorage {
+export interface CartsStorage {
   carts: ICart[]
   cart: ICart | null
   loadCarts: () => void
   setCart: (cartId: string) => void
-  addCart: (carts: CartInputs) => void
+  addCart: (carts: CartInputs) => Promise<void>
   updateCart: (cart: ICart) => void
   removeCart: (id: string) => void
 }
 
-export const useCartsStorage = create<CartsStorage>((set: any, get: any) => ({
+export const useCartsStorage = create<CartsStorage>((set) => ({
   carts: JSON.parse(localStorage.getItem('@carts') as string) || [],
   cart: null,
 
@@ -48,53 +47,49 @@ export const useCartsStorage = create<CartsStorage>((set: any, get: any) => ({
     })
   },
 
-  addCart: (data: CartInputs) => {
+  addCart: async (data: CartInputs) => {
     const cartsStoraged: ICart[] =
       JSON.parse(localStorage.getItem('@carts') as string) || []
 
     const cart: ICart = {
       id: uuidv4(),
-      cartName: data.cartName,
-      totalPrice: data.totalPrice,
-      createdAt: new Date(),
-      status: 'finished',
+      title: data.title,
+      limit: data.limit,
+      created_at: new Date(),
     }
 
     cartsStoraged.push(cart)
     localStorage.setItem('@carts', JSON.stringify([...cartsStoraged]))
 
-    return set({ carts: [...get().carts, cart] })
+    return set({ carts: cartsStoraged })
   },
 
   setCart: (id: string) => {
     const cartsStoraged: ICart[] =
       JSON.parse(localStorage.getItem('@carts') as string) || []
 
-    const findCartById = cartsStoraged.find((cart) => cart.id === id)
+    const cart = cartsStoraged.find((cart) => cart.id === id)
 
-    if (!findCartById) return
+    if (!cart) return
 
-    return set({
-      cart: findCartById,
-    })
+    return set({ cart })
   },
 
   updateCart: (data: ICart) => {
     const cartsStoraged: ICart[] =
       JSON.parse(localStorage.getItem('@carts') as string) || []
 
-    const findCartById = cartsStoraged.findIndex((cart) => cart.id === data.id)
+    const cartFinded = cartsStoraged.find((cart) => cart.id === data.id)
 
-    cartsStoraged[findCartById] = {
-      ...cartsStoraged[findCartById],
-      ...data,
-    }
+    const cartsUpdated = cartsStoraged.map((cart) => {
+      return cart.id === cartFinded?.id ? data : cart
+    })
 
-    localStorage.setItem('@carts', JSON.stringify([...cartsStoraged]))
+    localStorage.setItem('@carts', JSON.stringify(cartsUpdated))
 
     return set({
-      carts: cartsStoraged,
-      cart: cartsStoraged[findCartById],
+      carts: cartsUpdated,
+      cart: data,
     })
   },
 
@@ -104,12 +99,8 @@ export const useCartsStorage = create<CartsStorage>((set: any, get: any) => ({
     let products: IProduct[] =
       JSON.parse(localStorage.getItem('@products') as string) || []
 
-    const findCartById = carts.find((cart) => cart.id === id)
-
-    if (!findCartById) return
-
-    carts = carts.filter((cart) => cart.id !== findCartById.id)
-    products = products.filter((product) => product.cartId !== findCartById.id)
+    carts = carts.filter((cart) => cart.id !== id)
+    products = products.filter((product) => product.cartId !== id)
 
     localStorage.setItem('@carts', JSON.stringify(carts))
     localStorage.setItem('@products', JSON.stringify(products))

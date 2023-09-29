@@ -7,14 +7,12 @@ import { Overlay, Content } from './styles'
 
 interface ConfirmCartRemoveProps {
   onRemove: () => void
-  description: string
   children: ReactNode
 }
 
 export function ConfirmCartRemove({
   onRemove,
   children,
-  description,
 }: ConfirmCartRemoveProps) {
   return (
     <ConfirmModal.Root>
@@ -27,7 +25,7 @@ export function ConfirmCartRemove({
           <div className="description">
             <ConfirmModal.Title>Deseja remover ?</ConfirmModal.Title>
             <ConfirmModal.Description asChild>
-              <p>{description}</p>
+              <p>Confirmar a remoção, não terá como reverter</p>
             </ConfirmModal.Description>
           </div>
 

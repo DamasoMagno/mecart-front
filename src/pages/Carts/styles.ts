@@ -47,19 +47,10 @@ export const Content = styled('main', {
   padding: '0 1rem',
   maxWidth: '728px',
 
-  '.cartQuantity': {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+  '> strong': {
+    display: 'block',
+    fontSize: '1.125rem',
     color: '#E1E1E6',
-
-    strong: {
-      fontSize: '1.125rem',
-    },
-
-    span: {
-      fontSize: '.875rem',
-    },
   },
 
   '.filter': {

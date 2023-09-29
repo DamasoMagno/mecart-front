@@ -1,24 +1,31 @@
 import { styled } from '../../../../config/stitches.config'
 
 export const Container = styled('div', {
-  top: 0,
+  background: 'rgba(0, 0, 0, .5)',
   position: 'fixed',
-  right: 0,
-  height: '100%',
-  transition: 'transform .25s',
-  zIndex: 1,
-  background: '#000',
-  overflow: 'hidden',
-  maxWidth: '540px',
-  width: '100%',
+  inset: 0,
+  zIndex: 0,
 
   variants: {
     closed: {
       true: {
-        transform: 'translateX(100%)',
+        display: 'none',
       },
     },
   },
+})
+
+export const Content = styled('div', {
+  top: 0,
+  position: 'fixed',
+  right: 0,
+  height: '100%',
+  zIndex: 9999,
+  transition: 'transform 1s',
+  background: '$black',
+  overflow: 'hidden',
+  maxWidth: '540px',
+  width: '100%',
 
   header: {
     padding: '2rem 0 1.5rem',

@@ -6,16 +6,13 @@ import { formatPrice } from '../../../../utils/format-price'
 import { Resume } from './styles'
 
 interface ResumesProps {
-  totalPriceOnCart: number
-  limitCreditOnCart: number
+  totalPrice: number
+  limit: number
 }
 
-export const Resumes = ({
-  totalPriceOnCart,
-  limitCreditOnCart,
-}: ResumesProps) => {
-  const statusAsCompleted = totalPriceOnCart >= limitCreditOnCart
-  const cartStatus = totalPriceOnCart < limitCreditOnCart ? 'Livre' : 'Cheia'
+export const Resumes = ({ totalPrice, limit }: ResumesProps) => {
+  const statusCompleted = totalPrice >= limit
+  const fullBag = statusCompleted ? 'Cheia' : 'Livre'
 
   return (
     <Swiper
@@ -33,20 +30,20 @@ export const Resumes = ({
         },
       }}
     >
-      <Resume completed={statusAsCompleted}>
+      <Resume completed={statusCompleted}>
         <header>
           <span>Status</span>
           <Info />
         </header>
-        <strong>Sacola {cartStatus}</strong>
+        <strong>Sacola {fullBag}</strong>
       </Resume>
 
-      <Resume completed={statusAsCompleted}>
+      <Resume completed={statusCompleted}>
         <header>
           <span>Total na sacola</span>
           <CurrencyDollar />
         </header>
-        <strong>{formatPrice(totalPriceOnCart)}</strong>
+        <strong>{formatPrice(totalPrice)}</strong>
       </Resume>
 
       <Resume>
@@ -55,7 +52,7 @@ export const Resumes = ({
           <CurrencyDollar />
         </header>
 
-        <strong>{formatPrice(limitCreditOnCart)}</strong>
+        <strong>{formatPrice(limit)}</strong>
       </Resume>
     </Swiper>
   )

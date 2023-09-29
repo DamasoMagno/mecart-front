@@ -1,11 +1,14 @@
-import { Link, useParams } from 'react-router-dom'
 import { Basket, CurrencyDollar, Pencil, Trash } from '@phosphor-icons/react'
+
+import { useModalStorage } from '../../../../store/modalStorage'
+import { useProductStorage } from '../../../../store/productStorage'
 
 import { ConfirmCartRemove } from '../../../../components/ModalConfirm'
 
 import { IProduct } from '../../../../types'
-import { Container } from './styles'
 import { formatPrice } from '../../../../utils/format-price'
+
+import { Container } from './styles'
 
 interface ProductProps {
   product: IProduct
@@ -13,7 +16,10 @@ interface ProductProps {
 }
 
 export const Product = ({ product, setProducts }: ProductProps) => {
-  const params = useParams()
+  const toggleProductModal = useModalStorage(
+    ({ toggleProductModal }) => toggleProductModal,
+  )
+  const setProduct = useProductStorage(({ setProduct }) => setProduct)
 
   function handleRemoveProductCart() {
     const productsStoragedByCartId: IProduct[] =
@@ -28,12 +34,16 @@ export const Product = ({ product, setProducts }: ProductProps) => {
   }
 
   const totalPriceProduct = product.quantity * product.pricePerUnity
-  const productUrl = `/cart/${params.cartId}/product?productId=${product.id}`
+
+  function openProductModalWithContent() {
+    setProduct(product)
+    toggleProductModal()
+  }
 
   return (
     <Container>
       <div className="productData">
-        <strong>{product.productName}</strong>
+        <strong>{product.name}</strong>
 
         <div>
           <span>
@@ -48,14 +58,11 @@ export const Product = ({ product, setProducts }: ProductProps) => {
       </div>
 
       <div className="productEdit">
-        <Link to={productUrl}>
+        <button onClick={openProductModalWithContent}>
           <Pencil />
-        </Link>
+        </button>
 
-        <ConfirmCartRemove
-          onRemove={handleRemoveProductCart}
-          description="Confirmar a remoção, não terá como reverter"
-        >
+        <ConfirmCartRemove onRemove={handleRemoveProductCart}>
           <button>
             <Trash />
           </button>

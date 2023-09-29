@@ -11,19 +11,19 @@ interface CartProps {
 }
 
 export function Cart({ cart }: CartProps) {
-  const cartCreatedAt = new Date(cart.createdAt)
+  const cartCreatedAt = new Date(cart.created_at)
   const dateFormatted = format(cartCreatedAt, 'dd/MM/yyyy')
 
   return (
     <Container to={`/cart/${cart.id}`}>
-      <strong>{cart.cartName}</strong>
+      <strong>{cart.title}</strong>
 
       <div>
         <time>
           <Clock /> {dateFormatted}
         </time>
         <span>
-          <CurrencyDollar /> {formatPrice(Number(cart.totalPrice))}
+          <CurrencyDollar /> {formatPrice(Number(cart.limit))}
         </span>
       </div>
     </Container>

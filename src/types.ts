@@ -1,22 +1,19 @@
-export type IProduct = {
+export interface IProduct {
   id: string
-  productName: string
+  name: string
   quantity: number
   pricePerUnity: number
   cartId: string
 }
 
-export type IProductName = {
+export interface IProductName {
   id: string
-  productName: string
+  name: string
 }
 
-export type ICart = {
+export interface ICart {
   id: string
-  cartName: string
-  totalPrice: number
-  createdAt: Date
-  status: 'pendent' | 'finished'
+  title: string
+  limit: number
+  created_at: Date
 }
-
-export type CartInputs = Omit<ICart, 'id' | 'createdAt' | 'status'>

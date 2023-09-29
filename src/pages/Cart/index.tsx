@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { CaretLeft, List, Package, Plus } from '@phosphor-icons/react'
 
-import { useModalStorage } from '../../store/modalStorage'
 import { useCartsStorage } from '../../store/cartsStorage'
 
 import { Product } from './components/Product'
 import { Header } from '../../components/Header'
 import { Button } from '../../components/Button'
 import { Resumes } from './components/Resumes'
-import { Drawer } from './components/Drawer'
+import { EditCartModal } from './components/EditCartModal'
+import { ProductModal } from './components/ProductModal'
 
 import { IProduct } from '../../types'
 
 import { Actions, Container, Navigation } from './styles'
+import { useModalStorage } from '../../store/modalStorage'
 
 import 'swiper/css'
 
@@ -22,15 +23,13 @@ type ParamsProps = {
 }
 
 export function Cart() {
-  const navigate = useNavigate()
   const { cartId } = useParams<ParamsProps>()
 
-  const { openCartModal, toggleModalCart } = useModalStorage((state: any) => ({
-    toggleModalCart: state.toggleCartModal,
-    openCartModal: state.openCartWithData,
+  const { toggleCartModal, toggleProductModal } = useModalStorage((state) => ({
+    toggleCartModal: state.toggleCartModal,
+    toggleProductModal: state.toggleProductModal,
   }))
-  const { cart, setCart, carts } = useCartsStorage((state: any) => ({
-    carts: state.carts,
+  const { cart, setCart } = useCartsStorage((state) => ({
     cart: state.cart,
     setCart: state.setCart,
   }))
@@ -48,13 +47,6 @@ export function Cart() {
   )
 
   useEffect(() => {
-    const checkCartExists = carts.find((cart: any) => cart.id === cartId)
-
-    if (!checkCartExists) {
-      navigate('/')
-      return
-    }
-
     setCart(cartId as string)
 
     const productsStoragedByCartId: IProduct[] =
@@ -65,28 +57,23 @@ export function Cart() {
     )
 
     setProducts(filterProductsByCartId)
-  }, [])
-
-  function redirect() {
-    toggleModalCart()
-    navigate('/')
-  }
+  }, [cartId, setCart])
 
   return (
     <>
       <Header>
-        <Navigation onClick={redirect}>
+        <Navigation to="/">
           <CaretLeft />
           <strong>Carrinho</strong>
         </Navigation>
 
         <Actions>
-          <Button onClick={() => navigate(`/cart/${cartId}/product`)}>
+          <Button onClick={toggleProductModal}>
             <Plus />
             <span>Inserir item</span>
           </Button>
 
-          <button className="logout" onClick={() => openCartModal(cart)}>
+          <button className="logout" onClick={toggleCartModal}>
             <List />
           </button>
         </Actions>
@@ -94,19 +81,16 @@ export function Cart() {
 
       <Container>
         <Resumes
-          limitCreditOnCart={Number(cart?.totalPrice)}
-          totalPriceOnCart={totalPriceInCart}
+          limit={Number(cart?.limit || 0)}
+          totalPrice={totalPriceInCart}
         />
 
         <section className="products">
-          <strong className="quantityProducts">
-            Produtos
-            <span>{products?.length ?? 0}</span>
-          </strong>
+          <strong className="quantityProducts">Produtos</strong>
 
           <ul>
             {products.length > 0 ? (
-              products?.map((product) => {
+              products.map((product) => {
                 return (
                   <Product
                     key={product.id}
@@ -125,7 +109,8 @@ export function Cart() {
         </section>
       </Container>
 
-      <Drawer />
+      <EditCartModal />
+      <ProductModal setProducts={setProducts} />
     </>
   )
 }
