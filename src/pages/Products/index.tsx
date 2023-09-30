@@ -13,10 +13,18 @@ import { Product } from './components/Product'
 import { useState } from 'react'
 import { IProductName } from 'src/types'
 import toast from 'react-hot-toast'
+import { useProductStorage } from '@store/productsStorage'
 
 export function Products() {
+  const { products: items, updateProducts } = useProductStorage(
+    ({ products, updateProducts }) => ({
+      products,
+      updateProducts,
+    }),
+  )
+
   const [products, setProducts] = useState<IProductName[]>(() => {
-    const products = JSON.parse(localStorage.getItem('@product') as string)
+    const products = JSON.parse(localStorage.getItem('@products') as string)
 
     return products || []
   })
@@ -41,12 +49,17 @@ export function Products() {
     setFilter('')
   }
 
-  function handleDeleteProduct(productId: string) {
+  function handleDeleteProduct(product: IProductName) {
     const filterProducts = products.filter(
-      (product) => product.id !== productId,
+      (currentProduct) => currentProduct.id !== product.id,
     )
-    setProducts(filterProducts)
-    localStorage.setItem('@product', JSON.stringify(filterProducts))
+
+    const findItems = items.filter((item) => {
+      return item.name !== product.name
+    })
+
+    updateProducts(findItems)
+    localStorage.setItem('@products', JSON.stringify(filterProducts))
   }
 
   return (
@@ -79,7 +92,7 @@ export function Products() {
                 id: product.id,
                 name: product.name,
               }}
-              onRemoveProduct={() => handleDeleteProduct(product.id)}
+              onRemoveProduct={() => handleDeleteProduct(product)}
             />
           ))}
         </ul>

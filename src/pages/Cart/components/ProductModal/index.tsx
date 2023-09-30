@@ -67,7 +67,7 @@ export function ProductModal() {
 
   const [productsName, setProductsName] = useState<IProductName[]>(() => {
     const namesOfProduct = JSON.parse(
-      localStorage.getItem('@product') as string,
+      localStorage.getItem('@products') as string,
     )
 
     return namesOfProduct || []
@@ -87,7 +87,7 @@ export function ProductModal() {
     setProductsName(products)
     setValue('name', product.name)
 
-    localStorage.setItem('@product', JSON.stringify(products))
+    localStorage.setItem('@products', JSON.stringify(products))
   }
 
   const actions = {

@@ -22,6 +22,7 @@ export interface ProductStorage {
   createProduct: (cartId: string, product: IProductInput) => void
   removeProduct: (product: IProduct) => void
   updateProduct: (productInput: IProduct) => void
+  updateProducts: (productInput: IProduct[]) => void
 }
 
 export const useProductStorage = create<ProductStorage>((set, get) => ({
@@ -70,6 +71,14 @@ export const useProductStorage = create<ProductStorage>((set, get) => ({
     })
   },
 
+  updateProducts: (products: IProduct[]) => {
+    localStorage.setItem('@items', JSON.stringify(products))
+
+    set({
+      products,
+    })
+  },
+
   removeProduct: (productInput: IProduct) => {
     const products = get().products
 
@@ -81,6 +90,7 @@ export const useProductStorage = create<ProductStorage>((set, get) => ({
 
     set({
       products: removeProducts,
+      product: null,
     })
   },
 }))
