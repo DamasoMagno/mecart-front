@@ -1,22 +1,21 @@
 import { ComponentProps, forwardRef } from 'react'
-import { Icon } from '@phosphor-icons/react'
 
-import { Container } from './styles'
+import { Field } from './styles'
+import { BaseInput } from '../styles'
 
 interface InputProps extends ComponentProps<'input'> {
   label?: string
-  icon?: Icon
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ label, ...props }, ref) => (
-    <Container>
+    <BaseInput>
       {label && <label htmlFor={props.id}>{label}</label>}
 
-      <div className="field">
+      <Field>
         <input ref={ref} {...props} />
-      </div>
-    </Container>
+      </Field>
+    </BaseInput>
   ),
 )
 

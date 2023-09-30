@@ -13,10 +13,12 @@ export const Container = styled('div', {
 export const Content = styled('div', {
   width: '100%',
   color: '$white',
+  padding: '0 1.5rem',
   maxWidth: '600px',
-  margin: '12.5rem auto 2.5rem',
-  padding: '0 4rem',
+  margin: '0 auto',
+
   display: 'flex',
+  justifyContent: 'center',
   flexDirection: 'column',
   alignItems: 'center',
 
@@ -38,9 +40,5 @@ export const Content = styled('div', {
     button: {
       marginTop: '2rem',
     },
-  },
-
-  '@lg': {
-    padding: '0 1rem',
   },
 })

@@ -1,6 +1,6 @@
 import { styled } from '../../../../config/stitches.config'
 
-export const ProductNameContainer = styled('div', {
+export const Product = styled('div', {
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
@@ -13,27 +13,27 @@ export const ProductNameContainer = styled('div', {
   },
 })
 
-export const Total = styled('div', {
-  width: '100%',
+export const Form = styled('form', {
   display: 'flex',
   flexDirection: 'column',
-
-  span: {
-    fontSize: '1.25rem',
-    color: '$white',
-    display: 'block',
-    marginTop: '1rem',
-    alignSelf: 'flex-end',
-  },
+  gap: '.75rem',
 
   footer: {
     width: '100%',
-    marginTop: '1.5rem',
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: '.25rem',
+
+    span: {
+      display: 'block',
+      color: '$white',
+      fontSize: '1.125rem',
+      marginLeft: 'auto',
+    },
 
     button: {
       width: '100%',
+      marginTop: '1.5rem',
     },
   },
 })
-
-export const Form = styled('form', {})

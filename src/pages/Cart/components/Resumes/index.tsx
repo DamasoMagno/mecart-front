@@ -1,17 +1,20 @@
 import { Swiper } from 'swiper/react'
 import { CurrencyDollar, Info } from '@phosphor-icons/react'
 
-import { formatPrice } from '../../../../utils/format-price'
+import { formatPrice } from '@utils/format-price'
 
 import { Resume } from './styles'
+import { useCartsStorage } from '@store/cartsStorage'
 
 interface ResumesProps {
   totalPrice: number
-  limit: number
 }
 
-export const Resumes = ({ totalPrice, limit }: ResumesProps) => {
-  const statusCompleted = totalPrice >= limit
+export const Resumes = ({ totalPrice }: ResumesProps) => {
+  const cart = useCartsStorage((state) => state.cart)
+
+  const limitRestant = Number(cart?.limit) - totalPrice || 0
+  const statusCompleted = totalPrice >= Number(cart?.limit)
   const fullBag = statusCompleted ? 'Cheia' : 'Livre'
 
   return (
@@ -40,7 +43,7 @@ export const Resumes = ({ totalPrice, limit }: ResumesProps) => {
 
       <Resume completed={statusCompleted}>
         <header>
-          <span>Total na sacola</span>
+          <span>Total</span>
           <CurrencyDollar />
         </header>
         <strong>{formatPrice(totalPrice)}</strong>
@@ -48,11 +51,11 @@ export const Resumes = ({ totalPrice, limit }: ResumesProps) => {
 
       <Resume>
         <header>
-          <span>Limite da sacola</span>
+          <span>Disponivel</span>
           <CurrencyDollar />
         </header>
 
-        <strong>{formatPrice(limit)}</strong>
+        <strong>{formatPrice(limitRestant)}</strong>
       </Resume>
     </Swiper>
   )

@@ -1,5 +1,5 @@
 import * as Modal from '@radix-ui/react-dialog'
-import { styled } from '../../config/stitches.config'
+import { styled } from '@config/stitches.config'
 
 export const Overlay = styled(Modal.Overlay, {
   position: 'fixed',
@@ -27,6 +27,7 @@ export const Content = styled(Modal.Content, {
     color: '$white',
     fontSize: '1.25rem',
     fontWeight: 'bold',
+    marginBottom: '1.5rem',
 
     button: {
       border: 0,

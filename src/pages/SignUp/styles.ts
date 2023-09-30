@@ -14,11 +14,13 @@ export const Content = styled('div', {
   width: '100%',
   color: '$white',
   maxWidth: '600px',
-  margin: '12.5rem auto 2.5rem',
-  padding: '0 4rem',
+  margin: '0 auto',
+  padding: '0 1.5rem',
+
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  justifyContent: 'center',
 
   strong: {
     fontSize: '2rem',

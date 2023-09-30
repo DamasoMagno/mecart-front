@@ -5,9 +5,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useCartsStorage, ICart } from '../../../../store/cartsStorage'
 import { useModalStorage } from '../../../../store/modalStorage'
 
-import { Input } from '../../../../components/Input'
+import { Input } from '../../../../components/Inputs/Input'
 import { Button } from '../../../../components/Button'
 import { ModalContainer } from '../../../../components/ModalBase'
+import { Form } from './styles'
 
 const cartSchemaBody = z.object({
   title: z
@@ -56,7 +57,7 @@ export function CreateCartModal() {
       open={modalNewCartIsOpen}
       onOpenChange={closeModal}
     >
-      <form onSubmit={handleSubmit(handleCreateCart)}>
+      <Form onSubmit={handleSubmit(handleCreateCart)}>
         <Controller
           control={control}
           name="title"
@@ -77,7 +78,7 @@ export function CreateCartModal() {
         />
 
         <Button type="submit">Criar novo carrinho</Button>
-      </form>
+      </Form>
     </ModalContainer>
   )
 }

@@ -9,6 +9,7 @@ export const globalStyles = globalCss({
 
   body: {
     background: '#202024',
+    height: '100vh',
   },
 
   'body, input, textarea, button': {

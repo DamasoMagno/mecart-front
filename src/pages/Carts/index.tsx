@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import {
   Bag,
+  Basket,
   MagnifyingGlass,
   Plus,
   WarningCircle,
@@ -11,7 +12,7 @@ import { useCartsStorage, ICart } from '../../store/cartsStorage'
 import { useModalStorage } from '../../store/modalStorage'
 
 import { Button } from '../../components/Button'
-import { Input } from '../../components/Input'
+import { Input } from '../../components/Inputs/Input'
 import { Cart } from './components/Cart'
 import { Header } from '../../components/Header'
 import { CreateCartModal } from './components/CreateCartModal'
@@ -58,7 +59,7 @@ export function Home() {
     <>
       <Header>
         <Logo>
-          <Bag weight="bold" />
+          <Basket weight="bold" />
           <strong>
             Me<span>Cart</span>
           </strong>

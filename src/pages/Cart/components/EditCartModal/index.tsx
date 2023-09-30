@@ -5,13 +5,15 @@ import { X } from '@phosphor-icons/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { useCartsStorage, ICart } from '../../../../store/cartsStorage'
+import { useCartsStorage, ICart } from '@store/cartsStorage'
+import { useModalStorage } from '@store/modalStorage'
 
-import { Button } from '../../../../components/Button'
-import { Input } from '../../../../components/Input'
+import { Button } from '@components/Button'
+import { Input } from '@components/Inputs/Input'
 
-import { Container, Form, Content } from './styles'
-import { useModalStorage } from '../../../../store/modalStorage'
+import { Container, Form, Content, Overlay, Portal, Close } from './styles'
+import { useTotalCart } from '@hooks/useTotalCart'
+import toast from 'react-hot-toast'
 
 const cartSchemaBody = z.object({
   title: z
@@ -27,18 +29,24 @@ type Cart = z.infer<typeof cartSchemaBody>
 export function EditCartModal() {
   const navigate = useNavigate()
 
-  const { updateCart, removeCart, cart } = useCartsStorage((state) => ({
-    updateCart: state.updateCart,
-    removeCart: state.removeCart,
-    cart: state.cart,
-  }))
+  const { updateCart, removeCart, cart } = useCartsStorage(
+    ({ updateCart, removeCart, cart }) => ({
+      updateCart,
+      removeCart,
+      cart,
+    }),
+  )
 
-  const { toggleCartModal, modalCartIsOpen } = useModalStorage((state) => ({
-    toggleCartModal: state.toggleCartModal,
-    modalCartIsOpen: state.modalCartIsOpen,
-  }))
+  const { toggleCartModal, modalCartIsOpen } = useModalStorage(
+    ({ modalCartIsOpen, toggleCartModal }) => ({
+      toggleCartModal,
+      modalCartIsOpen,
+    }),
+  )
 
-  const { handleSubmit, control, setValue } = useForm<ICart>({
+  const totalCart = useTotalCart(String(cart?.id))
+
+  const { handleSubmit, control, setValue, reset } = useForm<ICart>({
     resolver: zodResolver(cartSchemaBody),
     defaultValues: {
       title: '',
@@ -46,7 +54,17 @@ export function EditCartModal() {
     },
   })
 
-  const handleCreateCart = (data: Cart) => {
+  const handleUpdateCart = (data: Cart) => {
+    if (data.limit < totalCart) {
+      toast.error('Limite menor que o total existe', {
+        style: {
+          zIndex: 99999,
+        },
+        position: 'top-center',
+      })
+      return
+    }
+
     const updattedCart: ICart = {
       id: String(cart?.id),
       title: data.title,
@@ -55,63 +73,72 @@ export function EditCartModal() {
     }
 
     updateCart(updattedCart)
+    toggleCartModal()
   }
 
   function handleDeleteCart() {
     removeCart(String(cart?.id))
-
     navigate('/')
   }
 
   useEffect(() => {
+    reset()
+
     if (cart?.id) {
       setValue('title', cart.title)
       setValue('limit', cart.limit)
     }
-  }, [cart, setValue])
+  }, [cart])
 
   return (
-    <Container closed={!modalCartIsOpen}>
-      <Content>
-        <header>
-          <button onClick={toggleCartModal}>
-            <X />
-          </button>
-        </header>
+    <Container open={modalCartIsOpen} onOpenChange={toggleCartModal}>
+      <Portal>
+        <Overlay />
 
-        <Form onSubmit={handleSubmit(handleCreateCart)}>
-          <div className="inputs">
-            <Controller
-              control={control}
-              name="title"
-              render={({ field }) => (
-                <Input label="Nome do carrinho" {...field} />
-              )}
-            />
+        <Content>
+          <header>
+            <Close asChild>
+              <button>
+                <X />
+              </button>
+            </Close>
+          </header>
 
-            <Controller
-              control={control}
-              name="limit"
-              render={({ field }) => (
-                <Input
-                  type="number"
-                  label="Limite sacola"
-                  step={0.01}
-                  {...field}
-                />
-              )}
-            />
+          <Form onSubmit={handleSubmit(handleUpdateCart)}>
+            <div className="inputs">
+              <Controller
+                control={control}
+                name="title"
+                render={({ field }) => (
+                  <Input id="cart" label="Nome do carrinho" {...field} />
+                )}
+              />
 
-            <button type="button" onClick={handleDeleteCart}>
-              Remover
-            </button>
-          </div>
+              <Controller
+                control={control}
+                name="limit"
+                render={({ field }) => (
+                  <Input
+                    type="number"
+                    label="Limite sacola"
+                    id="limit"
+                    step={0.01}
+                    {...field}
+                  />
+                )}
+              />
 
-          <Button variant={{ ghost: true }} type="submit">
-            Salvar alterações
-          </Button>
-        </Form>
-      </Content>
+              <button type="button" onClick={handleDeleteCart}>
+                Remover
+              </button>
+            </div>
+
+            <Button variant={{ ghost: true }} type="submit">
+              Salvar alterações
+            </Button>
+          </Form>
+        </Content>
+      </Portal>
     </Container>
   )
 }

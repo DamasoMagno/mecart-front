@@ -97,13 +97,13 @@ export const useCartsStorage = create<CartsStorage>((set) => ({
     let carts: ICart[] =
       JSON.parse(localStorage.getItem('@carts') as string) || []
     let products: IProduct[] =
-      JSON.parse(localStorage.getItem('@products') as string) || []
+      JSON.parse(localStorage.getItem('@items') as string) || []
 
     carts = carts.filter((cart) => cart.id !== id)
     products = products.filter((product) => product.cartId !== id)
 
     localStorage.setItem('@carts', JSON.stringify(carts))
-    localStorage.setItem('@products', JSON.stringify(products))
+    localStorage.setItem('@items', JSON.stringify(products))
 
     return set({
       carts,

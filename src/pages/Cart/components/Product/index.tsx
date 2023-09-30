@@ -1,7 +1,7 @@
 import { Basket, CurrencyDollar, Pencil, Trash } from '@phosphor-icons/react'
 
 import { useModalStorage } from '../../../../store/modalStorage'
-import { useProductStorage } from '../../../../store/productStorage'
+import { useProductStorage } from '../../../../store/productsStorage'
 
 import { ConfirmCartRemove } from '../../../../components/ModalConfirm'
 
@@ -12,30 +12,25 @@ import { Container } from './styles'
 
 interface ProductProps {
   product: IProduct
-  setProducts: (products: IProduct[]) => void
 }
 
-export const Product = ({ product, setProducts }: ProductProps) => {
+export const Product = ({ product }: ProductProps) => {
   const toggleProductModal = useModalStorage(
     ({ toggleProductModal }) => toggleProductModal,
   )
-  const setProduct = useProductStorage(({ setProduct }) => setProduct)
+  const { setProduct, removeProduct } = useProductStorage(
+    ({ setProduct, products, removeProduct }) => ({
+      setProduct,
+      products,
+      removeProduct,
+    }),
+  )
 
-  function handleRemoveProductCart() {
-    const productsStoragedByCartId: IProduct[] =
-      JSON.parse(localStorage.getItem('@products') as string) || []
-
-    const removeProductByID = productsStoragedByCartId.filter(
-      (currentProduct) => currentProduct.id !== product.id,
-    )
-
-    localStorage.setItem('@products', JSON.stringify(removeProductByID))
-    setProducts(removeProductByID)
-  }
+  const handleRemoveProductCart = () => removeProduct(product)
 
   const totalPriceProduct = product.quantity * product.pricePerUnity
 
-  function openProductModalWithContent() {
+  function openProductModal() {
     setProduct(product)
     toggleProductModal()
   }
@@ -58,7 +53,7 @@ export const Product = ({ product, setProducts }: ProductProps) => {
       </div>
 
       <div className="productEdit">
-        <button onClick={openProductModalWithContent}>
+        <button onClick={openProductModal}>
           <Pencil />
         </button>
 
