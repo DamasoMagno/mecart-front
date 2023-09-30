@@ -19,6 +19,7 @@ import { useModalStorage } from '@store/modalStorage'
 import { useProductStorage } from '@store/productsStorage'
 
 import { Product, Form } from './styles'
+import { useTotalCart, calculateTotalPrice } from '@hooks/useTotalCart'
 
 const productSchemaBody = z.object({
   name: z.string().min(1, 'Nome exigido'),
@@ -37,17 +38,31 @@ export function ProductModal() {
   const navigate = useNavigate()
 
   const cart = useCartsStorage(({ cart }) => cart)
+  const totalCart = useTotalCart(String(cart?.id))
 
-  const { product, setProduct, createProduct, updateProduct } =
-    useProductStorage(
-      ({ product, createProduct, updateProduct, products, setProduct }) => ({
-        product,
-        products,
-        createProduct,
-        updateProduct,
-        setProduct,
-      }),
-    )
+  const {
+    product,
+    setProduct,
+    createProduct,
+    updateProduct,
+    updateWithoutSaveProducts,
+  } = useProductStorage(
+    ({
+      product,
+      createProduct,
+      updateProduct,
+      products,
+      setProduct,
+      updateWithoutSaveProducts,
+    }) => ({
+      product,
+      products,
+      createProduct,
+      updateProduct,
+      setProduct,
+      updateWithoutSaveProducts,
+    }),
+  )
 
   const { toggleProductModal, modalProductIsOpen } = useModalStorage(
     ({ toggleProductModal, modalProductIsOpen }) => ({
@@ -92,6 +107,15 @@ export function ProductModal() {
 
   const actions = {
     handleCreateItem: (data: Product) => {
+      const totalPriceItem = data.pricePerUnity * data.quantity
+      const uppdatedTotalPrice = totalPriceItem + totalCart
+
+      const limitReached = uppdatedTotalPrice > Number(cart?.limit)
+
+      if (limitReached) {
+        return console.log('Limit alcançado')
+      }
+
       createProduct(String(cart?.id), data)
       closeModal()
     },
@@ -101,6 +125,20 @@ export function ProductModal() {
         ...data,
         id: String(product?.id),
         cartId: String(cart?.id),
+      }
+
+      const updatedProducts = updateWithoutSaveProducts(productFormatted)
+      const updattedTotalCart = calculateTotalPrice(
+        String(cart?.id),
+        updatedProducts,
+      )
+
+      const limitReached = updattedTotalCart > Number(cart?.limit)
+
+      if (limitReached) {
+        console.log(updatedProducts)
+
+        return console.log('Limit alcançado')
       }
 
       updateProduct(productFormatted)

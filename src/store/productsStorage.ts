@@ -23,6 +23,7 @@ export interface ProductStorage {
   removeProduct: (product: IProduct) => void
   updateProduct: (productInput: IProduct) => void
   updateProducts: (productInput: IProduct[]) => void
+  updateWithoutSaveProducts: (productInput: IProduct) => IProduct[]
 }
 
 export const useProductStorage = create<ProductStorage>((set, get) => ({
@@ -92,5 +93,20 @@ export const useProductStorage = create<ProductStorage>((set, get) => ({
       products: removeProducts,
       product: null,
     })
+  },
+
+  updateWithoutSaveProducts: (productInput: IProduct) => {
+    let products = get().products
+
+    products = products.map((currentProduct) => {
+      return currentProduct.id === productInput.id
+        ? {
+            ...currentProduct,
+            ...productInput,
+          }
+        : currentProduct
+    })
+
+    return products
   },
 }))
