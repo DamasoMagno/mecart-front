@@ -1,7 +1,7 @@
 import { format } from 'date-fns'
 import { Clock, CurrencyDollar } from '@phosphor-icons/react'
 
-import { formatPrice } from '../../../../utils/format-price'
+import { formatPrice } from '@utils/format-price'
 import { ICart } from '../../../../types'
 
 import { Container } from './styles'

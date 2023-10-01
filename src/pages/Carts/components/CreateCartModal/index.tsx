@@ -2,12 +2,12 @@ import { useForm, Controller } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { useCartsStorage, ICart } from '../../../../store/cartsStorage'
-import { useModalStorage } from '../../../../store/modalStorage'
+import { useCartsStorage, ICart } from '@store/cartsStorage'
 
-import { Input } from '../../../../components/Inputs/Input'
-import { Button } from '../../../../components/Button'
-import { ModalContainer } from '../../../../components/ModalBase'
+import { Input } from '@components/Inputs/Input'
+import { Button } from '@components/Button'
+import { ModalContainer } from '@components/ModalBase'
+
 import { Form } from './styles'
 
 const cartSchemaBody = z.object({
@@ -22,11 +22,11 @@ const cartSchemaBody = z.object({
 type Cart = z.infer<typeof cartSchemaBody>
 
 export function CreateCartModal() {
-  const addCart = useCartsStorage(({ addCart }) => addCart)
-  const { modalNewCartIsOpen, toggleNewCartModal } = useModalStorage(
-    ({ modalNewCartIsOpen, toggleNewCartModal }) => ({
-      modalNewCartIsOpen,
-      toggleNewCartModal,
+  const { addCart, modalNewCartIsOpen, toggleNewCartModal } = useCartsStorage(
+    (state) => ({
+      addCart: state.addCart,
+      toggleNewCartModal: state.toggleNewCartModal,
+      modalNewCartIsOpen: state.modalNewCartIsOpen,
     }),
   )
 
@@ -43,12 +43,9 @@ export function CreateCartModal() {
     toggleNewCartModal()
   }
 
-  const handleCreateCart = async (data: Cart) => {
-    try {
-      await addCart(data)
-
-      closeModal()
-    } catch (error) {}
+  function handleCreateCart(data: Cart) {
+    addCart(data)
+    closeModal()
   }
 
   return (
@@ -68,12 +65,7 @@ export function CreateCartModal() {
           control={control}
           name="limit"
           render={({ field }) => (
-            <Input
-              type="number"
-              label="Limite sacola"
-              step={'0.01'}
-              {...field}
-            />
+            <Input type="number" label="Limite sacola" step={0.01} {...field} />
           )}
         />
 

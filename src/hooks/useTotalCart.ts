@@ -21,6 +21,8 @@ export function calculateTotalPrice(cartId: string, products: IProduct[]) {
 
 export function useTotalCart(cartId: string) {
   const products = useProductStorage((state) => state.products)
+
   const totalPriceInCart = calculateTotalPrice(cartId, products)
+
   return totalPriceInCart
 }

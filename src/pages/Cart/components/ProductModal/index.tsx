@@ -5,21 +5,21 @@ import { v4 as uuidv4 } from 'uuid'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
+import { useTotalCart, calculateTotalPrice } from '@hooks/useTotalCart'
 import { IProduct, IProductName } from '../../../../types'
 import { formatPrice } from '@utils/format-price'
+
+import { useCartsStorage } from '@store/cartsStorage'
+import { useProductStorage } from '@store/productsStorage'
 
 import { Input } from '@components/Inputs/Input'
 import { Button } from '@components/Button'
 import { Select } from '@components/Inputs/Select'
 import { ModalContainer } from '@components/ModalBase'
 
-import { useCartsStorage } from '@store/cartsStorage'
-import { useModalStorage } from '@store/modalStorage'
-import { useProductStorage } from '@store/productsStorage'
-
 import { Product, Form } from './styles'
-import { useTotalCart, calculateTotalPrice } from '@hooks/useTotalCart'
 
 const productSchemaBody = z.object({
   name: z.string().min(1, 'Nome exigido'),
@@ -46,30 +46,17 @@ export function ProductModal() {
     createProduct,
     updateProduct,
     updateWithoutSaveProducts,
-  } = useProductStorage(
-    ({
-      product,
-      createProduct,
-      updateProduct,
-      products,
-      setProduct,
-      updateWithoutSaveProducts,
-    }) => ({
-      product,
-      products,
-      createProduct,
-      updateProduct,
-      setProduct,
-      updateWithoutSaveProducts,
-    }),
-  )
-
-  const { toggleProductModal, modalProductIsOpen } = useModalStorage(
-    ({ toggleProductModal, modalProductIsOpen }) => ({
-      toggleProductModal,
-      modalProductIsOpen,
-    }),
-  )
+    toggleProductModal,
+    modalProductIsOpen,
+  } = useProductStorage((state) => ({
+    product: state.product,
+    createProduct: state.createProduct,
+    updateProduct: state.updateProduct,
+    setProduct: state.setProduct,
+    updateWithoutSaveProducts: state.updateWithoutSaveProducts,
+    toggleProductModal: state.toggleProductModal,
+    modalProductIsOpen: state.modalProductIsOpen,
+  }))
 
   const { handleSubmit, setValue, watch, control, reset } = useForm<IProduct>({
     resolver: zodResolver(productSchemaBody),
@@ -113,7 +100,7 @@ export function ProductModal() {
       const limitReached = uppdatedTotalPrice > Number(cart?.limit)
 
       if (limitReached) {
-        return console.log('Limit alcançado')
+        return toast.error('Sacola cheia!')
       }
 
       createProduct(String(cart?.id), data)
@@ -128,17 +115,15 @@ export function ProductModal() {
       }
 
       const updatedProducts = updateWithoutSaveProducts(productFormatted)
-      const updattedTotalCart = calculateTotalPrice(
+      const uppdatedTotalPrice = calculateTotalPrice(
         String(cart?.id),
         updatedProducts,
       )
 
-      const limitReached = updattedTotalCart > Number(cart?.limit)
+      const limitReached = uppdatedTotalPrice > Number(cart?.limit)
 
       if (limitReached) {
-        console.log(updatedProducts)
-
-        return console.log('Limit alcançado')
+        return toast.error('Sacola cheia!')
       }
 
       updateProduct(productFormatted)

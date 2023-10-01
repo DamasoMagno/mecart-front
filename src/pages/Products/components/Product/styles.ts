@@ -29,5 +29,6 @@ export const Container = styled('li', {
     color: '$white',
     height: '2rem',
     width: '2rem',
+    cursor: 'pointer',
   },
 })

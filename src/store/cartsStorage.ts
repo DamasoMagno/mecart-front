@@ -1,31 +1,17 @@
 import { create } from 'zustand'
 import { v4 as uuidv4 } from 'uuid'
-
-export type IProduct = {
-  id: string
-  name: string
-  quantity: number
-  pricePerUnity: number
-  cartId: string
-}
-
-export type IProductName = {
-  id: string
-  name: string
-}
-
-export type ICart = {
-  id: string
-  title: string
-  limit: number
-  created_at: Date
-}
+import { ICart, IProduct } from 'src/types'
 
 export type CartInputs = Omit<ICart, 'id' | 'created_at'>
 
 export interface CartsStorage {
   carts: ICart[]
   cart: ICart | null
+  modalCartIsOpen: boolean
+  modalNewCartIsOpen: boolean
+
+  toggleCartModal: () => void
+  toggleNewCartModal: () => void
   loadCarts: () => void
   setCart: (cartId: string) => void
   addCart: (carts: CartInputs) => Promise<void>
@@ -33,9 +19,19 @@ export interface CartsStorage {
   removeCart: (id: string) => void
 }
 
-export const useCartsStorage = create<CartsStorage>((set) => ({
+export const useCartsStorage = create<CartsStorage>((set, get) => ({
   carts: JSON.parse(localStorage.getItem('@carts') as string) || [],
   cart: null,
+  modalCartIsOpen: false,
+  modalNewCartIsOpen: false,
+
+  toggleNewCartModal: () => {
+    set({ modalNewCartIsOpen: !get().modalNewCartIsOpen })
+  },
+
+  toggleCartModal: () => {
+    set({ modalCartIsOpen: !get().modalCartIsOpen })
+  },
 
   loadCarts: () => {
     const cartsStoraged: ICart[] =

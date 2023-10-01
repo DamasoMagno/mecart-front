@@ -18,6 +18,8 @@ export type IProductInput = {
 export interface ProductStorage {
   product: IProduct | null
   products: IProduct[]
+  modalProductIsOpen: boolean
+  toggleProductModal: () => void
   setProduct: (product: IProduct | null) => void
   createProduct: (cartId: string, product: IProductInput) => void
   removeProduct: (product: IProduct) => void
@@ -29,6 +31,7 @@ export interface ProductStorage {
 export const useProductStorage = create<ProductStorage>((set, get) => ({
   product: null,
   products: JSON.parse(localStorage.getItem('@items') as string) || [],
+  modalProductIsOpen: false,
 
   setProduct: (product: IProduct | null) => {
     set({ product })
@@ -108,5 +111,8 @@ export const useProductStorage = create<ProductStorage>((set, get) => ({
     })
 
     return products
+  },
+  toggleProductModal: () => {
+    set({ modalProductIsOpen: !get().modalProductIsOpen })
   },
 }))

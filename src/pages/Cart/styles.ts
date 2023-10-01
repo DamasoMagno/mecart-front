@@ -1,5 +1,5 @@
-import { styled } from '@stitches/react'
 import { Link } from 'react-router-dom'
+import { styled } from '@stitches/react'
 
 export const Navigation = styled(Link, {
   display: 'flex',

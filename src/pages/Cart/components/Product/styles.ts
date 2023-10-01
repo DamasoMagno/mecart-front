@@ -26,7 +26,6 @@ export const Container = styled('li', {
     div: {
       display: 'flex',
       gap: '.85rem',
-      marginTop: '.75rem',
 
       span: {
         display: 'flex',

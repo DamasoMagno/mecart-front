@@ -4,16 +4,15 @@ import { Controller, useForm } from 'react-hook-form'
 import { X } from '@phosphor-icons/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import toast from 'react-hot-toast'
 
 import { useCartsStorage, ICart } from '@store/cartsStorage'
-import { useModalStorage } from '@store/modalStorage'
+import { useTotalCart } from '@hooks/useTotalCart'
 
 import { Button } from '@components/Button'
 import { Input } from '@components/Inputs/Input'
 
 import { Container, Form, Content, Overlay, Portal, Close } from './styles'
-import { useTotalCart } from '@hooks/useTotalCart'
-import toast from 'react-hot-toast'
 
 const cartSchemaBody = z.object({
   title: z
@@ -29,20 +28,14 @@ type Cart = z.infer<typeof cartSchemaBody>
 export function EditCartModal() {
   const navigate = useNavigate()
 
-  const { updateCart, removeCart, cart } = useCartsStorage(
-    ({ updateCart, removeCart, cart }) => ({
-      updateCart,
-      removeCart,
-      cart,
-    }),
-  )
-
-  const { toggleCartModal, modalCartIsOpen } = useModalStorage(
-    ({ modalCartIsOpen, toggleCartModal }) => ({
-      toggleCartModal,
-      modalCartIsOpen,
-    }),
-  )
+  const { updateCart, removeCart, cart, modalCartIsOpen, toggleCartModal } =
+    useCartsStorage((state) => ({
+      updateCart: state.updateCart,
+      cart: state.cart,
+      removeCart: state.removeCart,
+      toggleCartModal: state.toggleCartModal,
+      modalCartIsOpen: state.modalCartIsOpen,
+    }))
 
   const totalCart = useTotalCart(String(cart?.id))
 
@@ -60,8 +53,8 @@ export function EditCartModal() {
         style: {
           zIndex: 99999,
         },
-        position: 'top-center',
       })
+
       return
     }
 

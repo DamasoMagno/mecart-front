@@ -2,17 +2,16 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { CaretLeft, List, Package, Plus } from '@phosphor-icons/react'
 
-import { useCartsStorage } from '../../store/cartsStorage'
+import { useCartsStorage } from '@store/cartsStorage'
 
+import { Header } from '@components/Header'
+import { Button } from '@components/Button'
 import { Product } from './components/Product'
-import { Header } from '../../components/Header'
-import { Button } from '../../components/Button'
 import { Resumes } from './components/Resumes'
 import { EditCartModal } from './components/EditCartModal'
 import { ProductModal } from './components/ProductModal'
 
 import { Actions, Container, Navigation } from './styles'
-import { useModalStorage } from '../../store/modalStorage'
 
 import 'swiper/css'
 import { useTotalCart } from '../../hooks/useTotalCart'
@@ -25,16 +24,15 @@ type ParamsProps = {
 export function Cart() {
   const { cartId } = useParams<ParamsProps>()
 
-  const { toggleCartModal, toggleProductModal } = useModalStorage(
-    ({ toggleCartModal, toggleProductModal }) => ({
-      toggleCartModal,
-      toggleProductModal,
-    }),
-  )
+  const { setCart, toggleCartModal } = useCartsStorage((state) => ({
+    toggleCartModal: state.toggleCartModal,
+    setCart: state.setCart,
+  }))
 
-  const setCart = useCartsStorage(({ setCart }) => setCart)
-
-  const products = useProductStorage(({ products }) => products)
+  const { products, toggleProductModal } = useProductStorage((state) => ({
+    products: state.products,
+    toggleProductModal: state.toggleProductModal,
+  }))
 
   const totalPrice = useTotalCart(String(cartId))
 

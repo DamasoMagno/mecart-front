@@ -1,12 +1,11 @@
 import { Basket, CurrencyDollar, Pencil, Trash } from '@phosphor-icons/react'
 
-import { useModalStorage } from '../../../../store/modalStorage'
-import { useProductStorage } from '../../../../store/productsStorage'
+import { useProductStorage } from '@store/productsStorage'
 
-import { ConfirmCartRemove } from '../../../../components/ModalConfirm'
+import { ConfirmCartRemove } from '@components/ModalConfirm'
 
 import { IProduct } from '../../../../types'
-import { formatPrice } from '../../../../utils/format-price'
+import { formatPrice } from '@utils/format-price'
 
 import { Container } from './styles'
 
@@ -15,14 +14,12 @@ interface ProductProps {
 }
 
 export const Product = ({ product }: ProductProps) => {
-  const toggleProductModal = useModalStorage(
-    ({ toggleProductModal }) => toggleProductModal,
-  )
-  const { setProduct, removeProduct } = useProductStorage(
-    ({ setProduct, products, removeProduct }) => ({
-      setProduct,
-      products,
-      removeProduct,
+  const { setProduct, removeProduct, toggleProductModal } = useProductStorage(
+    (state) => ({
+      setProduct: state.setProduct,
+      products: state.products,
+      removeProduct: state.removeProduct,
+      toggleProductModal: state.toggleProductModal,
     }),
   )
 

@@ -1,4 +1,4 @@
-import { styled } from '../../config/stitches.config'
+import { styled } from '@config/stitches.config'
 
 export const Logo = styled('div', {
   display: 'flex',

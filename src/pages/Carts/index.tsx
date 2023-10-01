@@ -8,25 +8,22 @@ import {
 } from '@phosphor-icons/react'
 import { toast } from 'react-hot-toast'
 
-import { useCartsStorage, ICart } from '../../store/cartsStorage'
-import { useModalStorage } from '../../store/modalStorage'
+import { useCartsStorage, ICart } from '@store/cartsStorage'
 
-import { Button } from '../../components/Button'
-import { Input } from '../../components/Inputs/Input'
+import { Button } from '@components/Button'
+import { Input } from '@components/Inputs/Input'
+import { Header } from '@components/Header'
 import { Cart } from './components/Cart'
-import { Header } from '../../components/Header'
 import { CreateCartModal } from './components/CreateCartModal'
 
 import { Content, Logo, Actions } from './styles'
 
 export function Home() {
-  const { carts, loadCarts } = useCartsStorage(({ carts, loadCarts }) => ({
-    carts,
-    loadCarts,
+  const { carts, loadCarts, toggleNewCartModal } = useCartsStorage((state) => ({
+    carts: state.carts,
+    loadCarts: state.loadCarts,
+    toggleNewCartModal: state.toggleNewCartModal,
   }))
-  const toggleNewCartModal = useModalStorage(
-    ({ toggleNewCartModal }) => toggleNewCartModal,
-  )
 
   const [cartsFiltered, setCartsFiltered] = useState<ICart[]>(carts)
   const [filter, setFilter] = useState<string>('')
@@ -49,7 +46,7 @@ export function Home() {
     setFilter('')
   }
 
-  useEffect(() => loadCarts(), [loadCarts])
+  useEffect(() => loadCarts(), [])
 
   useEffect(() => {
     setCartsFiltered(carts)
@@ -89,9 +86,7 @@ export function Home() {
 
         <ul>
           {cartsFiltered.length > 0 ? (
-            cartsFiltered.map((cart) => {
-              return <Cart key={cart.id} cart={cart} />
-            })
+            cartsFiltered.map((cart) => <Cart key={cart.id} cart={cart} />)
           ) : (
             <div className="no-content">
               <Bag weight="bold" size={50} />
