@@ -2,7 +2,8 @@ import { useForm, Controller } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { useCartsStorage, ICart } from '@store/cartsStorage'
+import { useCartsStorage } from '@store/cartsStorage'
+import { ICart } from 'src/types'
 
 import { Input } from '@components/Inputs/Input'
 import { Button } from '@components/Button'

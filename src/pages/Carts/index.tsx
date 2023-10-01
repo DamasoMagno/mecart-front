@@ -7,8 +7,9 @@ import {
   WarningCircle,
 } from '@phosphor-icons/react'
 import { toast } from 'react-hot-toast'
+import { ICart } from 'src/types'
 
-import { useCartsStorage, ICart } from '@store/cartsStorage'
+import { useCartsStorage } from '@store/cartsStorage'
 
 import { Button } from '@components/Button'
 import { Input } from '@components/Inputs/Input'

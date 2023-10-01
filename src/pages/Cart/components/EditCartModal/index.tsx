@@ -5,8 +5,9 @@ import { X } from '@phosphor-icons/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import toast from 'react-hot-toast'
+import { ICart } from 'src/types'
 
-import { useCartsStorage, ICart } from '@store/cartsStorage'
+import { useCartsStorage } from '@store/cartsStorage'
 import { useTotalCart } from '@hooks/useTotalCart'
 
 import { Button } from '@components/Button'
