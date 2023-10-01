@@ -70,11 +70,6 @@ export function EditCartModal() {
     toggleCartModal()
   }
 
-  function handleDeleteCart() {
-    removeCart(String(cart?.id))
-    navigate('/')
-  }
-
   useEffect(() => {
     reset()
 
@@ -83,6 +78,11 @@ export function EditCartModal() {
       setValue('limit', cart.limit)
     }
   }, [cart])
+
+  function handleDeleteCart() {
+    removeCart(String(cart?.id))
+    navigate('/')
+  }
 
   return (
     <Container open={modalCartIsOpen} onOpenChange={toggleCartModal}>
