@@ -1,22 +1,21 @@
-import { Swiper } from "swiper/react";
-import { CurrencyDollar, Info } from "@phosphor-icons/react";
+import { Swiper } from 'swiper/react'
+import { CurrencyDollar, Info } from '@phosphor-icons/react'
 
-import { formatPrice } from "../../../../utils/format-price";
+import { formatPrice } from '@utils/format-price'
 
-import { Resume } from "./styles";
+import { Resume } from './styles'
+import { useCartsStorage } from '@store/cartsStorage'
 
 interface ResumesProps {
-  totalPriceOnCart: number;
-  limitCreditOnCart: number;
+  totalPrice: number
 }
 
-export const Resumes = ({
-  totalPriceOnCart,
-  limitCreditOnCart,
-}: ResumesProps) => {
-  const statusAsCompleted = totalPriceOnCart >= limitCreditOnCart;
-  const cartStatus =
-    totalPriceOnCart < limitCreditOnCart ? "Livre" : "Cheia";
+export const Resumes = ({ totalPrice }: ResumesProps) => {
+  const cart = useCartsStorage((state) => state.cart)
+
+  const limitRestant = Number(cart?.limit) - totalPrice || 0
+  const statusCompleted = totalPrice >= Number(cart?.limit)
+  const fullBag = statusCompleted ? 'Cheia' : 'Livre'
 
   return (
     <Swiper
@@ -34,30 +33,30 @@ export const Resumes = ({
         },
       }}
     >
-      <Resume completed={statusAsCompleted}>
+      <Resume completed={statusCompleted}>
         <header>
           <span>Status</span>
           <Info />
         </header>
-        <strong>Sacola {cartStatus}</strong>
+        <strong>Sacola {fullBag}</strong>
       </Resume>
 
-      <Resume completed={statusAsCompleted}>
+      <Resume completed={statusCompleted}>
         <header>
-          <span>Total na sacola</span>
+          <span>Total</span>
           <CurrencyDollar />
         </header>
-        <strong>{formatPrice(totalPriceOnCart)}</strong>
+        <strong>{formatPrice(totalPrice)}</strong>
       </Resume>
 
       <Resume>
         <header>
-          <span>Limite da sacola</span>
+          <span>Disponivel</span>
           <CurrencyDollar />
         </header>
 
-        <strong>{formatPrice(limitCreditOnCart)}</strong>
+        <strong>{formatPrice(limitRestant)}</strong>
       </Resume>
     </Swiper>
-  );
-};
+  )
+}

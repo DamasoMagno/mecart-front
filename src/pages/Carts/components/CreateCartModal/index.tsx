@@ -1,66 +1,77 @@
-import { useForm, Controller } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, Controller } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 
-import { useModalStorage } from "../../../../store/modalStorage";
-import { useCartsStorage } from "../../../../store/cartsStorage";
+import { useCartsStorage } from '@store/cartsStorage'
+import { ICart } from 'src/types'
 
-import { Input } from "../../../../components/Input";
-import { Button } from "../../../../components/Button";
-import { ModalContainer } from "../../../../components/ModalContainer";
+import { Input } from '@components/Inputs/Input'
+import { Button } from '@components/Button'
+import { ModalContainer } from '@components/ModalBase'
 
-import { ICart } from "../../../../store/cartsStorage";
-import { cartSchemaBody } from "../../../../validations/Cart";
+import { Form } from './styles'
 
-type Cart = z.infer<typeof cartSchemaBody>;
+const cartSchemaBody = z.object({
+  title: z
+    .string({ required_error: 'Campo obrigatório' })
+    .nonempty('Nome do produto requerido'),
+  limit: z.coerce
+    .number({ required_error: 'Campo obrigatório' })
+    .min(0.1, 'Limite da sacola obrigatório'),
+})
+
+type Cart = z.infer<typeof cartSchemaBody>
 
 export function CreateCartModal() {
-  const { toggleCartModal, modalCartIsOpen } = useModalStorage((state) => ({
-    modalCartIsOpen: state.modalCartIsOpen,
-    toggleCartModal: state.toggleCartModal,
-  }));
-  const addCart = useCartsStorage((state) => state.addCart);
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<ICart>({
-    resolver: zodResolver(cartSchemaBody),
-  });
+  const { addCart, modalNewCartIsOpen, toggleNewCartModal } = useCartsStorage(
+    (state) => ({
+      addCart: state.addCart,
+      toggleNewCartModal: state.toggleNewCartModal,
+      modalNewCartIsOpen: state.modalNewCartIsOpen,
+    }),
+  )
 
-  const handleCreateCart = (data: Cart) => {
-    addCart(data);
-    toggleCartModal();
-  };
+  const { handleSubmit, control, reset } = useForm<ICart>({
+    resolver: zodResolver(cartSchemaBody),
+    defaultValues: {
+      title: '',
+      limit: 0,
+    },
+  })
+
+  function closeModal() {
+    reset()
+    toggleNewCartModal()
+  }
+
+  function handleCreateCart(data: Cart) {
+    addCart(data)
+    closeModal()
+  }
 
   return (
     <ModalContainer
       title="Novo carrinho"
-      modalIsOpen={modalCartIsOpen}
-      onOpenChangeModal={toggleCartModal}
-      onSubmit={handleSubmit(handleCreateCart)}
+      open={modalNewCartIsOpen}
+      onOpenChange={closeModal}
     >
-      <Controller
-        control={control}
-        name="cartName"
-        render={({ field }) => <Input label="Nome do carrinho" {...field} />}
-      />
+      <Form onSubmit={handleSubmit(handleCreateCart)}>
+        <Controller
+          control={control}
+          name="title"
+          render={({ field }) => <Input label="Nome do carrinho" {...field} />}
+        />
 
-      <Controller
-        control={control}
-        name="totalPrice"
-        render={({ field: { onChange, ...props } }) => (
-          <Input
-            type="number"
-            label="Limite sacola"
-            step={"0.01"}
-            {...props}
-            onChange={(e) => onChange(Number(e.target.value))}
-          />
-        )}
-      />
+        <Controller
+          control={control}
+          name="limit"
+          render={({ field }) => (
+            <Input type="number" label="Limite sacola" step={0.01} {...field} />
+          )}
+        />
 
-      <Button type="submit">Criar novo carrinho</Button>
+        <Button type="submit">Criar novo carrinho</Button>
+      </Form>
     </ModalContainer>
-  );
+  )
 }

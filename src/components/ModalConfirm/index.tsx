@@ -1,20 +1,18 @@
-import { ReactNode } from "react";
-import * as ConfirmModal from "@radix-ui/react-alert-dialog";
+import { ReactNode } from 'react'
+import * as ConfirmModal from '@radix-ui/react-alert-dialog'
 
-import { Button } from "../Button";
+import { Button } from '../Button'
 
-import { Overlay, Content } from "./styles";
+import { Overlay, Content } from './styles'
 
 interface ConfirmCartRemoveProps {
-  onRemove: () => void;
-  description: string;
-  children: ReactNode;
+  onRemove: () => void
+  children: ReactNode
 }
 
 export function ConfirmCartRemove({
   onRemove,
   children,
-  description,
 }: ConfirmCartRemoveProps) {
   return (
     <ConfirmModal.Root>
@@ -27,7 +25,7 @@ export function ConfirmCartRemove({
           <div className="description">
             <ConfirmModal.Title>Deseja remover ?</ConfirmModal.Title>
             <ConfirmModal.Description asChild>
-              <p>{description}</p>
+              <p>Confirmar a remoção, não terá como reverter</p>
             </ConfirmModal.Description>
           </div>
 
@@ -49,5 +47,5 @@ export function ConfirmCartRemove({
         </Content>
       </ConfirmModal.Portal>
     </ConfirmModal.Root>
-  );
+  )
 }

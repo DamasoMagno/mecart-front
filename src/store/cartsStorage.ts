@@ -1,121 +1,108 @@
-import { create } from "zustand";
-import { v4 as uuidv4 } from "uuid";
+import { create } from 'zustand'
+import { v4 as uuidv4 } from 'uuid'
+import { ICart, IProduct } from 'src/types'
 
-export type IProduct = {
-  id: string;
-  productName: string;
-  quantity: number;
-  pricePerUnity: number;
-  cartId: string;
-}
+export type CartInputs = Omit<ICart, 'id' | 'created_at'>
 
-export type IProductName = {
-  id: string;
-  productName: string;
-}
+export interface CartsStorage {
+  carts: ICart[]
+  cart: ICart | null
+  modalCartIsOpen: boolean
+  modalNewCartIsOpen: boolean
 
-export type ICart = {
-  id: string;
-  cartName: string;
-  totalPrice: number;
-  createdAt: Date;
-  status: "pendent" | "finished";
-}
-
-export type CartInputs = Omit<ICart, "id" | "createdAt" | "status">;
-
-interface CartsStorage {
-  carts: ICart[];
-  cart: ICart | null;
-  loadCarts: () => void;
-  setCart: (cartId: string) => void;
-  addCart: (carts: CartInputs) => void;
-  updateCart: (cart: ICart) => void;
-  removeCart: (id: string) => void;
+  toggleCartModal: () => void
+  toggleNewCartModal: () => void
+  loadCarts: () => void
+  setCart: (cartId: string) => void
+  addCart: (carts: CartInputs) => Promise<void>
+  updateCart: (cart: ICart) => void
+  removeCart: (id: string) => void
 }
 
 export const useCartsStorage = create<CartsStorage>((set, get) => ({
-  carts: JSON.parse(localStorage.getItem("@carts") as string) || [],
+  carts: JSON.parse(localStorage.getItem('@carts') as string) || [],
   cart: null,
+  modalCartIsOpen: false,
+  modalNewCartIsOpen: false,
+
+  toggleNewCartModal: () => {
+    set({ modalNewCartIsOpen: !get().modalNewCartIsOpen })
+  },
+
+  toggleCartModal: () => {
+    set({ modalCartIsOpen: !get().modalCartIsOpen })
+  },
 
   loadCarts: () => {
     const cartsStoraged: ICart[] =
-      JSON.parse(localStorage.getItem("@carts") as string) || [];
+      JSON.parse(localStorage.getItem('@carts') as string) || []
 
     return set({
       carts: cartsStoraged,
-      cart: null
-    });
+      cart: null,
+    })
   },
 
-  addCart: (data: CartInputs) => {
+  addCart: async (data: CartInputs) => {
     const cartsStoraged: ICart[] =
-      JSON.parse(localStorage.getItem("@carts") as string) || [];
+      JSON.parse(localStorage.getItem('@carts') as string) || []
 
-    let cart: ICart = {
+    const cart: ICart = {
       id: uuidv4(),
-      cartName: data.cartName,
-      totalPrice: data.totalPrice,
-      createdAt: new Date(),
-      status: "finished",
-    };
+      title: data.title,
+      limit: data.limit,
+      created_at: new Date(),
+    }
 
-    cartsStoraged.push(cart);
-    localStorage.setItem("@carts", JSON.stringify([...cartsStoraged]));
+    cartsStoraged.push(cart)
+    localStorage.setItem('@carts', JSON.stringify([...cartsStoraged]))
 
-    return set({ carts: [...get().carts, cart] });
+    return set({ carts: cartsStoraged })
   },
 
   setCart: (id: string) => {
-    let cartsStoraged: ICart[] =
-      JSON.parse(localStorage.getItem("@carts") as string) || [];
+    const cartsStoraged: ICart[] =
+      JSON.parse(localStorage.getItem('@carts') as string) || []
 
-    let findCartById = cartsStoraged.find((cart) => cart.id === id);
+    const cart = cartsStoraged.find((cart) => cart.id === id)
 
-    if (!findCartById) return;
+    if (!cart) return
 
-    return set({
-      cart: findCartById,
-    });
+    return set({ cart })
   },
 
   updateCart: (data: ICart) => {
-    let cartsStoraged: ICart[] =
-      JSON.parse(localStorage.getItem("@carts") as string) || [];
+    const cartsStoraged: ICart[] =
+      JSON.parse(localStorage.getItem('@carts') as string) || []
 
-    let findCartById = cartsStoraged.findIndex((cart) => cart.id === data.id);
+    const cartFinded = cartsStoraged.find((cart) => cart.id === data.id)
 
-    cartsStoraged[findCartById] = {
-      ...cartsStoraged[findCartById],
-      ...data,
-    };
+    const cartsUpdated = cartsStoraged.map((cart) => {
+      return cart.id === cartFinded?.id ? data : cart
+    })
 
-    localStorage.setItem("@carts", JSON.stringify([...cartsStoraged]));
-    
+    localStorage.setItem('@carts', JSON.stringify(cartsUpdated))
+
     return set({
-      carts: cartsStoraged,
-      cart: cartsStoraged[findCartById],
-    });
+      carts: cartsUpdated,
+      cart: data,
+    })
   },
 
   removeCart: (id: string) => {
     let carts: ICart[] =
-      JSON.parse(localStorage.getItem("@carts") as string) || [];
+      JSON.parse(localStorage.getItem('@carts') as string) || []
     let products: IProduct[] =
-      JSON.parse(localStorage.getItem("@products") as string) || [];
+      JSON.parse(localStorage.getItem('@items') as string) || []
 
-    const findCartById = carts.find((cart) => cart.id === id);
+    carts = carts.filter((cart) => cart.id !== id)
+    products = products.filter((product) => product.cartId !== id)
 
-    if (!findCartById) return;
-
-    carts = carts.filter((cart) => cart.id !== findCartById.id);
-    products = products.filter((product) => product.cartId !== findCartById.id);
-
-    localStorage.setItem("@carts", JSON.stringify(carts));
-    localStorage.setItem("@products", JSON.stringify(products));
+    localStorage.setItem('@carts', JSON.stringify(carts))
+    localStorage.setItem('@items', JSON.stringify(products))
 
     return set({
-      carts: carts,
-    });
+      carts,
+    })
   },
-}));
+}))

@@ -1,42 +1,25 @@
+import { Link } from 'react-router-dom'
 import { styled } from '@config/stitches.config'
 
-export const Logo = styled('div', {
+export const Navigation = styled(Link, {
   display: 'flex',
   alignItems: 'center',
   gap: '.5rem',
+  textDecoration: 'none',
+  background: 'transparent',
+  border: 0,
+  cursor: 'pointer',
 
   svg: {
-    color: '$green700',
-    fontSize: '2rem',
+    fontSize: '1.25rem',
+    color: '#FFF',
   },
 
   strong: {
-    fontSize: '1rem',
+    fontSize: '1.25rem',
     color: '$white',
 
     span: {
-      color: '$green700',
-    },
-  },
-})
-
-export const Actions = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '1.5rem',
-
-  '.logout': {
-    background: 'transparent',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: '#7C7C8A',
-    fontSize: '1.5rem',
-    cursor: 'pointer',
-    border: 0,
-    transition: 'color .25s',
-
-    '&:hover': {
       color: '$green700',
     },
   },
